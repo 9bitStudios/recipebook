@@ -7,7 +7,7 @@
   <title>Recipe Book</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/style.css">
-  
+  <script data-main="app/main" src="app/libs/require/require.js"></script>
 </head>
  
 <body>
@@ -16,28 +16,5 @@
 
 <div id="page"></div>
  
-
-
- 
-<script src="app/libs/jquery/jquery-1.9.1.js"></script> 
-<script src="app/libs/underscore/underscore.js"></script> 
-<script src="app/libs/backbone/backbone.js"></script>
-<script src="app/config.js"></script>
-<script src="app/models/UserModel.js"></script>  
-<script src="app/models/RecipeModel.js"></script> 
-<script src="app/collections/UserCollection.js"></script> 
-<script src="app/collections/RecipeCollection.js"></script> 
-<script src="app/views/RecipesView.js"></script> 
-<script src="app/router.js"></script> 
-<script src="app/app.js"></script> 
-
-<script type="text/template" id="all-recipes">
-<div>
-	<% _.each(recipes, function(recipe) { %>
-		<p><%= recipe.get('name') %></p>
-	<% }) %>
-</div>
-</script>
-
 </body>
 </html>

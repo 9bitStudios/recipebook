@@ -1,6 +1,6 @@
-var rb = rb || {};
+define(['jquery','underscore', 'backbone'], function($, _, Backbone){
 
-	rb.RecipeModel = Backbone.Model.extend({
+	var RecipeModel = Backbone.Model.extend({
 	
 		urlRoot: 'api/recipes', 
 		
@@ -16,4 +16,6 @@ var rb = rb || {};
 	
 	});
 	
+	return RecipeModel;
 	
+});

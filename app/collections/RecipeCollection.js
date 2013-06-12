@@ -1,9 +1,12 @@
-var rb = rb || {};
+define(['jquery','underscore', 'backbone', 'models/RecipeModel'], function($, _, Backbone, RecipeModel){
 
-	rb.RecipeCollection = Backbone.Collection.extend({
+	var RecipeCollection = Backbone.Collection.extend({
 	
-		model: rb.RecipeModel,
+		model: RecipeModel,
 		url: "api/recipes",
 	
 	});
 	
+	return RecipeCollection;
+	
+});

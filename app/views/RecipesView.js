@@ -1,6 +1,13 @@
-var rb = rb || {};
+define(['jquery',
+		'underscore', 
+		'backbone', 
+		'models/RecipeModel',
+		'collections/RecipeCollection', 
+		'text!templates/all-recipes.html'
+		], function($, _, Backbone, RecipeModel, RecipeCollection, allRecipesTemplate){
+
 		
-	rb.RecipesView = Backbone.View.extend({
+	var RecipesView = Backbone.View.extend({
 
 		el: '#page',
 		
@@ -12,13 +19,13 @@ var rb = rb || {};
 			
 			var self = this;
 			
-			var recipes = new rb.RecipeCollection();
+			var recipes = new RecipeCollection();
 			
 			recipes.fetch({
 				wait: true,
 				reset: true,
 				success: function(collection, response, options) {
-					var template = _.template($('#all-recipes').html(), {recipes: collection.models});
+					var template = _.template(allRecipesTemplate, {recipes: collection.models});
 					self.$el.html(template);					
 				},
 				
@@ -32,4 +39,8 @@ var rb = rb || {};
 
 	});
 	
+	return RecipesView;
+	
+});
+
 

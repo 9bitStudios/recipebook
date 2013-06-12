@@ -1,4 +1,13 @@
-var rb = rb || {};
+define(['jquery','underscore', 'backbone', 'router'], function($, _, Backbone, Router){
 
-	rb.router = new rb.Router();	
-	Backbone.history.start();
+	
+    var initialize = function(){
+	
+		Router.init();
+	
+	};
+	
+    return { 
+        init: initialize
+    };
+});

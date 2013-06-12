@@ -1,9 +1,11 @@
-var rb = rb || {};
+define(['jquery','underscore', 'backbone'], function($, _, Backbone){
 
-	rb.UserModel = Backbone.Model.extend({
+	var UserModel = Backbone.Model.extend({
 	
 		
 	
 	});
 	
+	return UserModel;
 	
+});

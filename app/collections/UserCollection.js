@@ -1,8 +1,11 @@
-var rb = rb || {};
+define(['jquery','underscore', 'backbone'], function($, _, Backbone){
 
-	rb.UserCollection = Backbone.Collection.extend({
+	var UserCollection = Backbone.Collection.extend({
 	
 		url: 'api/users',
 	
 	});
 	
+	return UserCollection;
+	
+});

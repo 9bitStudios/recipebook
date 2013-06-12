@@ -1,7 +1,8 @@
-var rb = rb || {};
+define([], function(){
 	
-    rb.config = { 
+    return { 
         applicationName: 'Recipe Book',
 		applicationAuthor: '9bit Studios'
     };
 	
+});

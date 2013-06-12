@@ -1,6 +1,12 @@
-var rb = rb || {};
+define([
+	"config",
+	"jquery", 
+	"underscore", 
+	"backbone",
+	"models/RecipeModel",
+	"views/RecipesView"], function(config, $, _, Backbone, RecipeModel, RecipesView) {
 
-	rb.Router = Backbone.Router.extend({
+	var Router = Backbone.Router.extend({
 	
 		routes: {
 		
@@ -11,11 +17,11 @@ var rb = rb || {};
 			"edit/:id": "edit",
 			"error": "error",
 		},
-
+		
+		
 		home: function() {
-			console.log('We have loaded the home view and kicked off application ' + rb.config.applicationName + ' by ' + rb.config.applicationAuthor);
-			var recipiesView = new rb.RecipesView();
-		  
+			console.log('We have loaded the home view and kicked off application ' + config.applicationName + ' by ' + config.applicationAuthor);
+			var recipiesView = new RecipesView();		  
 		},
 
 		createNew: function() {
@@ -28,9 +34,22 @@ var rb = rb || {};
 		
 		error: function() {
 			console.log('Error...');
-		},		
+		},			
 		
+	
 	});
-		
+	
 
+	var initialize = function() {
+	
+		var router = new Router();
+		Backbone.history.start();
+		
+	};
+	
+	return {
+		init: initialize
+	}
+
+});
 
