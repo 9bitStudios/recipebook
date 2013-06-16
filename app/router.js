@@ -4,7 +4,7 @@ define([
 	"underscore", 
 	"backbone",
 	"models/RecipeModel",
-	"views/RecipesView"], function(config, $, _, Backbone, RecipeModel, RecipesView) {
+	"views/RecipesAllView"], function(config, $, _, Backbone, RecipeModel, RecipesAllView) {
 
 	var Router = Backbone.Router.extend({
 	
@@ -21,7 +21,7 @@ define([
 		
 		home: function() {
 			console.log('We have loaded the home view and kicked off application ' + config.applicationName + ' by ' + config.applicationAuthor);
-			var recipiesView = new RecipesView();		  
+			var recipiesView = new RecipesAllView();		  
 		},
 
 		createNew: function() {

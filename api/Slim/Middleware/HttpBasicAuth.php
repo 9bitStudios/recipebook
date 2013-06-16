@@ -35,7 +35,6 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace Slim\Extras\Middleware;
 
 class HttpBasicAuth extends \Slim\Middleware
 {
@@ -57,16 +56,45 @@ class HttpBasicAuth extends \Slim\Middleware
     /**
      * Constructor
      *
-     * @param   string  $username   The HTTP Authentication username
-     * @param   string  $password   The HTTP Authentication password
      * @param   string  $realm      The HTTP Authentication realm
      */
-    public function __construct($username, $password, $realm = 'Protected Area')
+    public function __construct($realm = 'Protected Area')
     {
-        $this->username = $username;
-        $this->password = $password;
         $this->realm = $realm;
     }
+	
+    /**
+     * Deny Access
+     *
+	*/	
+    public function deny_access() {
+        $res = $this->app->response();
+        $res->status(401);
+        $res->header('WWW-Authenticate', sprintf('Basic realm="%s"', $this->realm));        
+    }
+ 
+ 
+    /**
+     * Authenticate
+	 *
+     * @param   string  $username   The HTTP Authentication username
+     * @param   string  $password   The HTTP Authentication password	 
+     *
+	*/
+    public function authenticate($username, $password) {
+ 
+        if(!ctype_alnum($username))
+            return false;
+		
+		if(isset($username) && isset($password)) {
+			
+			$password = crypt($password);
+			// Check database here with $username and $password
+			return true;
+		}
+		else
+			return false;
+    }	
 
     /**
      * Call
@@ -81,11 +109,11 @@ class HttpBasicAuth extends \Slim\Middleware
         $res = $this->app->response();
         $authUser = $req->headers('PHP_AUTH_USER');
         $authPass = $req->headers('PHP_AUTH_PW');
-        if ($authUser && $authPass && $authUser === $this->username && $authPass === $this->password) {
+		
+        if ($this->authenticate($authUser, $authPass)) {
             $this->next->call();
         } else {
-            $res->status(401);
-            $res->header('WWW-Authenticate', sprintf('Basic realm="%s"', $this->realm));
+            $this->deny_access();
         }
     }
 }

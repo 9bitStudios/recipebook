@@ -3,6 +3,7 @@ require.config({
     'jquery': 'http://code.jquery.com/jquery-latest',
     'underscore': 'libs/underscore/underscore',
 	'backbone': 'libs/backbone/backbone',
+	'helper': 'libs/helper/helper',
 	'text': 'libs/require/text'
   },
   
@@ -16,7 +17,7 @@ require.config({
   } 
  
 });
-require(['jquery', 'underscore', 'backbone', 'app'], function($, _, Backbone, App){ 
+require(['jquery', 'underscore', 'backbone', 'helper', 'app'], function($, _, Backbone, Helper, App){ 
  
 	App.init();
 

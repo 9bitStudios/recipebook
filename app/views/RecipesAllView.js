@@ -7,7 +7,7 @@ define(['jquery',
 		], function($, _, Backbone, RecipeModel, RecipeCollection, allRecipesTemplate){
 
 		
-	var RecipesView = Backbone.View.extend({
+	var RecipesAllView = Backbone.View.extend({
 
 		el: '#page',
 		
@@ -39,7 +39,7 @@ define(['jquery',
 
 	});
 	
-	return RecipesView;
+	return RecipesAllView;
 	
 });
 

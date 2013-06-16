@@ -8,6 +8,8 @@
  * If you are using Composer, you can skip this step.
  */
 require 'Slim/Slim.php';
+require 'Slim/Middleware.php';
+require 'Slim/Middleware/HttpBasicAuth.php';
 
 \Slim\Slim::registerAutoloader();
 
@@ -20,6 +22,7 @@ require 'Slim/Slim.php';
  * of setting names and values into the application constructor.
  */
 $app = new \Slim\Slim();
+$app->add(new \HttpBasicAuth());
 
 /**
  * Step 3: Define the Slim application routes
