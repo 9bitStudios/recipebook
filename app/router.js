@@ -4,7 +4,8 @@ define([
 	"underscore", 
 	"backbone",
 	"models/RecipeModel",
-	"views/RecipesAllView"], function(config, $, _, Backbone, RecipeModel, RecipesAllView) {
+	"views/RecipesAllView",
+	"views/RecipeCreateView"], function(config, $, _, Backbone, RecipeModel, RecipesAllView, RecipeCreateView) {
 
 	var Router = Backbone.Router.extend({
 	
@@ -26,6 +27,7 @@ define([
 
 		createNew: function() {
 			console.log('We are going to create something new here...');
+			var createRecipiesView = new RecipeCreateView();
 		},		
 		 
 		edit: function(idParam) {
