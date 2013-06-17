@@ -4,6 +4,7 @@ require.config({
     'underscore': 'libs/underscore/underscore',
 	'backbone': 'libs/backbone/backbone',
 	'helper': 'libs/helper/helper',
+	'notifications': 'libs/notifications/notifications',
 	'text': 'libs/require/text'
   },
   
