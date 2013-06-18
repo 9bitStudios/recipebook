@@ -8,6 +8,7 @@
  * If you are using Composer, you can skip this step.
  */
 require 'Slim/Slim.php';
+require 'Slim/Database.php';
 require 'Slim/Middleware.php';
 require 'Slim/Middleware/HttpBasicAuth.php';
 
@@ -44,21 +45,30 @@ $app->get('/', function () use ($app) {
 $app->get('/recipes', function () use ($app) {
     
 	$request = (array) json_decode($app->request()->getBody());
+	$db = new Database('localhost', 'RecipeBook', 'root', '');
+	$items = $db->get_all_items('recipes');
 	
-	$items = array(
-		array(
-			'id' => '1', 
-			'name' => 'Cookies',
-		),
+	$results = array();
+	
+	if($items) {
+	
+		// get all results
+		foreach($items as $row) {
 		
-		array(
-			'id' => '2', 
-			'name' => 'Burgers',
-		),			
-	);
+			$itemArray = array(
+				'id' => $row['id'],
+				'name' => $row['recipe_name'],
+			);
+			array_push($results, $itemArray);
+		}
 	
-	$app->response()->header('Content-Type', 'application/json');
-	echo json_encode($items);
+		$app->response()->header('Content-Type', 'application/json');
+		echo json_encode($results);
+	}
+	else {
+		$app->response()->status(500);
+	}
+	
 	
 });
 
