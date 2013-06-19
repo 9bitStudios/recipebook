@@ -4,7 +4,7 @@ define(['jquery',
 		'views/NotificationView',		
 		'models/RecipeModel',
 		'collections/RecipeCollection', 
-		'text!templates/all-recipes.html'
+		'text!templates/recipes-all.html'
 		], function($, _, Backbone, NotificationView, RecipeModel, RecipeCollection, allRecipesTemplate){
 
 		

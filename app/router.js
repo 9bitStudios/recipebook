@@ -4,8 +4,9 @@ define([
 	"underscore", 
 	"backbone",
 	"models/RecipeModel",
+	"views/HomeView",	
 	"views/RecipesAllView",
-	"views/RecipeCreateView"], function(config, $, _, Backbone, RecipeModel, RecipesAllView, RecipeCreateView) {
+	"views/RecipeCreateView"], function(config, $, _, Backbone, RecipeModel, HomeView, RecipesAllView, RecipeCreateView) {
 
 	var Router = Backbone.Router.extend({
 	
@@ -14,6 +15,7 @@ define([
 			// "url": "event"
 		
 			"": "home", 
+			"recipes": "allRecipes", 			
 			"new": "createNew",  
 			"edit/:id": "edit",
 			"error": "error",
@@ -22,9 +24,12 @@ define([
 		
 		home: function() {
 			console.log('We have loaded the home view and kicked off application ' + config.applicationName + ' by ' + config.applicationAuthor);
-			var recipiesView = new RecipesAllView();		  
+			var homeView = new HomeView();  
 		},
-
+		
+		allRecipes: function(){
+			var recipiesView = new RecipesAllView();				
+		},
 		createNew: function() {
 			console.log('We are going to create something new here...');
 			var createRecipiesView = new RecipeCreateView();
@@ -44,7 +49,8 @@ define([
 
 	var initialize = function() {
 	
-		var router = new Router();
+		var router = new Router();	
+		
 		Backbone.history.start();
 		
 	};

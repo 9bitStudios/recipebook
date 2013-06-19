@@ -9,8 +9,10 @@ define(['jquery',
 
 		
 	var RecipeCreateView = Backbone.View.extend({
-
-		el: '#page',
+		
+		tagName: 'div',
+		
+		className: 'recipeCreate',
 		
 		events: {
 			'click #submit': 'saveRecipe',
@@ -18,12 +20,24 @@ define(['jquery',
 		},
 		
 		initialize: function(){
+		
 			this.render();
+		
 		},
+		
+		render: function(){
+			
+			var self = this;
+			var template = _.template(recipeCreateTemplate, {});
+			this.$el.html(template);
+			$('#page').empty().append(this.$el);
+		},		
 		
 		saveRecipe: function(event) {
 			
 			event.preventDefault();
+			
+			var self = this;
 			var recipeName = $('#recipe-name').val();
 			var recipe = new RecipeModel();
 			recipe.save("name", recipeName, {
@@ -34,7 +48,7 @@ define(['jquery',
 					var success = new NotificationView({ 
 						type: 'success', 
 						text: 'Recipe created successfully'
-					});				
+					});	
 				
 				},
 				
@@ -49,14 +63,8 @@ define(['jquery',
 			
 			});
 		
-		},
-		
-		render: function(){
-			
-			var self = this;
-			var template = _.template(recipeCreateTemplate, {});
-			this.$el.html(template);
 		}
+		
 
 	});
 	
