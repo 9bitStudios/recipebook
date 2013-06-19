@@ -22,7 +22,6 @@ define(['jquery',
 		initialize: function(){
 		
 			this.render();
-		
 		},
 		
 		render: function(){
@@ -49,6 +48,9 @@ define(['jquery',
 						type: 'success', 
 						text: 'Recipe created successfully'
 					});	
+				
+					self.remove(); // remove and unbind everything...
+					self.goTo('recipes',{trigger:true});
 				
 				},
 				

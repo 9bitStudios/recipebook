@@ -16,11 +16,11 @@ define([
 		
 			"": "home", 
 			"recipes": "allRecipes", 			
-			"new": "createNew",  
-			"edit/:id": "edit",
+			"new": "createNewRecipe",  
+			"edit/:id": "editRecipe",
+			"delete/:id": "deleteRecipe",			
 			"error": "error",
 		},
-		
 		
 		home: function() {
 			console.log('We have loaded the home view and kicked off application ' + config.applicationName + ' by ' + config.applicationAuthor);
@@ -30,19 +30,22 @@ define([
 		allRecipes: function(){
 			var recipiesView = new RecipesAllView();				
 		},
-		createNew: function() {
+		createNewRecipe: function() {
 			console.log('We are going to create something new here...');
 			var createRecipiesView = new RecipeCreateView();
 		},		
 		 
-		edit: function(idParam) {
+		editRecipe: function(idParam) {
 			console.log('We are going to edit recipe number ' + idParam);
 		},	
+		
+		deleteRecipe: function(idParam) {
+			console.log('We are going to delete recipe number ' + idParam);
+		},		
 		
 		error: function() {
 			console.log('Error...');
 		},			
-		
 	
 	});
 	
@@ -50,6 +53,11 @@ define([
 	var initialize = function() {
 	
 		var router = new Router();	
+		
+		// used for triggering routes in view, there is probably a better way....
+		Backbone.View.prototype.goTo = function (route, options) {
+			router.navigate(route, options);
+		};		
 		
 		Backbone.history.start();
 		
