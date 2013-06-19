@@ -83,7 +83,16 @@ $app->get('/recipes/:id', function () use ($app) {
 $app->post('/recipes', function () use ($app) {
 
 	$request = (array) json_decode($app->request()->getBody());
-	$app->response()->header('Content-Type', 'application/json');
+	
+	$name = $request['name'];
+	$db = new Database('localhost', 'RecipeBook', 'root', '');
+	$items = $db->insert_items('recipes', $name);	
+	
+	
+	if($items) { // if successful, just return the JSON sent for use on the client-side
+		$app->response()->header('Content-Type', 'application/json');
+	}
+	
 	echo json_encode($request);
 	
 });

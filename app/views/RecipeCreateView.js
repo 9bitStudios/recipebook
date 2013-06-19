@@ -1,10 +1,11 @@
 define(['jquery',
 		'underscore', 
 		'backbone', 
+		'views/NotificationView',		
 		'models/RecipeModel',
 		'collections/RecipeCollection', 
 		'text!templates/recipe-create.html'
-		], function($, _, Backbone, RecipeModel, RecipeCollection, recipeCreateTemplate){
+		], function($, _, Backbone, NotificationView, RecipeModel, RecipeCollection, recipeCreateTemplate){
 
 		
 	var RecipeCreateView = Backbone.View.extend({
@@ -20,12 +21,33 @@ define(['jquery',
 			this.render();
 		},
 		
-		saveRecipe: function() {
-		
-			console.log('You clicked the button');
+		saveRecipe: function(event) {
+			
+			event.preventDefault();
 			var recipeName = $('#recipe-name').val();
-			var recipe = new RecipeModel({ name: recipeName })
-			recipe.save();
+			var recipe = new RecipeModel();
+			recipe.save("name", recipeName, {
+			
+				wait: true,
+				success: function(model, response, options) {
+				
+					var success = new NotificationView({ 
+						type: 'success', 
+						text: 'Recipe created successfully'
+					});				
+				
+				},
+				
+				error: function (model, xhr, options) {
+				
+					var success = new NotificationView({ 
+						type: 'error', 
+						text: 'Error creating recipe'
+					});					
+				
+				}
+			
+			});
 		
 		},
 		
