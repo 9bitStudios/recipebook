@@ -1,7 +1,10 @@
 
 <div>
 	<% _.each(recipes, function(recipe) { %>
-		<%= recipe.get('name') %>&nbsp;
+		<p>
+		<%= recipe.get('name') %>
+		<a href="#/edit/<%= recipe.get('id') %>">Edit</a>
+		</p>
 	<% }) %>
 </div>
 

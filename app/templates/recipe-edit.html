@@ -1,0 +1,8 @@
+
+<h2>Edit recipe: <%= model.get('name') %></h2>
+
+<form id="recipe-edit">
+	<input type="hidden" id="recipe-id" value="<%= model.get('id') %>" />
+	<input type="text" id="recipe-name" value="<%= model.get('name') %>" />
+	<button id="submit">Update Recipe</button>
+</form>

@@ -44,7 +44,6 @@ $app->get('/', function () use ($app) {
 // GET route
 $app->get('/recipes', function () use ($app) {
     
-	$request = (array) json_decode($app->request()->getBody());
 	$db = new Database('localhost', 'RecipeBook', 'root', '');
 	$items = $db->get_all_items('recipes');
 	
@@ -73,9 +72,28 @@ $app->get('/recipes', function () use ($app) {
 });
 
 // GET route
-$app->get('/recipes/:id', function () use ($app) {
+$app->get('/recipes/:id', function ($id) use ($app) {
     
 	// GET with parameter
+	
+	$db = new Database('localhost', 'RecipeBook', 'root', '');
+	$items = $db->get_items('recipes', $id);
+	$results = array();
+	
+	if($items) {
+	
+		$results = array(
+			'id' => $items['id'],
+			'name' => $items['recipe_name']
+		);
+	
+		$app->response()->header('Content-Type', 'application/json');
+		echo json_encode($results);
+	}
+	else {
+		$app->response()->status(500);
+	}
+	
 	
 });
 
@@ -98,8 +116,25 @@ $app->post('/recipes', function () use ($app) {
 });
 
 // PUT route
-$app->put('/recipes/:id', function () use ($app) {
-    echo 'This is a PUT route';
+$app->put('/recipes/:id', function ($id) use ($app) {
+
+	$request = (array) json_decode($app->request()->getBody());
+	$name = $request['name'];
+	$db = new Database('localhost', 'RecipeBook', 'root', '');
+	$items = $db->update_items('recipes', $name, $id);	
+		
+	if($items) { // if successful, return the new object with the values
+	
+		$results = array(
+			'id' => $id,
+			'name' => $name
+		);
+	
+		$app->response()->header('Content-Type', 'application/json');
+		echo json_encode($results);
+		
+	}
+	
 });
 
 // DELETE route

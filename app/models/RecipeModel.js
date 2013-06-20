@@ -4,8 +4,6 @@ define(['jquery','underscore', 'backbone'], function($, _, Backbone){
 	
 		urlRoot: 'api/recipes', 
 		
-		idAttribute: "_id",
-		
 		defaults: {
 			name: 'New Recipe',
 		},
