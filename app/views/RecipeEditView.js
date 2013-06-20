@@ -22,7 +22,7 @@ define(['jquery',
 		initialize: function(options){
 		
 			var self = this;
-		
+
 			if(options.idParam) {
 
 				this.model = new RecipeModel({ id: options.idParam });
@@ -36,11 +36,10 @@ define(['jquery',
 					error: function (model, xhr, options) { 
 						var success = new NotificationView({ 
 							type: 'error', 
-							text: 'Error fetching data recipe'
+							text: 'Error fetching recipe data'
 						});						
 					}
 				});
-				
 				
 			}
 			
@@ -53,7 +52,7 @@ define(['jquery',
 			this.$el.html(template);
 			$('#page').empty().append(this.$el);			
 
-		},		
+		},	
 		
 		saveRecipe: function(event) {
 			
@@ -61,6 +60,7 @@ define(['jquery',
 			
 			var self = this;
 			var recipeName = $('#recipe-name').val();
+			
 			this.model.save("name", recipeName, {
 			
 				wait: true,
@@ -78,9 +78,15 @@ define(['jquery',
 				
 				error: function (model, xhr, options) {
 				
+					var message = 'Error updating recipe';
+					
+					if(recipeName === self.model.get('name')) {
+						message = 'Recipe name is unchanged';
+					}
+				
 					var success = new NotificationView({ 
 						type: 'error', 
-						text: 'Error updating recipe'
+						text: message
 					});					
 				
 				}

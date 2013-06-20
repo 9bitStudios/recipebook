@@ -134,12 +134,25 @@ $app->put('/recipes/:id', function ($id) use ($app) {
 		echo json_encode($results);
 		
 	}
+	else {
+		$app->response()->status(500);
+	}
 	
 });
 
 // DELETE route
-$app->delete('/delete/:id', function () use ($app) {
-    echo 'This is a DELETE route';
+$app->delete('/recipes/:id', function ($id) use ($app) {
+	
+	$request = (array) json_decode($app->request()->getBody());
+	$db = new Database('localhost', 'RecipeBook', 'root', '');
+	$items = $db->delete_items('recipes', $id);	
+	
+	if($items) { // if successful, just return the deleted item if it's needed on the client side
+		$app->response()->header('Content-Type', 'application/json');
+	}
+	
+	echo json_encode($request);	
+	
 });
 
 /**

@@ -127,7 +127,7 @@ class Database {
 				':name' => $value
 			));	
 		
-			if($statement->rowCount() >= 1)
+			if($statement->rowCount() === 1)
 				return true;
 			else
 				return false;

@@ -10,7 +10,11 @@ define(['jquery',
 		
 	var RecipesAllView = Backbone.View.extend({
 
-		el: '#page',
+		tagName: 'div',
+		
+		events: {
+			'click .delete': 'deleteRecipe',
+		},
 		
 		initialize: function(){
 			this.render();
@@ -19,7 +23,6 @@ define(['jquery',
 		render: function(){
 			
 			var self = this;
-			
 			var recipes = new RecipeCollection();
 			
 			recipes.fetch({
@@ -28,7 +31,8 @@ define(['jquery',
 				success: function(collection, response, options) {				
 					
 					var template = _.template(allRecipesTemplate, {recipes: collection.models});
-					$(self.el).html(template);					
+					self.$el.html(template);
+					$('#page').empty().append(self.$el);					
 				},
 				
 				error: function(model, xhr, options) {
@@ -45,7 +49,37 @@ define(['jquery',
 		
 			});	
 
+		},
+		
+		deleteRecipe: function(event) {
+			
+			var self = this;
+			event.preventDefault();
+			var id = $(event.currentTarget).data("id");
+			var recipe = new RecipeModel({ id: id });
+			
+			recipe.destroy({
+			
+				wait: true,
+				success: function(model, response, options) {
+					console.log('model removed');
+					$('.recipe-item-'+id).fadeOut();
+				},
+				
+				error: function(model, xhr, options) {
+					
+					var error = new NotificationView({ 
+						type: 'error', 
+						text: 'There was an error deleting the recipe'
+					});					
+					
+				}
+			
+			})
+			
+			
 		}
+		
 
 	});
 	
