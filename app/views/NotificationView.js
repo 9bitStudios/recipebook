@@ -8,6 +8,8 @@ define(['jquery',
 		
 		targetElement: 'body',
 		
+		tagName: 'div',
+		
 		className: 'notification',		
 		
 		defaultMessages: {
@@ -29,6 +31,9 @@ define(['jquery',
 			var text = options.text; 
 			var target = options.target;
 		
+			if(options.automaticClose)
+				this.automaticClose = options.automaticClose;
+		
 			if(!type)
 				type = 'information';
 			
@@ -38,7 +43,11 @@ define(['jquery',
 			if(target)
 				this.targetElement = target;		
 		
-			this.render(type, text, target);
+			// is message already displayed? if yes, don't show again
+			if($('.notification:contains('+text+')').length === 0) { 
+				this.render(type, text, target);
+			}
+				
 		},
 		
 		render: function(type, text, target){
@@ -62,8 +71,11 @@ define(['jquery',
 		},
 		
 		closeNotification: function() {
-			$('.notification').fadeOut(function(){
-				$('.notification').remove();
+		
+			var self = this;
+		
+			$(this.el).fadeOut(function() {
+				$(self.el).remove();
 			});
 		}
 		
