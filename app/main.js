@@ -1,6 +1,6 @@
 require.config({
   paths: {
-    'jquery': 'http://code.jquery.com/jquery-latest',
+    'jquery': 'libs/jquery/jquery-1.9.1',
     'underscore': 'libs/underscore/underscore',
 	'backbone': 'libs/backbone/backbone',
 	'helper': 'libs/helper/helper',
@@ -13,7 +13,8 @@ require.config({
            exports: '_',
       },
       'backbone': {
-           exports: 'Backbone',
+			deps: ['underscore', 'jquery'],
+			exports: 'Backbone',
       }	  
   } 
  

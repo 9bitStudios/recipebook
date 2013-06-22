@@ -63,26 +63,26 @@ define(['jquery',
 			var id = $(event.currentTarget).data("id");
 			var recipe = new RecipeModel({ id: id });
 			
-			recipe.destroy({
-			
-				wait: true,
-				success: function(model, response, options) {
-					console.log('model removed');
-					$('.recipe-item-'+id).fadeOut();
-				},
+			if (confirm('Are you sure you want to delete this recipe?')) {
+				recipe.destroy({
 				
-				error: function(model, xhr, options) {
+					wait: true,
+					success: function(model, response, options) {
+						console.log('model removed');
+						$('.recipe-item-'+id).fadeOut();
+					},
 					
-					var error = new NotificationView({ 
-						type: 'error', 
-						text: 'There was an error deleting the recipe'
-					});					
-					
-				}
-			
-			})
-			
-			
+					error: function(model, xhr, options) {
+						
+						var error = new NotificationView({ 
+							type: 'error', 
+							text: 'There was an error deleting the recipe'
+						});					
+						
+					}
+				
+				});
+			}
 		}
 		
 
