@@ -38,13 +38,18 @@ define(['jquery',
 				error: function(model, xhr, options) {
 					
 					var message;
-					if(xhr.status === 401)
+					if(xhr.status === 401) {
 						message = 'You must be logged in and have proper permissions to access this data.';
-						
+						self.goTo('', { trigger: true })
+					
+					}
 					var error = new NotificationView({ 
 						type: 'error', 
 						text: message
 					});
+					
+					
+					
 				}
 		
 			});	

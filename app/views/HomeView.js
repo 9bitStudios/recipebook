@@ -10,7 +10,7 @@ define(['jquery',
 		
 	var HomeView = Backbone.View.extend({
 
-		el: '#page',
+		tagName: 'div',
 		
 		initialize: function(){
 			this.render();
@@ -19,8 +19,8 @@ define(['jquery',
 		render: function(){
 			
 			var template = _.template(homeTemplate, {});
-			$(this.el).html(template);	
-
+			this.$el.html(template);
+			$('#page').empty().append(this.$el);
 		}
 
 	});

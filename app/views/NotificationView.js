@@ -75,7 +75,7 @@ define(['jquery',
 			var self = this;
 		
 			$(this.el).fadeOut(function() {
-				$(self.el).remove();
+				self.remove();
 			});
 		}
 		
