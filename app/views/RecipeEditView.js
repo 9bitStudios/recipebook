@@ -37,7 +37,10 @@ define(['jquery',
 						var success = new NotificationView({ 
 							type: 'error', 
 							text: 'Error fetching recipe data'
-						});						
+						});
+						
+						Backbone.history.navigate('recipes',true);
+						
 					}
 				});
 				
@@ -72,7 +75,7 @@ define(['jquery',
 					});	
 				
 					self.remove(); // remove and unbind everything...
-					self.goTo('recipes',{trigger:true});
+					Backbone.history.navigate('recipes', true);
 				
 				},
 				

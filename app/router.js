@@ -4,10 +4,11 @@ define([
 	"underscore", 
 	"backbone",
 	"models/RecipeModel",
-	"views/HomeView",	
+	"views/HomeView",
+	"views/LoginView",	
 	"views/RecipesAllView",
 	"views/RecipeCreateView",
-	"views/RecipeEditView"], function(config, $, _, Backbone, RecipeModel, HomeView, RecipesAllView, RecipeCreateView, RecipeEditView) {
+	"views/RecipeEditView"], function(config, $, _, Backbone, RecipeModel, HomeView, LoginView, RecipesAllView, RecipeCreateView, RecipeEditView) {
 
 	var Router = Backbone.Router.extend({
 	
@@ -20,16 +21,20 @@ define([
 			// "url": "event"
 		
 			"": "home", 
+			"login": "login", 
 			"recipes": "allRecipes", 			
 			"new": "createNewRecipe",  
-			"edit/:id": "editRecipe",
-			"delete/:id": "deleteRecipe",			
+			"edit/:id": "editRecipe",		
 			"error": "error",
 		},
 		
 		home: function() {
 			console.log('We have loaded the home view and kicked off application ' + config.applicationName + ' by ' + config.applicationAuthor);
 			var view = new HomeView();  
+		},
+		
+		login: function() {
+			var view = new LoginView();
 		},
 		
 		allRecipes: function(){
@@ -43,11 +48,7 @@ define([
 		editRecipe: function(idParam) {
 			console.log('We are going to edit recipe number ' + idParam);
 			var view = new RecipeEditView({idParam: idParam, model: RecipeModel});
-		},	
-		
-		deleteRecipe: function(idParam) {
-			console.log('We are going to delete recipe number ' + idParam);
-		},		
+		},			
 		
 		error: function() {
 			console.log('Error...');
@@ -65,12 +66,7 @@ define([
 		
 			// do something if needed (remove view and unbind events and set current view perhaps?)
 		
-		});			
-		
-		// used for triggering routes in view, there is probably a better way....
-		Backbone.View.prototype.goTo = function (route, options) {
-			router.navigate(route, options);
-		};		
+		});		
 		
 		Backbone.history.start();
 		

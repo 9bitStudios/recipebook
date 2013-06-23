@@ -40,7 +40,7 @@ define(['jquery',
 					var message;
 					if(xhr.status === 401) {
 						message = 'You must be logged in and have proper permissions to access this data.';
-						self.goTo('', { trigger: true })
+						Backbone.history.navigate('',true);
 					
 					}
 					var error = new NotificationView({ 

@@ -50,7 +50,7 @@ define(['jquery',
 					});	
 				
 					self.remove(); // remove and unbind everything...
-					self.goTo('recipes',{trigger:true});
+					Backbone.history.navigate('recipes', true);
 				
 				},
 				

@@ -4,7 +4,7 @@
 		<p class="recipe-item-<%= recipe.get('id') %>">
 		<%= recipe.get('name') %>
 		<a href="#/edit/<%= recipe.get('id') %>">Edit</a>
-		<a class="delete" data-id="<%= recipe.get('id') %>">Delete</a>
+		<a href="#/delete/<%= recipe.get('id') %>" class="delete" data-id="<%= recipe.get('id') %>">Delete</a>
 		</p>
 	<% }) %>
 </div>
