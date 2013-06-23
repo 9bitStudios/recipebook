@@ -50,7 +50,6 @@ define(['jquery',
 		
 		render: function(id){
 		
-			console.log(this.model.get('name'));
 			var template = _.template(recipeEditTemplate, { model: this.model });
 			this.$el.html(template);
 			$('#page').empty().append(this.$el);			

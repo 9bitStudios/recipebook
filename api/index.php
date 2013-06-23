@@ -40,6 +40,30 @@ $app->get('/', function () use ($app) {
 	
 });
 
+// Login route
+$app->post('/login', function () use ($app) {
+    
+	$req = $app->request();
+	$res = $app->response();
+	
+	$username = $req->headers('PHP_AUTH_USER');
+	$password = $req->headers('PHP_AUTH_PW');	
+	
+	// Check user credentials against 
+	$userArray = array(
+		'user' => $username,
+		'password' => $password,
+	);
+	
+	if(isset($username) && isset($password) && $username != 'wrong' && $password != 'wrong') {
+		$app->response()->header('Content-Type', 'application/json');
+		echo json_encode($userArray);
+	}
+	else {
+		$res->status(401);		
+	}
+	
+});
 
 // GET route
 $app->get('/recipes', function () use ($app) {
