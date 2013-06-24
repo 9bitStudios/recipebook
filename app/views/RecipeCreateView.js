@@ -1,11 +1,11 @@
 define(['jquery',
 		'underscore', 
 		'backbone', 
+		'globals',
 		'views/NotificationView',		
 		'models/RecipeModel',
-		'collections/RecipeCollection', 
 		'text!templates/recipe-create.html'
-		], function($, _, Backbone, NotificationView, RecipeModel, RecipeCollection, recipeCreateTemplate){
+		], function($, _, Backbone, globals, NotificationView, RecipeModel, recipeCreateTemplate){
 
 		
 	var RecipeCreateView = Backbone.View.extend({

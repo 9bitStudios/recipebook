@@ -65,6 +65,14 @@ $app->post('/login', function () use ($app) {
 	
 });
 
+// Logout route
+$app->post('/logout', function () use ($app) {
+    
+	$res = $app->response();
+	$res->status(401);
+	
+});
+
 // GET route
 $app->get('/recipes', function () use ($app) {
     

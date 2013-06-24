@@ -1,11 +1,11 @@
 define(['jquery',
 		'underscore', 
 		'backbone', 
+		'globals',
 		'views/NotificationView',		
 		'models/RecipeModel',
-		'collections/RecipeCollection', 
 		'text!templates/recipe-edit.html'
-		], function($, _, Backbone, NotificationView, RecipeModel, RecipeCollection, recipeEditTemplate){
+		], function($, _, Backbone, globals, NotificationView, RecipeModel, recipeEditTemplate){
 
 		
 	var RecipeEditView = Backbone.View.extend({
@@ -63,37 +63,43 @@ define(['jquery',
 			var self = this;
 			var recipeName = $('#recipe-name').val();
 			
-			this.model.save("name", recipeName, {
 			
-				wait: true,
-				success: function(model, response, options) {
+			if(recipeName === this.model.get('name')) {
+				message = 'Recipe name is unchanged';
+				var error = new NotificationView({ 
+					type: 'error', 
+					text: message
+				});				
+			}
+			else {
+				this.model.save("name", recipeName, {
 				
-					var success = new NotificationView({ 
-						type: 'success', 
-						text: 'Recipe updated successfully'
-					});	
-				
-					self.remove(); // remove and unbind everything...
-					Backbone.history.navigate('recipes', true);
-				
-				},
-				
-				error: function (model, xhr, options) {
-				
-					var message = 'Error updating recipe';
+					wait: true,
+					success: function(model, response, options) {
 					
-					if(recipeName === self.model.get('name')) {
-						message = 'Recipe name is unchanged';
+						var success = new NotificationView({ 
+							type: 'success', 
+							text: 'Recipe updated successfully'
+						});	
+					
+						self.remove(); // remove and unbind everything...
+						Backbone.history.navigate('recipes', true);
+					
+					},
+					
+					error: function (model, xhr, options) {
+					
+						var message = 'Error updating recipe';
+					
+						var error = new NotificationView({ 
+							type: 'error', 
+							text: message
+						});					
+					
 					}
 				
-					var success = new NotificationView({ 
-						type: 'error', 
-						text: message
-					});					
-				
-				}
-			
-			});
+				});
+			}
 		
 		}
 		

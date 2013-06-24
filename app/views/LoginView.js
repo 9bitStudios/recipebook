@@ -2,11 +2,10 @@ define(['config',
 		'jquery',
 		'underscore', 
 		'backbone', 
-		'views/NotificationView',		
-		'models/RecipeModel',
-		'collections/RecipeCollection', 
+		'globals',
+		'views/NotificationView',
 		'text!templates/login.html'
-		], function(config, $, _, Backbone, NotificationView, RecipeModel, RecipeCollection, loginTemplate){
+		], function(config, $, _, Backbone, globals, NotificationView, loginTemplate){
 
 		
 	var LoginView = Backbone.View.extend({
@@ -32,22 +31,33 @@ define(['config',
 		
 			var username = $('#username').val();
 			var password = $('#password').val();
-			
-			$.ajax({
-				type: "POST",
-				url: config.baseURL + "/api/login",
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				username: username,
-				password: password,				
-				success: function (successMessage) {
-					console.log('success');
-				},
-				error: function (errorMessage) {
-					console.log('failure');
-					
-				}
-			});		
+		
+			if(username.length > 0 && password.length > 0) {
+		
+				$.ajax({
+					type: "POST",
+					url: config.baseURL + "/api/login",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					username: username,
+					password: password,				
+					success: function (successMessage) {
+						globals.currentUser.set('loggedIn', true);
+						globals.userInfo.render();
+						Backbone.history.navigate('', true);
+					},
+					error: function (errorMessage) {
+						var error = new NotificationView({ type:'error', text: 'Error logging in' });
+						
+					}
+				});	
+			}
+			else {
+				var enterCredentials = new NotificationView({
+					type: 'error',
+					text: 'Please enter your username and password!'
+				});
+			}
 		
 		},
 		

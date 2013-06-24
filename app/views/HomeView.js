@@ -1,11 +1,12 @@
 define(['jquery',
 		'underscore', 
 		'backbone', 
+		'globals',
 		'views/NotificationView',		
 		'models/RecipeModel',
 		'collections/RecipeCollection', 
 		'text!templates/home.html'
-		], function($, _, Backbone, NotificationView, RecipeModel, RecipeCollection, homeTemplate){
+		], function($, _, Backbone, globals, NotificationView, RecipeModel, RecipeCollection, homeTemplate){
 
 		
 	var HomeView = Backbone.View.extend({
@@ -13,6 +14,7 @@ define(['jquery',
 		tagName: 'div',
 		
 		initialize: function(){
+			console.log(globals.currentUser.get('loggedIn'));
 			this.render();
 		},
 		
