@@ -16,6 +16,9 @@ define(['config', 'jquery','underscore', 'backbone'], function(config, $, _, Bac
 		},
 		
 		reset: function() {
+			
+			var self = this;
+			
 			$.ajax({
 				type: "POST",
 				url: config.baseURL + "/api/logout",
@@ -25,10 +28,10 @@ define(['config', 'jquery','underscore', 'backbone'], function(config, $, _, Bac
 				username: 'dummy',
 				password: 'dummy',				
 				error: function (errorMessage) {
-					
+					self.set('loggedIn',false);
 				}
 			});			
-		
+			
 		}		
 		
 	

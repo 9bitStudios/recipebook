@@ -3,12 +3,13 @@ define([
 	"jquery", 
 	"underscore", 
 	"backbone",
+	"globals",
 	"models/RecipeModel",
 	"views/HomeView",
 	"views/LoginView",	
 	"views/RecipesAllView",
 	"views/RecipeCreateView",
-	"views/RecipeEditView"], function(config, $, _, Backbone, RecipeModel, HomeView, LoginView, RecipesAllView, RecipeCreateView, RecipeEditView) {
+	"views/RecipeEditView"], function(config, $, _, Backbone, globals, RecipeModel, HomeView, LoginView, RecipesAllView, RecipeCreateView, RecipeEditView) {
 
 	var Router = Backbone.Router.extend({
 	
@@ -22,6 +23,7 @@ define([
 		
 			"": "home", 
 			"login": "login", 
+			"logout": "logout",
 			"recipes": "allRecipes", 			
 			"new": "createNewRecipe",  
 			"edit/:id": "editRecipe",		
@@ -37,17 +39,31 @@ define([
 			var view = new LoginView();
 		},
 		
+		logout: function() {
+			globals.currentUser.reset();
+			globals.userInfo.render();
+			Backbone.history.navigate('', true);
+		},
+		
 		allRecipes: function(){
-			var view = new RecipesAllView();				
+		
+			if(globals.currentUser.get('loggedIn') !== true)
+				Backbone.history.navigate('login', true);
+			else
+				var view = new RecipesAllView();				
 		},
 		createNewRecipe: function() {
-			console.log('We are going to create something new here...');
+			if(globals.currentUser.get('loggedIn') !== true)
+				Backbone.history.navigate('login', true);
+			else
 			var view = new RecipeCreateView();
 		},		
 		 
 		editRecipe: function(idParam) {
-			console.log('We are going to edit recipe number ' + idParam);
-			var view = new RecipeEditView({idParam: idParam, model: RecipeModel});
+			if(globals.currentUser.get('loggedIn') !== true)
+				Backbone.history.navigate('login', true);
+			else
+				var view = new RecipeEditView({idParam: idParam, model: RecipeModel});
 		},			
 		
 		error: function() {
@@ -58,7 +74,7 @@ define([
 	
 
 	var initialize = function() {
-	
+		
 		var router = new Router();	
 		
 		// listen for any route changes
@@ -69,6 +85,7 @@ define([
 		});		
 		
 		Backbone.history.start();
+		
 		
 	};
 	
