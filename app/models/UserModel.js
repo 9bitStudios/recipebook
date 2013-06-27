@@ -1,4 +1,4 @@
-define(['config', 'jquery','underscore', 'backbone'], function(config, $, _, Backbone){
+define(['config', 'jquery','underscore', 'backbone', 'helper'], function(config, $, _, Backbone, Helper){
 
 	var UserModel = Backbone.Model.extend({
 	
@@ -11,7 +11,9 @@ define(['config', 'jquery','underscore', 'backbone'], function(config, $, _, Bac
 		},
 		
 		initialize: function() {
-			// TODO: check auth login status and set loggedIn property. Set cookie?
+			if(Helper.readCookie('RecipeLogin') === '1')
+			    this.set('loggedIn', true);
+			
 			console.log('User model init...');
 		},
 		
@@ -19,14 +21,16 @@ define(['config', 'jquery','underscore', 'backbone'], function(config, $, _, Bac
 			
 			var self = this;
 			
+			Helper.destroyCookie('RecipeLogin');
+			
 			$.ajax({
 				type: "POST",
 				url: config.baseURL + "/api/logout",
 				contentType: "application/json; charset=utf-8",
 				async: false,
 				dataType: "json",
-				username: 'dummy',
-				password: 'dummy',				
+				username: Helper.randomString(),
+				password: Helper.randomString(),				
 				error: function (errorMessage) {
 					self.set('loggedIn',false);
 				}

@@ -12,7 +12,6 @@ define(['config',
 		tagName: 'div',
 		
 		initialize: function(){
-			this.model.reset();
 			this.render();
 		},
 		

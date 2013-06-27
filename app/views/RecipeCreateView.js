@@ -35,7 +35,7 @@ define(['jquery',
 		saveRecipe: function(event) {
 			
 			event.preventDefault();
-			
+			$('#submit').attr('disabled', 'disabled');
 			var self = this;
 			var recipeName = $('#recipe-name').val();
 			var recipe = new RecipeModel();

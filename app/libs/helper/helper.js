@@ -9,7 +9,7 @@ define(['underscore', 'backbone'], function(_, Backbone){
 		randomString: function(strLength) {
 		
 			if(typeof strLength === 'undefined') 
-				strLength = 5;
+				strLength = 8;
 		
 			var text = "";
 			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -42,8 +42,8 @@ define(['underscore', 'backbone'], function(_, Backbone){
 		},
 
 		destroyCookie: function (name) {
-			createCookie(name,"",-1);
-		},		
+			this.createCookie(name,"",-1);
+		}		
 	
     };
 	

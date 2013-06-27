@@ -1,11 +1,12 @@
 define(['config',
 		'jquery',
 		'underscore', 
-		'backbone', 
+		'backbone',
+		'helper',
 		'globals',
 		'views/NotificationView',
 		'text!templates/login.html'
-		], function(config, $, _, Backbone, globals, NotificationView, loginTemplate){
+		], function(config, $, _, Backbone, Helper, globals, NotificationView, loginTemplate){
 
 		
 	var LoginView = Backbone.View.extend({
@@ -43,6 +44,7 @@ define(['config',
 					password: password,				
 					success: function (successMessage) {
 						globals.currentUser.set('loggedIn', true);
+						Helper.createCookie('RecipeLogin', 1);
 						globals.userInfo.render();
 						Backbone.history.navigate('', true);
 					},
