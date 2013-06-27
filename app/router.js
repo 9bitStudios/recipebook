@@ -17,6 +17,18 @@ define([
 			console.log('New router created');	
 		},
 		
+                views: {
+                    main: null
+                },
+                
+                unsetView: function() {
+                    if(this.views.main) {
+                        this.views.main.unbind();
+                        this.views.main.remove();
+                        console.log('Unset');
+                    }
+                },
+                
 		routes: {
 		
 			// "url": "event"
@@ -32,11 +44,14 @@ define([
 		
 		home: function() {
 			console.log('We have loaded the home view and kicked off application ' + config.applicationName + ' by ' + config.applicationAuthor);
-			var view = new HomeView();  
+			this.unsetView();
+                        this.views.main = new HomeView();
+                          
 		},
 		
 		login: function() {
-			var view = new LoginView();
+                        this.unsetView();
+			this.views.main = new LoginView();
 		},
 		
 		logout: function() {
@@ -46,24 +61,26 @@ define([
 		},
 		
 		allRecipes: function(){
-		
+                        this.unsetView();
 			if(globals.currentUser.get('loggedIn') !== true)
 				Backbone.history.navigate('login', true);
 			else
-				var view = new RecipesAllView();				
+				this.views.main = new RecipesAllView();				
 		},
 		createNewRecipe: function() {
+                        this.unsetView();
 			if(globals.currentUser.get('loggedIn') !== true)
 				Backbone.history.navigate('login', true);
 			else
-			var view = new RecipeCreateView();
+			this.views.main = new RecipeCreateView();
 		},		
 		 
 		editRecipe: function(idParam) {
+                        this.unsetView();
 			if(globals.currentUser.get('loggedIn') !== true)
 				Backbone.history.navigate('login', true);
 			else
-				var view = new RecipeEditView({idParam: idParam, model: RecipeModel});
+				this.views.main = new RecipeEditView({idParam: idParam, model: RecipeModel});
 		},			
 		
 		error: function() {
@@ -91,7 +108,7 @@ define([
 	
 	return {
 		init: initialize
-	}
+	};
 
 });
 
