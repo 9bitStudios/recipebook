@@ -171,6 +171,14 @@ class Users extends Database {
 	parent::__construct();
     }
     
+    function get_user($name, $password){
+	$sql = 'SELECT * FROM users WHERE username = :name AND password = :password';
+	$where = array(
+	    'name' => $name,
+	    'password' => $password
+	);
+	return $this->get_items($sql, $where);
+    }
 }
 
 class Recipes extends Database {

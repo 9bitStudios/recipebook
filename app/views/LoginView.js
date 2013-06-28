@@ -42,7 +42,9 @@ define(['config',
 					dataType: "json",
 					username: username,
 					password: password,				
-					success: function (successMessage) {
+					success: function (data) {
+					    
+						globals.currentUser.set('name', data.username);
 						globals.currentUser.set('loggedIn', true);
 						Helper.createCookie('RecipeLogin', 1);
 						globals.userInfo.render();

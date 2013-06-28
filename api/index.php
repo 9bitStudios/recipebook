@@ -47,15 +47,16 @@ $app->post('/login', function () use ($app) {
 	$res = $app->response();
 	
 	$username = $req->headers('PHP_AUTH_USER');
-	$password = $req->headers('PHP_AUTH_PW');	
+	$password = $req->headers('PHP_AUTH_PW');
 	
-	// Check user credentials against 
+	$db = new Users();
+	$user = $db->get_user($username, $password);
+	
 	$userArray = array(
-		'user' => $username,
-		'password' => $password,
-	);
+	    'username' => $user['username']
+	);	
 	
-	if(isset($username) && isset($password) && $username != 'wrong' && $password != 'wrong') {
+	if($user) {
 		$app->response()->header('Content-Type', 'application/json');
 		echo json_encode($userArray);
 	}
