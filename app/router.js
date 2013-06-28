@@ -21,16 +21,19 @@ define([
                     main: null
                 },
                 
-                unsetView: function() {
-                    if(this.views.main) {
-                        this.views.main.unbind();
-                        this.views.main.remove();
-                        console.log('Unset');
+                unsetView: function(view) {
+                    if(this.views[view]) {
+			try {
+			    this.views[view].unbind();
+			    this.views[view].remove();
+			} 
+			catch(e) { 
+			    // Exception handling here...
+			}
                     }
                 },
                 
 		routes: {
-		
 			// "url": "event"
 		
 			"": "home", 
@@ -44,14 +47,14 @@ define([
 		
 		home: function() {
 			console.log('We have loaded the home view and kicked off application ' + config.applicationName + ' by ' + config.applicationAuthor);
-			this.unsetView();
-                        this.views.main = new HomeView();
+			this.unsetView('main');
+                        this.views['main'] = new HomeView();
                           
 		},
 		
 		login: function() {
-                        this.unsetView();
-			this.views.main = new LoginView();
+                        this.unsetView('main');
+			this.views['main'] = new LoginView();
 		},
 		
 		logout: function() {
@@ -61,26 +64,26 @@ define([
 		},
 		
 		allRecipes: function(){
-                        this.unsetView();
+                        this.unsetView('main');
 			if(globals.currentUser.get('loggedIn') !== true)
 				Backbone.history.navigate('login', true);
 			else
-				this.views.main = new RecipesAllView();				
+				this.views['main'] = new RecipesAllView();				
 		},
 		createNewRecipe: function() {
-                        this.unsetView();
+                        this.unsetView('main');
 			if(globals.currentUser.get('loggedIn') !== true)
 				Backbone.history.navigate('login', true);
 			else
-			this.views.main = new RecipeCreateView();
+			this.views['main'] = new RecipeCreateView();
 		},		
 		 
 		editRecipe: function(idParam) {
-                        this.unsetView();
+                        this.unsetView('main');
 			if(globals.currentUser.get('loggedIn') !== true)
 				Backbone.history.navigate('login', true);
 			else
-				this.views.main = new RecipeEditView({idParam: idParam, model: RecipeModel});
+				this.views['main'] = new RecipeEditView({idParam: idParam, model: RecipeModel});
 		},			
 		
 		error: function() {
