@@ -76,9 +76,8 @@ $app->post('/logout', function () use ($app) {
 // GET route
 $app->get('/recipes', function () use ($app) {
     
-	$db = new Database('localhost', 'RecipeBook', 'root', '');
-	$items = $db->get_all_items('recipes');
-	
+	$db = new Recipes();
+	$items = $db->get_all_recipes();
 	$results = array();
 	
 	if($items) {
@@ -108,8 +107,8 @@ $app->get('/recipes/:id', function ($id) use ($app) {
     
 	// GET with parameter
 	
-	$db = new Database('localhost', 'RecipeBook', 'root', '');
-	$items = $db->get_items('recipes', $id);
+	$db = new Recipes();
+	$items = $db->get_recipe($id);
 	$results = array();
 	
 	if($items) {
@@ -135,8 +134,8 @@ $app->post('/recipes', function () use ($app) {
 	$request = (array) json_decode($app->request()->getBody());
 	
 	$name = $request['name'];
-	$db = new Database('localhost', 'RecipeBook', 'root', '');
-	$items = $db->insert_items('recipes', $name);	
+	$db = new Recipes();
+	$items = $db->add_recipe($name);	
 	
 	
 	if($items) { // if successful, just return the JSON sent for use on the client-side
@@ -152,8 +151,8 @@ $app->put('/recipes/:id', function ($id) use ($app) {
 
 	$request = (array) json_decode($app->request()->getBody());
 	$name = $request['name'];
-	$db = new Database('localhost', 'RecipeBook', 'root', '');
-	$items = $db->update_items('recipes', $name, $id);	
+	$db = new Recipes();
+	$items = $db->update_recipe($id, $name);	
 		
 	if($items) { // if successful, return the new object with the values
 	
@@ -176,8 +175,8 @@ $app->put('/recipes/:id', function ($id) use ($app) {
 $app->delete('/recipes/:id', function ($id) use ($app) {
 	
 	$request = (array) json_decode($app->request()->getBody());
-	$db = new Database('localhost', 'RecipeBook', 'root', '');
-	$items = $db->delete_items('recipes', $id);	
+	$db = new Recipes();
+	$items = $db->delete_recipe($id);	
 	
 	if($items) { // if successful, just return the deleted item if it's needed on the client side
 		$app->response()->header('Content-Type', 'application/json');

@@ -6,7 +6,12 @@
  * Abstracts database processes out of routes. Hard dependency on PDO 
  *
  */ 
- 
+
+define('RECIPE_BOOK_DB_DATABASE', 'recipebook');
+define('RECIPE_BOOK_DB_HOST', 'localhost');
+define('RECIPE_BOOK_DB_USER', 'root');
+define('RECIPE_BOOK_DB_PASSWORD', '');
+
 class Database {
 
 	private $username; 
@@ -18,11 +23,11 @@ class Database {
 	 * __construct
 	 */	
 		
-	function __construct($host, $database, $username, $password) {
+	function __construct() {
 	
-		$this->username = $username;
-		$this->password = $password;
-		$this->connectionString = 'mysql:host='.$host.';dbname='.$database;
+		$this->username = RECIPE_BOOK_DB_USER;
+		$this->password = RECIPE_BOOK_DB_PASSWORD;
+		$this->connectionString = 'mysql:host='.RECIPE_BOOK_DB_HOST.';dbname='.RECIPE_BOOK_DB_DATABASE;
 	
 		$this->connectionAttributes = array(
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION		
@@ -42,11 +47,11 @@ class Database {
 	 * Get All Items
 	 */	
 	
-	function get_all_items($table) {
+	function get_all_items($sql) {
 	
 		try {
 			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare('SELECT * FROM '.$table);
+			$statement = $conn->prepare($sql);
 			$statement->execute();
 			$results = $statement->fetchAll();			
 		
@@ -67,12 +72,12 @@ class Database {
 	 * Get Items (from id)
 	 */	
 	
-	function get_items($table, $id) {
+	function get_items($sql, $whereValues) {
 	
 		try {
 			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare('SELECT * FROM '.$table.' WHERE id = :id');
-			$statement->execute(array('id' => $id));
+			$statement = $conn->prepare($sql);
+			$statement->execute($whereValues);
 			$results = $statement->fetch();			
 		
 			if(count($results))
@@ -92,14 +97,12 @@ class Database {
 	 * Insert Items
 	 */	
 	
-	function insert_items($table, $value) {
+	function insert_items($sql, $params) {
 	
 		try {
 			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare('INSERT INTO '.$table.' (recipe_name) VALUES(:name)');
-			$statement->execute(array(
-				':name' => $value
-			));		
+			$statement = $conn->prepare($sql);
+			$statement->execute($params);		
 		
 			if($statement->rowCount() === 1)
 				return true;
@@ -117,15 +120,12 @@ class Database {
 	 * Update Items
 	 */	
 	
-	function update_items($table, $value, $id) {
+	function update_items($sql, $params) {
 	
 		try {
 			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare('UPDATE '.$table.' SET recipe_name = :name WHERE id = :id');
-			$statement->execute(array(
-				':id' => $id,
-				':name' => $value
-			));	
+			$statement = $conn->prepare($sql);
+			$statement->execute($params);	
 		
 			if($statement->rowCount() === 1)
 				return true;
@@ -143,25 +143,71 @@ class Database {
 	 * Delete Items
 	 */
 
-	function delete_items($table, $id) {
-	
-		try {
-			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare('DELETE FROM '.$table.' WHERE id = :id');
-			$statement->execute(array(
-				':id' => $id
-			));	
-		
-			if($statement->rowCount() >= 1)
-				return true;
-			else
-				return false;
-		}
-		catch(PDOException $e) {
-			
-			$this->print_error_message($e->getMessage());
-			return false;
-		}	
-	}	
+    function delete_items($sql, $params) {
 
+	    try {
+		    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
+		    $statement = $conn->prepare($sql);
+		    $statement->execute($params);	
+
+		    if($statement->rowCount() >= 1)
+			    return true;
+		    else
+			    return false;
+	    }
+	    catch(PDOException $e) {
+
+		    $this->print_error_message($e->getMessage());
+		    return false;
+	    }	
+    }	
+
+}
+
+
+class Users extends Database {
+    
+    function __construct(){
+	parent::__construct();
+    }
+    
+}
+
+class Recipes extends Database {
+    
+    function __construct(){
+	parent::__construct();
+    }
+    
+    function get_all_recipes(){
+	
+	$sql = 'SELECT * FROM recipes';
+	return $this->get_all_items($sql);
+    }
+    
+    function get_recipe($id){
+	
+	$sql = 'SELECT * FROM recipes WHERE id = :id';
+	$where = array('id' => $id);
+	return $this->get_items($sql, $where);
+    } 
+    
+    function add_recipe($value){
+	$sql = 'INSERT INTO recipes (recipe_name) VALUES(:name)';
+	$params = array(':name' => $value);
+	return $this->insert_items($sql, $params);
+    } 
+    
+    function update_recipe($id, $value){
+	$sql = 'UPDATE recipes SET recipe_name = :name WHERE id = :id';
+	$params = array(':id' => $id, ':name' => $value);
+	return $this->update_items($sql, $params);
+    }    
+    
+    function delete_recipe($id){
+	$sql = 'DELETE FROM recipes WHERE id = :id';
+	$params = array(':id' => $id);
+	return $this->delete_items($sql, $params);
+    }     
+    
 }
