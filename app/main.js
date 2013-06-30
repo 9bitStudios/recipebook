@@ -21,6 +21,15 @@ require.config({
 });
 require(['jquery', 'underscore', 'backbone', 'helper', 'app'], function($, _, Backbone, Helper, App){ 
     
+    // unbind events and remove view from memory
+    Backbone.View.prototype.clearout = function() {
+	this.unbind();
+	this.remove();
+    };
+    
+    // generic subview bucket
+    Backbone.View.prototype.subviews = [];  
+    
     App.init();
     
 });

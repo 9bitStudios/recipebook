@@ -10,6 +10,8 @@ define(['jquery',
 
 	tagName: 'div',
 	
+	className: 'direction',
+	
 	events: {
 	    'click .deleteDirection': 'close'
 	},

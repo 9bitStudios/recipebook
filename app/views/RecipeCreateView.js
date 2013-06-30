@@ -13,7 +13,7 @@ define(['jquery',
     var RecipeCreateView = Backbone.View.extend({
 	tagName: 'div',
 	className: 'recipeCreate',
-
+	
 	events: {
 	    'click #submit': 'saveRecipe',
 	    'click #addIngredient': 'addIngredient',
@@ -32,11 +32,11 @@ define(['jquery',
 	},		
 
 	addIngredient: function() {
-	    var ingredientView = new IngredientView();
+	    this.subviews.push(new IngredientView()); // add to subviews list so that things can be unbound later
 	},
 
 	addDirection: function() {
-	    var directionView = new DirectionView();
+	    this.subviews.push(new DirectionView()); // add to subviews list so that things can be unbound later
 	},
 
 	saveRecipe: function(event) {

@@ -7,6 +7,7 @@
  *
  * If you are using Composer, you can skip this step.
  */
+require 'config.php';
 require 'Slim/Slim.php';
 require 'Slim/Database.php';
 require 'Slim/Middleware.php';
