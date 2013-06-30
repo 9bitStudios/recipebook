@@ -41,37 +41,34 @@ $app->get('/', function () use ($app) {
 	
 });
 
+// User route
+$app->get('/user', function () use ($app) {
+    
+	
+});
+
 // Login route
 $app->post('/login', function () use ($app) {
+    	
+    $env = $app->environment();
     
-	$req = $app->request();
-	$res = $app->response();
-	
-	$username = $req->headers('PHP_AUTH_USER');
-	$password = $req->headers('PHP_AUTH_PW');
-	
-	$db = new Users();
-	$user = $db->get_user($username, $password);
-	
-	$userArray = array(
-	    'username' => $user['username']
-	);	
-	
-	if($user) {
-		$app->response()->header('Content-Type', 'application/json');
-		echo json_encode($userArray);
-	}
-	else {
-		$res->status(401);		
-	}
+    // environment variables set in middleware...
+    $userArray = array('username' => $env['nbs.username']); 
+    
+    if($userArray['username']) {
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($userArray);
+    }
+    else
+	$app->respose->status(401);
 	
 });
 
 // Logout route
 $app->post('/logout', function () use ($app) {
     
-	$res = $app->response();
-	$res->status(401);
+    $res = $app->response();
+    $res->status(401);
 	
 });
 

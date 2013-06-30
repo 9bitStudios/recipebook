@@ -7,7 +7,6 @@
  *
  */ 
 
-
 class Database {
 
 	private $username; 

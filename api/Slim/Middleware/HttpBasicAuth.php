@@ -53,6 +53,14 @@ class HttpBasicAuth extends \Slim\Middleware
      */
     protected $password;
 
+    
+    /**
+     * @var array
+     * 
+     * Route string set to tell middleware to ignore authentication
+     */    
+    protected $allowedRoutes;
+    
     /**
      * Constructor
      *
@@ -61,17 +69,37 @@ class HttpBasicAuth extends \Slim\Middleware
     public function __construct($realm = 'Protected Area')
     {
         $this->realm = $realm;
+	$this->allowedRoutes = array(
+	    'GET/user',
+	    'POST/logout'
+	);  
     }
 	
     /**
      * Deny Access
      *
-	*/	
+    */	
     public function deny_access() {
         $res = $this->app->response();
         $res->status(401);
         $res->header('WWW-Authenticate', sprintf('Basic realm="%s"', $this->realm));        
     }
+    
+    /**
+     * Check Allowed Routes
+     *
+    */	
+    public function check_allowed_routes($routeCheck) {
+        
+	foreach ($this->allowedRoutes as $routeString) {
+	    if($routeCheck == $routeString)
+		return true;
+	}
+	
+	//if we've gotten this far, route not found
+	return false;
+	
+    }    
  
  
     /**
@@ -84,16 +112,21 @@ class HttpBasicAuth extends \Slim\Middleware
     public function authenticate($username, $password) {
  
         if(!ctype_alnum($username))
-            return false;
-		
-		if(isset($username) && isset($password)) {
-			
-			$password = crypt($password);
-			// Check database here with $username and $password
-			return true;
-		}
-		else
-			return false;
+	    return false;
+	
+	if(isset($username) && isset($password)) {
+	    
+	    $db = new Users();
+	    $user = $db->get_user($username, $password);
+
+	    if($user) {
+		return $user;
+	    }
+	    else
+		return false;   
+	}
+	else
+	    return false;
     }	
 
     /**
@@ -106,14 +139,25 @@ class HttpBasicAuth extends \Slim\Middleware
     public function call()
     {
         $req = $this->app->request();
-        $res = $this->app->response();
-        $authUser = $req->headers('PHP_AUTH_USER');
-        $authPass = $req->headers('PHP_AUTH_PW');
+	$headers = $req->headers();    
+    
+	
+	if($this->check_allowed_routes($headers['REQUEST_METHOD'].$req->getResourceUri()))	
+	    $this->next->call();
+	else {
+	    $authUser = $req->headers('PHP_AUTH_USER');
+	    $authPass = $req->headers('PHP_AUTH_PW');
+	    
+	    $user = $this->authenticate($authUser, $authPass);
+	    
+	    if ($user) {
+		$env = $this->app->environment();
+		$env['nbs.username'] = $user['username'];		
+		$this->next->call();
 		
-        if ($this->authenticate($authUser, $authPass)) {
-            $this->next->call();
-        } else {
-            $this->deny_access();
-        }
+	    } else {
+		$this->deny_access();
+	    }
+	}
     }
 }
