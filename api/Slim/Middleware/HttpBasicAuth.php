@@ -70,7 +70,7 @@ class HttpBasicAuth extends \Slim\Middleware
     {
         $this->realm = $realm;
 	$this->allowedRoutes = array(
-	    'GET/user',
+	    'POST/user',
 	    'POST/logout'
 	);  
     }
@@ -104,11 +104,11 @@ class HttpBasicAuth extends \Slim\Middleware
  
     /**
      * Authenticate
-	 *
+     *
      * @param   string  $username   The HTTP Authentication username
      * @param   string  $password   The HTTP Authentication password	 
      *
-	*/
+     */
     public function authenticate($username, $password) {
  
         if(!ctype_alnum($username))
@@ -147,7 +147,7 @@ class HttpBasicAuth extends \Slim\Middleware
 	else {
 	    $authUser = $req->headers('PHP_AUTH_USER');
 	    $authPass = $req->headers('PHP_AUTH_PW');
-	    
+
 	    $user = $this->authenticate($authUser, $authPass);
 	    
 	    if ($user) {

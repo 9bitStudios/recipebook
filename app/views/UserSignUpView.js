@@ -32,12 +32,11 @@ define(['config',
 	    var password = $('#password').val();
 	
 	    $.ajax({
-		type: "GET",
+		type: "POST",
 		url: config.baseURL + "/api/user",
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
-		username: username,
-		password: password,				
+		data: JSON.stringify({username: username, password: password}),				
 		success: function (data) {
 		    
 		},

@@ -166,14 +166,24 @@ class Users extends Database {
 	parent::__construct();
     }
     
-    function get_user($name, $password){
-	$sql = 'SELECT * FROM users WHERE username = :name AND password = :password';
+    function get_user($username, $password){
+	$sql = 'SELECT * FROM users WHERE username = :username AND password = :password';
 	$where = array(
-	    'name' => $name,
+	    'username' => $username,
 	    'password' => $password
 	);
 	return $this->get_items($sql, $where);
     }
+    
+    function add_user($username, $password){
+	$sql = 'INSERT INTO users (username, password) VALUES(:username, :password)';
+	
+	$params = array(
+	    ':username' => $username,
+	    ':password' => $password,
+	);
+	return $this->insert_items($sql, $params);
+    }     
 }
 
 class Recipes extends Database {
