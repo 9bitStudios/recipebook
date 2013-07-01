@@ -9,152 +9,146 @@
 
 class Database {
 
-	private $username; 
-	private $password; 	
-	private $connectionString;
-	private $connectionAttributes;
+    private $username; 
+    private $password; 	
+    private $connectionString;
+    private $connectionAttributes;
 	
-	/**
-	 * __construct
-	 */	
-		
-	function __construct() {
-	
-		$this->username = RECIPE_BOOK_DB_USER;
-		$this->password = RECIPE_BOOK_DB_PASSWORD;
-		$this->connectionString = 'mysql:host='.RECIPE_BOOK_DB_HOST.';dbname='.RECIPE_BOOK_DB_DATABASE;
-	
-		$this->connectionAttributes = array(
-			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION		
-		);
-	}
-	
-	/**
-	 * Print Error
-	 */	
-	
-	function print_error_message($message) {
-	
-		echo 'There was an error connecting to the database: ' . $message;
-	}
-	
-	/**
-	 * Get All Items
-	 */	
-	
-	function get_all_items($sql) {
-	
-		try {
-			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare($sql);
-			$statement->execute();
-			$results = $statement->fetchAll();			
-		
-			if(count($results))
-				return $results;
-			else
-				return false;
-		}
-		catch(PDOException $e) {
-			
-			$this->print_error_message($e->getMessage());
-			return false;
-		}		
-	
-	}
-	
-	/**
-	 * Get Items (from id)
-	 */	
-	
-	function get_items($sql, $whereValues) {
-	
-		try {
-			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare($sql);
-			$statement->execute($whereValues);
-			$results = $statement->fetch();			
-		
-			if(count($results))
-				return $results;
-			else
-				return false;
-		}
-		catch(PDOException $e) {
-			
-			$this->print_error_message($e->getMessage());
-			return false;
-		}		
-	
-	}
+    /**
+     * __construct
+     */	
 
-	/**
-	 * Insert Items
-	 */	
-	
-	function insert_items($sql, $params) {
-	
-		try {
-			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare($sql);
-			$statement->execute($params);		
-		
-			if($statement->rowCount() === 1)
-				return true;
-			else
-				return false;
-		}
-		catch(PDOException $e) {
-			
-			$this->print_error_message($e->getMessage());
-			return false;
-		}	
-	}
-	
-	/**
-	 * Update Items
-	 */	
-	
-	function update_items($sql, $params) {
-	
-		try {
-			$conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-			$statement = $conn->prepare($sql);
-			$statement->execute($params);	
-		
-			if($statement->rowCount() === 1)
-				return true;
-			else
-				return false;
-		}
-		catch(PDOException $e) {
-			
-			$this->print_error_message($e->getMessage());
-			return false;
-		}	
-	}
+    function __construct() {
+	$this->username = RECIPE_BOOK_DB_USER;
+	$this->password = RECIPE_BOOK_DB_PASSWORD;
+	$this->connectionString = 'mysql:host='.RECIPE_BOOK_DB_HOST.';dbname='.RECIPE_BOOK_DB_DATABASE;
 
-	/**
-	 * Delete Items
-	 */
+	$this->connectionAttributes = array(
+	    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION		
+	);
+    }
+	
+    /**
+     * Print Error
+     */	
+
+    function print_error_message($message) {
+	echo 'There was an error connecting to the database: ' . $message;
+    }
+	
+    /**
+     * Get All Items
+     */	
+
+    function get_all_items($sql) {
+
+	try {
+	    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
+	    $statement = $conn->prepare($sql);
+	    $statement->execute();
+	    $results = $statement->fetchAll();			
+
+	    if(count($results))
+		return $results;
+	    else
+		return false;
+	}
+	catch(PDOException $e) {
+	    $this->print_error_message($e->getMessage());
+	    return false;
+	}		
+
+    }
+	
+    /**
+     * Get Items (from id)
+     */	
+
+    function get_items($sql, $whereValues) {
+
+	try {
+	    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
+	    $statement = $conn->prepare($sql);
+	    $statement->execute($whereValues);
+	    $results = $statement->fetch();			
+
+	    if(count($results))
+		return $results;
+	    else
+		return false;
+	}
+	catch(PDOException $e) {
+
+	    $this->print_error_message($e->getMessage());
+	    return false;
+	}		
+
+    }
+
+    /**
+     * Insert Items
+     */	
+
+    function insert_items($sql, $params) {
+
+	try {
+	    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
+	    $statement = $conn->prepare($sql);
+	    $statement->execute($params);		
+
+	    if($statement->rowCount() === 1)
+		return $conn->lastInsertId();
+	    else
+		return false;
+	}
+	catch(PDOException $e) {
+	    $this->print_error_message($e->getMessage());
+	    return false;
+	}	
+    }
+	
+    /**
+     * Update Items
+     */	
+
+    function update_items($sql, $params) {
+
+	try {
+	    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
+	    $statement = $conn->prepare($sql);
+	    $statement->execute($params);	
+
+	    if($statement->rowCount() === 1)
+		return true;
+	    else
+		return false;
+	}
+	catch(PDOException $e) {
+	    $this->print_error_message($e->getMessage());
+	    return false;
+	}	
+    }
+
+    /**
+     * Delete Items
+     */
 
     function delete_items($sql, $params) {
 
-	    try {
-		    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
-		    $statement = $conn->prepare($sql);
-		    $statement->execute($params);	
+	try {
+	    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
+	    $statement = $conn->prepare($sql);
+	    $statement->execute($params);	
 
-		    if($statement->rowCount() >= 1)
-			    return true;
-		    else
-			    return false;
-	    }
-	    catch(PDOException $e) {
-
-		    $this->print_error_message($e->getMessage());
-		    return false;
-	    }	
+	    if($statement->rowCount() >= 1)
+		return true;
+	    else
+		return false;
+	}
+	catch(PDOException $e) {
+	    $this->print_error_message($e->getMessage());
+	    return false;
+	}	
     }	
 
 }
@@ -206,13 +200,13 @@ class Recipes extends Database {
     } 
     
     function add_recipe($value){
-	$sql = 'INSERT INTO recipes (recipe_name) VALUES(:name)';
+	$sql = 'INSERT INTO recipes (name) VALUES(:name)';
 	$params = array(':name' => $value);
 	return $this->insert_items($sql, $params);
     } 
     
     function update_recipe($id, $value){
-	$sql = 'UPDATE recipes SET recipe_name = :name WHERE id = :id';
+	$sql = 'UPDATE recipes SET name = :name WHERE id = :id';
 	$params = array(':id' => $id, ':name' => $value);
 	return $this->update_items($sql, $params);
     }    
@@ -221,6 +215,43 @@ class Recipes extends Database {
 	$sql = 'DELETE FROM recipes WHERE id = :id';
 	$params = array(':id' => $id);
 	return $this->delete_items($sql, $params);
+    }     
+    
+}
+
+class Ingredients extends Database {
+    
+    function __construct(){
+	parent::__construct();
+    }
+    
+    function get_all_ingredients(){
+	
+	$sql = 'SELECT * FROM ingredients';
+	return $this->get_all_items($sql);
+    }
+    
+    function get_ingredient($id){
+	
+	$sql = 'SELECT * FROM ingredients WHERE id = :id';
+	$where = array('id' => $id);
+	return $this->get_items($sql, $where);
+    } 
+    
+    function get_recipe_ingredients($id){
+	
+	$sql = 'SELECT * FROM ingredients WHERE recipe_id = :recipe_id';
+	$where = array('recipe_id' => $id);
+	return $this->get_items($sql, $where);
+    }    
+    
+    function add_ingredient($recipe_id, $value){
+	$sql = 'INSERT INTO ingredients (recipe_id, name) VALUES(:recipe_id, :name)';
+	$params = array(
+	    ':recipe_id' => $recipe_id,
+	    ':name' => $value
+	);
+	return $this->insert_items($sql, $params);
     }     
     
 }

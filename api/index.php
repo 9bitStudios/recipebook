@@ -95,7 +95,7 @@ $app->get('/recipes', function () use ($app) {
 
 	    $itemArray = array(
 		'id' => $row['id'],
-		'name' => $row['recipe_name'],
+		'name' => $row['name'],
 	    );
 	    array_push($results, $itemArray);
 	}
@@ -122,7 +122,7 @@ $app->get('/recipes/:id', function ($id) use ($app) {
 
 	$results = array(
 	    'id' => $items['id'],
-	    'name' => $items['recipe_name']
+	    'name' => $items['name']
 	);
 
 	$app->response()->header('Content-Type', 'application/json');
@@ -142,14 +142,18 @@ $app->post('/recipes', function () use ($app) {
 
     $name = $request['name'];
     $db = new Recipes();
-    $items = $db->add_recipe($name);	
+    $item = $db->add_recipe($name);	
 
-
-    if($items) { // if successful, just return the JSON sent for use on the client-side
+    if($item) { // if successful, just return the JSON sent for use on the client-side
+	
+	$results = array(
+	    'id' => $item,
+	    'name' => $name
+	);	
+	
 	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($results);
     }
-
-    echo json_encode($request);
 	
 });
 
@@ -190,6 +194,31 @@ $app->delete('/recipes/:id', function ($id) use ($app) {
     }
 
     echo json_encode($request);	
+	
+});
+
+
+// POST route
+$app->post('/ingredients', function () use ($app) {
+
+    $request = (array) json_decode($app->request()->getBody());
+
+    $recipe_id = $request['recipeId'];
+    $name = $request['name'];
+    $db = new Ingredients();
+    $item = $db->add_ingredient($recipe_id,$name);	
+
+    if($item) { // if successful, just return the JSON sent for use on the client-side
+	
+	$results = array(
+	    'id' => $item,
+	    'recipeId' => $recipe_id,
+	    'name' => $name
+	);	
+	
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($results);
+    }
 	
 });
 

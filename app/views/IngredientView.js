@@ -10,7 +10,7 @@ define(['jquery',
 
 	tagName: 'div',
 	
-	className: 'ingredient',
+	className: 'ingredientContainer',
 	
 	events: {
 	    'click .deleteIngredient': 'close'

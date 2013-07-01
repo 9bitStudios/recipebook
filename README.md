@@ -11,7 +11,7 @@ Created database 'RecipeBook' then ran the following to create the "recipes" tab
 CREATE TABLE `recipes` (
     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT(11) NOT NULL,
-    recipe_name VARCHAR(255) COLLATE utf8_general_ci NOT NULL,
+    name VARCHAR(255) COLLATE utf8_general_ci NOT NULL,
     UNIQUE KEY id (id)
 )
 ```
