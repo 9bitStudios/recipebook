@@ -47,6 +47,7 @@ $app->post('/user', function () use ($app) {
     $request = (array) json_decode($app->request()->getBody());
     $username = $request['username'];
     $password = $request['password'];
+    $password = crypt($password, RECIPE_BOOK_DB_SALT);
     
     // add user to db...
     $db = new Users();

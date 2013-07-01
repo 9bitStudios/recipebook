@@ -115,7 +115,7 @@ class HttpBasicAuth extends \Slim\Middleware
 	    return false;
 	
 	if(isset($username) && isset($password)) {
-	    
+	    $password = crypt($password, RECIPE_BOOK_DB_SALT);
 	    $db = new Users();
 	    $user = $db->get_user($username, $password);
 
