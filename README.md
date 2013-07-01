@@ -5,12 +5,36 @@ An experimental exercise application built with Backbone.js & Slim PHP Framework
 
 For data storage: 
 
-Created database 'RecipeBook' then ran the following to create the "recipes" table...
+Created database 'RecipeBook' then ran the following to create the...
+
+Recipes Table:
 
 ```sql
 CREATE TABLE `recipes` (
     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT(11) NOT NULL,
+    name VARCHAR(255) COLLATE utf8_general_ci NOT NULL,
+    UNIQUE KEY id (id)
+)
+```
+
+Ingredients Table:
+
+```sql
+CREATE TABLE `ingredients` (
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    recipe_id INT(11) NOT NULL,
+    name VARCHAR(255) COLLATE utf8_general_ci NOT NULL,
+    UNIQUE KEY id (id)
+)
+```
+
+Directions Table:
+
+```sql
+CREATE TABLE `directions` (
+    id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    recipe_id INT(11) NOT NULL,
     name VARCHAR(255) COLLATE utf8_general_ci NOT NULL,
     UNIQUE KEY id (id)
 )

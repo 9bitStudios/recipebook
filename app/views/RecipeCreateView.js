@@ -5,10 +5,11 @@ define(['jquery',
 	'views/NotificationView',
 	'models/RecipeModel',
 	'models/IngredientModel',
+	'models/DirectionModel',
 	'views/IngredientView',
 	'views/DirectionView',
 	'text!templates/recipe-create.html'
-	], function($, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, IngredientView, DirectionView, recipeCreateTemplate){
+	], function($, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientView, DirectionView, recipeCreateTemplate){
 
 		
     var RecipeCreateView = Backbone.View.extend({
@@ -67,7 +68,10 @@ define(['jquery',
 	
 	saveSubItems: function(recipeId){
 	    
+	    
 	    try {
+		
+		// save ingredients
 		$('.ingredient').each(function(){
 		    var ingredientName = $(this).val();
 		    var ingredient = new IngredientModel({ recipeId: recipeId, name: ingredientName });
@@ -81,6 +85,21 @@ define(['jquery',
 			}
 		    });		
 		});
+		
+		// save directions
+		$('.direction').each(function(){
+		    var directionName = $(this).val();
+		    var direction = new DirectionModel({ recipeId: recipeId, name: directionName });
+		    direction.save(null, {
+			wait: true,
+			success: function(model, response, options) {
+			    // continue
+			},
+			error: function (model, xhr, options) {		
+			    throw 'Error saving recipe directions'
+			}
+		    });		
+		});		
 		
 		var success = new NotificationView({ 
 		    type: 'success', 
@@ -98,9 +117,9 @@ define(['jquery',
 	    }
 	    
 	    this.remove(); // remove and unbind everything...
-	    Backbone.history.navigate('recipes', true);
+	    Backbone.history.navigate('recipes', true);	    
 	    
-	},
+	}
 	
     });
 

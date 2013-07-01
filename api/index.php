@@ -222,6 +222,61 @@ $app->post('/ingredients', function () use ($app) {
 	
 });
 
+// DELETE route
+$app->delete('/ingredients/:id', function ($id) use ($app) {
+	
+    $request = (array) json_decode($app->request()->getBody());
+    $db = new Ingredients();
+    $items = $db->delete_ingredient_by_value($id);	
+
+    if($items) { // if successful, just return the deleted item if it's needed on the client side
+	$app->response()->header('Content-Type', 'application/json');
+    }
+
+    echo json_encode($request);	
+	
+});
+
+
+// POST route
+$app->post('/directions', function () use ($app) {
+
+    $request = (array) json_decode($app->request()->getBody());
+
+    $recipe_id = $request['recipeId'];
+    $name = $request['name'];
+    $db = new Directions();
+    $item = $db->add_direction($recipe_id,$name);	
+
+    if($item) { // if successful, just return the JSON sent for use on the client-side
+	
+	$results = array(
+	    'id' => $item,
+	    'recipeId' => $recipe_id,
+	    'name' => $name
+	);	
+	
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($results);
+    }
+	
+});
+
+// DELETE route
+$app->delete('/directions/:id', function ($id) use ($app) {
+	
+    $request = (array) json_decode($app->request()->getBody());
+    $db = new Directions();
+    $items = $db->delete_direction_by_value($id);	
+
+    if($items) { // if successful, just return the deleted item if it's needed on the client side
+	$app->response()->header('Content-Type', 'application/json');
+    }
+
+    echo json_encode($request);	
+	
+});
+
 /**
  * Step 4: Run the Slim application
  *
