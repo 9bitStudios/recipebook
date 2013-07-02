@@ -231,7 +231,7 @@ class Ingredients extends Database {
 	return $this->get_all_items($sql);
     }
     
-    function get_ingredient($id){
+    function get_ingredients($id){
 	
 	$sql = 'SELECT * FROM ingredients WHERE id = :id';
 	$where = array('id' => $id);
@@ -253,6 +253,12 @@ class Ingredients extends Database {
 	);
 	return $this->insert_items($sql, $params);
     } 
+    
+    function update_ingredient($id, $value){
+	$sql = 'UPDATE ingredients SET name = :name WHERE id = :id';
+	$params = array(':id' => $id, ':name' => $value);
+	return $this->update_items($sql, $params);
+    }       
     
     function delete_ingredient($id){
 	$sql = 'DELETE FROM ingredients WHERE id = :id';
@@ -281,7 +287,7 @@ class Directions extends Database {
 	return $this->get_all_items($sql);
     }
     
-    function get_direction($id){
+    function get_directions($id){
 	
 	$sql = 'SELECT * FROM directions WHERE id = :id';
 	$where = array('id' => $id);
@@ -303,6 +309,12 @@ class Directions extends Database {
 	);
 	return $this->insert_items($sql, $params);
     }  
+    
+    function update_direction($id, $value){
+	$sql = 'UPDATE directions SET name = :name WHERE id = :id';
+	$params = array(':id' => $id, ':name' => $value);
+	return $this->update_items($sql, $params);
+    }    
     
     function delete_direction($id){
 	$sql = 'DELETE FROM directions WHERE id = :id';

@@ -1,12 +1,11 @@
-define(['config',
-	'jquery',
+define(['jquery',
 	'underscore', 
 	'backbone', 
 	'globals',
 	'views/NotificationView',
 	'models/RecipeModel',
 	'collections/RecipeCollection', 
-	'text!templates/recipes-all.html'], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, RecipeCollection, allRecipesTemplate){
+	'text!templates/recipes-all.html'], function($, _, Backbone, globals, NotificationView, RecipeModel, RecipeCollection, allRecipesTemplate){
 
 		
     var RecipesAllView = Backbone.View.extend({
@@ -76,32 +75,7 @@ define(['config',
 
 		    }
 
-		});
-		
-		$.ajax({
-		    type: "DELETE",
-		    url: config.baseURL + "/api/ingredients/" + id,
-		    contentType: "application/json; charset=utf-8",
-		    dataType: "json",			
-		    success: function (data) {
-		    },
-		    error: function (errorMessage) {
-			var error = new NotificationView({ type:'error', text: 'Error deleting ingredients' });
-		    }
-		});
-				
-		$.ajax({
-		    type: "DELETE",
-		    url: config.baseURL + "/api/directions/" + id,
-		    contentType: "application/json; charset=utf-8",
-		    dataType: "json",			
-		    success: function (data) {
-		    },
-		    error: function (errorMessage) {
-			var error = new NotificationView({ type:'error', text: 'Error deleting ingredients' });
-		    }
 		});		
-		
 	    }
 	}
     });

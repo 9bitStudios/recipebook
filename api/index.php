@@ -177,26 +177,66 @@ $app->put('/recipes/:id', function ($id) use ($app) {
 
     }
     else {
-	    $app->response()->status(500);
+	$app->response()->status(500);
     }
 	
 });
 
 // DELETE route
 $app->delete('/recipes/:id', function ($id) use ($app) {
-	
+    
     $request = (array) json_decode($app->request()->getBody());
     $db = new Recipes();
     $items = $db->delete_recipe($id);	
-
-    if($items) { // if successful, just return the deleted item if it's needed on the client side
-	$app->response()->header('Content-Type', 'application/json');
+    
+    
+    if($items) { 
+	$db = new Ingredients();
+	$items = $db->delete_ingredient_by_value($id);
+	
+	$db = new Directions();
+	$items = $db->delete_direction_by_value($id);
+	
+	// if successful, just return the deleted item if it's needed on the client side
+	$app->response()->header('Content-Type', 'application/json');	
+	echo json_encode($request);
+	
     }
-
-    echo json_encode($request);	
+    else {
+	$app->response()->status(500);
+    }
 	
 });
 
+/**************************************************
+INGREDIENTS
+***************************************************/
+
+// GET route
+$app->get('/ingredients/:id', function ($id) use ($app) {
+    
+    // GET with parameter
+
+    $db = new Ingredients();
+    $items = $db->get_recipe_ingredients($id);
+    $results = array();
+
+    if($items) {
+
+	$results = array(
+	    'id' => $items['id'],
+	    'name' => $items['name']
+	);
+
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($results);
+    }
+    else {
+	$app->response()->status(500);
+    }
+
+	
+});
 
 // POST route
 $app->post('/ingredients', function () use ($app) {
@@ -222,21 +262,61 @@ $app->post('/ingredients', function () use ($app) {
 	
 });
 
-// DELETE route
-$app->delete('/ingredients/:id', function ($id) use ($app) {
-	
+// PUT route
+$app->put('/ingredients/:id', function ($id) use ($app) {
+
     $request = (array) json_decode($app->request()->getBody());
+    $name = $request['name'];
     $db = new Ingredients();
-    $items = $db->delete_ingredient_by_value($id);	
+    $items = $db->update_recipe($id, $name);	
 
-    if($items) { // if successful, just return the deleted item if it's needed on the client side
+    if($items) { // if successful, return the new object with the values
+
+	$results = array(
+	    'id' => $id,
+	    'name' => $name
+	);
+
 	$app->response()->header('Content-Type', 'application/json');
-    }
+	echo json_encode($results);
 
-    echo json_encode($request);	
+    }
+    else {
+	$app->response()->status(500);
+    }
 	
 });
 
+
+/**************************************************
+DIRECTIONS
+***************************************************/
+
+// GET route
+$app->get('/directions/:id', function ($id) use ($app) {
+    
+    // GET with parameter
+
+    $db = new Directions();
+    $items = $db->get_recipe_directions($id);
+    $results = array();
+
+    if($items) {
+
+	$results = array(
+	    'id' => $items['id'],
+	    'name' => $items['name']
+	);
+
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($results);
+    }
+    else {
+	$app->response()->status(500);
+    }
+
+	
+});
 
 // POST route
 $app->post('/directions', function () use ($app) {
@@ -262,18 +342,28 @@ $app->post('/directions', function () use ($app) {
 	
 });
 
-// DELETE route
-$app->delete('/directions/:id', function ($id) use ($app) {
-	
+// PUT route
+$app->put('/directions/:id', function ($id) use ($app) {
+
     $request = (array) json_decode($app->request()->getBody());
+    $name = $request['name'];
     $db = new Directions();
-    $items = $db->delete_direction_by_value($id);	
+    $items = $db->update_direction($id, $name);	
 
-    if($items) { // if successful, just return the deleted item if it's needed on the client side
+    if($items) { // if successful, return the new object with the values
+
+	$results = array(
+	    'id' => $id,
+	    'name' => $name
+	);
+
 	$app->response()->header('Content-Type', 'application/json');
-    }
+	echo json_encode($results);
 
-    echo json_encode($request);	
+    }
+    else {
+	$app->response()->status(500);
+    }
 	
 });
 
