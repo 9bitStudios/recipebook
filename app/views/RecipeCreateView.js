@@ -28,7 +28,7 @@ define(['jquery',
 
 	render: function(){
 	    var self = this;
-	    var template = _.template(recipeCreateTemplate, {});
+	    var template = _.template(recipeCreateTemplate, {model: this.model});
 	    this.$el.html(template);
 	    $('#page').empty().append(this.$el);
 	},		
@@ -68,9 +68,7 @@ define(['jquery',
 	
 	saveSubItems: function(recipeId){
 	    
-	    
-	    try {
-		
+	    try {	
 		// save ingredients
 		$('.ingredient').each(function(){
 		    var ingredientName = $(this).val();

@@ -10,29 +10,13 @@
     <a id="addIngredient">Add Ingredient</a>
     
     <div id="ingredients">
-	<% _.each(ingredients, function(ingredient) { %>
-	<div class="ingredientContainer">
-	    <p>
-		<input type="text" class="ingredient" value="<%= ingredient.get('name') %>" />
-		<a class="deleteIngredient">X</a>
-	    </p>
-	</div>
-	<% }) %>
     </div>
     
     <h3>Directions</h3>
 
     <a id="addDirection">Add Direction</a>
     
-    <div id="directions">
-	<% _.each(directions, function(direction) { %>
-	<div class="directionContainer">
-	    <p>
-		<textarea><%= direction.get('name') %></textarea>
-		<a class="deleteDirection">X</a>
-	    </p>
-	</div>
-	<% }) %>	
+    <div id="directions">	
     </div>
     
     <p>&nbsp;</p>

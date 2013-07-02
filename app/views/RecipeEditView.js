@@ -5,12 +5,14 @@ define(['config',
 	'globals',
 	'views/NotificationView',
 	'models/RecipeModel',
+	'models/IngredientModel',
+	'models/DirectionModel',
 	'collections/IngredientCollection',
 	'collections/DirectionCollection',
 	'views/IngredientView',
 	'views/DirectionView',
 	'text!templates/recipe-edit.html'
-	], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
+	], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
 
 		
     var RecipeEditView = Backbone.View.extend({
@@ -37,7 +39,7 @@ define(['config',
 		this.model.fetch({
 		    wait: true,
 		    success: function(model, response, options) {  
-			self.getRecipeIngredients(self.model.get('id'));
+			self.render(self.model.get('id'));
 		    },
 		    error: function (model, xhr, options) { 
 			var error = new NotificationView({ 
@@ -61,8 +63,9 @@ define(['config',
 		wait: true,
 		reset: true,
 		success: function(collection, response, options) {				
-		    self.ingredientCollection = collection;
-		    self.getRecipeDirections(self.model.get('id'));
+		    _.each(collection.models, function(ingredient){
+			self.subviews.push(new IngredientView({ model: ingredient }));
+		    });		    
 		},
 
 		error: function(model, xhr, options) {
@@ -82,8 +85,9 @@ define(['config',
 		wait: true,
 		reset: true,
 		success: function(collection, response, options) {				
-		    self.directionCollection = collection;
-		    self.render();
+		    _.each(collection.models, function(direction){
+			self.subviews.push(new DirectionView({ model: direction }));
+		    });	
 		},
 
 		error: function(model, xhr, options) {
@@ -94,23 +98,22 @@ define(['config',
 	    
 	},	
 
-	render: function(){
+	render: function(id){
 	    
 	    var template = _.template(recipeEditTemplate, { 
 		recipe: this.model, 
-		ingredients: this.ingredientCollection.models, 
-		directions: this.directionCollection.models 
 	    });
 	    this.$el.html(template);
 	    $('#page').empty().append(this.$el);			
-	    
+	    this.getRecipeIngredients(id);
+	    this.getRecipeDirections(id);
 	},
 	
-	addIngredient: function() {
+	addIngredient: function(event) {
 	    this.subviews.push(new IngredientView()); // add to subviews list so that things can be unbound later
 	},
 
-	addDirection: function() {
+	addDirection: function(event) {
 	    this.subviews.push(new DirectionView()); // add to subviews list so that things can be unbound later
 	},		
 
