@@ -70,7 +70,7 @@ class Database {
 	    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
 	    $statement = $conn->prepare($sql);
 	    $statement->execute($whereValues);
-	    $results = $statement->fetch();			
+	    $results = $statement->fetchAll();			
 
 	    if(count($results))
 		return $results;
@@ -84,6 +84,31 @@ class Database {
 	}		
 
     }
+    
+    /**
+     * Get Single Item (from id)
+     */	
+
+    function get_item($sql, $whereValues) {
+
+	try {
+	    $conn = new PDO($this->connectionString, $this->username, $this->password, $this->connectionAttributes);
+	    $statement = $conn->prepare($sql);
+	    $statement->execute($whereValues);
+	    $results = $statement->fetch();			
+
+	    if(count($results))
+		return $results;
+	    else
+		return false;
+	}
+	catch(PDOException $e) {
+
+	    $this->print_error_message($e->getMessage());
+	    return false;
+	}		
+
+    }    
 
     /**
      * Insert Items
@@ -166,7 +191,7 @@ class Users extends Database {
 	    'username' => $username,
 	    'password' => $password
 	);
-	return $this->get_items($sql, $where);
+	return $this->get_item($sql, $where);
     }
     
     function add_user($username, $password){
@@ -196,7 +221,7 @@ class Recipes extends Database {
 	
 	$sql = 'SELECT * FROM recipes WHERE id = :id';
 	$where = array('id' => $id);
-	return $this->get_items($sql, $where);
+	return $this->get_item($sql, $where);
     } 
     
     function add_recipe($value){

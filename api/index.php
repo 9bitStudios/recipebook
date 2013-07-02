@@ -223,10 +223,15 @@ $app->get('/ingredients/:id', function ($id) use ($app) {
 
     if($items) {
 
-	$results = array(
-	    'id' => $items['id'],
-	    'name' => $items['name']
-	);
+	// get all results
+	foreach($items as $row) {
+
+	    $itemArray = array(
+		'id' => $row['id'],
+		'name' => $row['name'],
+	    );
+	    array_push($results, $itemArray);
+	}
 
 	$app->response()->header('Content-Type', 'application/json');
 	echo json_encode($results);
@@ -303,10 +308,15 @@ $app->get('/directions/:id', function ($id) use ($app) {
 
     if($items) {
 
-	$results = array(
-	    'id' => $items['id'],
-	    'name' => $items['name']
-	);
+	// get all results
+	foreach($items as $row) {
+
+	    $itemArray = array(
+		'id' => $row['id'],
+		'name' => $row['name'],
+	    );
+	    array_push($results, $itemArray);
+	}
 
 	$app->response()->header('Content-Type', 'application/json');
 	echo json_encode($results);
