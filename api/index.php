@@ -228,6 +228,7 @@ $app->get('/ingredients/:id', function ($id) use ($app) {
 
 	    $itemArray = array(
 		'id' => $row['id'],
+		'recipeId' => $row['recipe_id'],
 		'name' => $row['name'],
 	    );
 	    array_push($results, $itemArray);
@@ -313,6 +314,7 @@ $app->get('/directions/:id', function ($id) use ($app) {
 
 	    $itemArray = array(
 		'id' => $row['id'],
+		'recipeId' => $row['recipe_id'],
 		'name' => $row['name'],
 	    );
 	    array_push($results, $itemArray);

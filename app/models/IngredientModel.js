@@ -9,7 +9,6 @@ define(['jquery','underscore', 'backbone'], function($, _, Backbone){
 	    name: 'New Ingredient'
 	},
 	initialize: function() {
-	    console.log('New ingredient has been created...');
 	}
     });
     

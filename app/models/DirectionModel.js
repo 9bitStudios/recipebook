@@ -9,7 +9,6 @@ define(['jquery','underscore', 'backbone'], function($, _, Backbone){
 	    name: 'New Direction'
 	},
 	initialize: function() {
-	    console.log('New direction has been created...');
 	}
     });
     

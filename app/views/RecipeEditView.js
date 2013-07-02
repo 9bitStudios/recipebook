@@ -110,11 +110,15 @@ define(['config',
 	},
 	
 	addIngredient: function(event) {
-	    this.subviews.push(new IngredientView()); // add to subviews list so that things can be unbound later
+	    event.preventDefault();
+	    var ingredient = new IngredientModel({ recipeId: this.model.get('id') });
+	    this.subviews.push(new IngredientView({ model: ingredient })); // add to subviews list so that things can be unbound later
 	},
 
 	addDirection: function(event) {
-	    this.subviews.push(new DirectionView()); // add to subviews list so that things can be unbound later
+	    event.preventDefault();
+	    var direction = new DirectionModel({ recipeId: this.model.get('id') });
+	    this.subviews.push(new DirectionView({ model: direction })); // add to subviews list so that things can be unbound later
 	},		
 
 	saveRecipe: function(event) {
