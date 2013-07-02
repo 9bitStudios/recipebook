@@ -5,25 +5,31 @@ define(['config',
 	'globals',
 	'views/NotificationView',
 	'models/RecipeModel',
-	'models/IngredientModel',
-	'models/DirectionModel',
+	'collections/IngredientCollection',
+	'collections/DirectionCollection',
+	'views/IngredientView',
+	'views/DirectionView',
 	'text!templates/recipe-edit.html'
-	], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, recipeEditTemplate){
+	], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
 
 		
     var RecipeEditView = Backbone.View.extend({
 	tagName: 'div',
 
 	className: 'recipeEdit',
-
+	
 	events: {
 	    'click #submit': 'saveRecipe',
 	    'click #addIngredient': 'addIngredient',
+	    'click #addDirection': 'addDirection'
 	},
 
 	initialize: function(options){
 
 	    var self = this;
+	    
+	    this.ingredientCollection = new IngredientCollection();
+	    this.directionCollection = new DirectionCollection();
 	    
 	    if(options.idParam) {
 
@@ -31,8 +37,7 @@ define(['config',
 		this.model.fetch({
 		    wait: true,
 		    success: function(model, response, options) {  
-			self.fetchSubItems(self.model.get('id'));
-			self.render(self.model.get('id'));
+			self.getRecipeIngredients(self.model.get('id'));
 		    },
 		    error: function (model, xhr, options) { 
 			var error = new NotificationView({ 
@@ -47,43 +52,67 @@ define(['config',
 
 	},
 	
-	fetchSubItems: function(id) {
-	   
-	    $.ajax({
-		type: "GET",
-		url: config.baseURL + "/api/ingredients/" + id,
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",			
-		success: function (data) {
-		    console.log(data);
+	getRecipeIngredients: function(id) {
+	    
+	    var self = this;
+	    var ingredientCollection = new IngredientCollection();
+	    ingredientCollection.url = config.baseURL + "/api/ingredients/" + id;
+	    ingredientCollection.fetch({
+		wait: true,
+		reset: true,
+		success: function(collection, response, options) {				
+		    self.ingredientCollection = collection;
+		    self.getRecipeDirections(self.model.get('id'));
 		},
-		error: function (errorMessage) {
+
+		error: function(model, xhr, options) {
 		    var error = new NotificationView({ type:'error', text: 'Error getting ingredients' });
 		}
-	    });		    
-	    
-	    $.ajax({
-		type: "GET",
-		url: config.baseURL + "/api/directions/" + id,
-		contentType: "application/json; charset=utf-8",
-		dataType: "json",			
-		success: function (data) {
-		    console.log(data);
-		},
-		error: function (errorMessage) {
-		    var error = new NotificationView({ type:'error', text: 'Error getting directions' });
-		}
-	    });    
+
+	    });	    	    
 	    
 	},
+	
+	getRecipeDirections: function(id) {
+	    
+	    var self = this;
+	    var directionCollection = new DirectionCollection();
+	    directionCollection.url = config.baseURL + "/api/directions/" + id;
+	    directionCollection.fetch({
+		wait: true,
+		reset: true,
+		success: function(collection, response, options) {				
+		    self.directionCollection = collection;
+		    self.render();
+		},
 
-	render: function(id){
+		error: function(model, xhr, options) {
+		    var error = new NotificationView({ type:'error', text: 'Error getting ingredients' });
+		}
 
-	    var template = _.template(recipeEditTemplate, { model: this.model });
+	    });	    	    
+	    
+	},	
+
+	render: function(){
+	    
+	    var template = _.template(recipeEditTemplate, { 
+		recipe: this.model, 
+		ingredients: this.ingredientCollection.models, 
+		directions: this.directionCollection.models 
+	    });
 	    this.$el.html(template);
 	    $('#page').empty().append(this.$el);			
+	    
+	},
+	
+	addIngredient: function() {
+	    this.subviews.push(new IngredientView()); // add to subviews list so that things can be unbound later
+	},
 
-	},	
+	addDirection: function() {
+	    this.subviews.push(new DirectionView()); // add to subviews list so that things can be unbound later
+	},		
 
 	saveRecipe: function(event) {
 	    event.preventDefault();
