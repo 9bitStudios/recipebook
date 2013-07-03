@@ -6,10 +6,12 @@ define(['jquery',
 	'models/RecipeModel',
 	'models/IngredientModel',
 	'models/DirectionModel',
+	'collections/IngredientCollection',
+	'collections/DirectionCollection',
 	'views/IngredientView',
 	'views/DirectionView',
 	'text!templates/recipe-create.html'
-	], function($, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientView, DirectionView, recipeCreateTemplate){
+	], function($, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeCreateTemplate){
 
 		
     var RecipeCreateView = Backbone.View.extend({
@@ -23,6 +25,9 @@ define(['jquery',
 	},
 
 	initialize: function(){
+	    
+	    this.ingredientCollection = new IngredientCollection();
+	    this.directionCollection = new DirectionCollection();
 	    this.render();
 	},
 
@@ -33,12 +38,20 @@ define(['jquery',
 	    $('#page').empty().append(this.$el);
 	},		
 
+	// add ingredient model to the collection on this view
+	// add to subviews list (from prototype) so that things can be unbound later
 	addIngredient: function() {
-	    this.subviews.push(new IngredientView()); // add to subviews list so that things can be unbound later
+	    var ingredient = new IngredientModel();
+	    this.directionCollection.add(ingredient);
+	    this.subviews.push(new IngredientView({ model: ingredient })); 
 	},
 
+	// add ingredient model to the collection on this view
+	// add to subviews list (from prototype) so that things can be unbound later
 	addDirection: function() {
-	    this.subviews.push(new DirectionView()); // add to subviews list so that things can be unbound later
+	    var direction = new DirectionModel();
+	    this.directionCollection.add(direction);
+	    this.subviews.push(new DirectionView({ model: direction })); 
 	},
 
 	saveMainItem: function(event) {
@@ -51,6 +64,12 @@ define(['jquery',
 	    recipe.save(null, {
 		wait: true,
 		success: function(model, response, options) {
+		    
+		    // set new foreign key on subviews obtained from newly created items
+		    self.ingredientCollection.invoke('set', {recipeId: recipe.get('id')});
+		    self.directionCollection.invoke('set', {recipeId: recipe.get('id')});
+		    
+		    // save subview items
 		    self.saveSubItems(recipe.get('id'));
 		},
 
@@ -66,55 +85,45 @@ define(['jquery',
 
 	},
 	
-	saveSubItems: function(recipeId){
+	saveSubItems: function(){
 	    
-	    try {	
-		// save ingredients
-		$('.ingredient').each(function(){
-		    var ingredientName = $(this).val();
-		    var ingredient = new IngredientModel({ recipeId: recipeId, name: ingredientName });
-		    ingredient.save(null, {
-			wait: true,
-			success: function(model, response, options) {
-			    // continue
-			},
-			error: function (model, xhr, options) {		
-			    throw 'Error saving recipe ingredients'
-			}
-		    });		
+	    // if we get an error on any save event, we're going to want to trigger a notification
+	    var ingredientsSaved = true;
+	    var directionsSaved = true;
+	    
+	    // loop through ingredients, saving each
+	    _.each(this.ingredientCollection.models, function(model){
+		model.save(null,{
+		    wait: true,
+		    success: function(model, response, options) { },
+		    error: function (model, xhr, options) {
+			ingredientsSaved = false;
+		    }
 		});
-		
-		// save directions
-		$('.direction').each(function(){
-		    var directionName = $(this).val();
-		    var direction = new DirectionModel({ recipeId: recipeId, name: directionName });
-		    direction.save(null, {
-			wait: true,
-			success: function(model, response, options) {
-			    // continue
-			},
-			error: function (model, xhr, options) {		
-			    throw 'Error saving recipe directions'
-			}
-		    });		
-		});		
-		
-		var success = new NotificationView({ 
-		    type: 'success', 
-		    text: 'Recipe saved successfully'
-		});		
-		
-	    }
-	    catch(e){
-		
-		var error = new NotificationView({ 
-		    type: 'error', 
-		    text: e
-		});			
-		
-	    }
+	    });	    
 	    
-	    this.remove(); // remove and unbind everything...
+	    // loop through directions, saving each
+	    _.each(this.directionCollection.models, function(model){
+		model.save(null,{
+		    wait: true,
+		    success: function(model, response, options) { },
+		    error: function (model, xhr, options) {
+			directionsSaved = false;
+		    }
+		});
+	    });	    
+	    
+	    // any errors?...
+	    if(!ingredientsSaved)
+		var error = new NotificationView({ type: 'error', text: 'Error saving one or more ingredients' });	    
+	    
+	    if(!directionsSaved)
+		var error = new NotificationView({ type: 'error', text: 'Error saving one or more directions' });
+	    
+	    // remove this view and unbind everything...
+	    this.clearout(); 
+	    
+	    // return to recipes view
 	    Backbone.history.navigate('recipes', true);	    
 	    
 	}

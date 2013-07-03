@@ -14,7 +14,8 @@ define(['jquery',
 	className: 'directionContainer',
 	
 	events: {
-	    'click .deleteDirection': 'close'
+	    'click .deleteDirection': 'close',
+	    'keyup': 'updateDirection'
 	},
 	
 	initialize: function(){
@@ -33,7 +34,9 @@ define(['jquery',
 	    this.$el.html(template);
 	    $('#directions').append(this.$el);
 	},
-		
+	updateDirection: function(){
+	    this.model.set('name', this.$('.direction').val());
+	},		
 	close: function(event) {
 	    event.preventDefault();
 	    this.clearout(); // from prototype

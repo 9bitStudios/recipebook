@@ -14,7 +14,8 @@ define(['jquery',
 	className: 'ingredientContainer',
 	
 	events: {
-	    'click .deleteIngredient': 'close'
+	    'click .deleteIngredient': 'close',
+	    'keyup': 'updateIngredient'
 	},
 	
 	initialize: function(){
@@ -33,7 +34,9 @@ define(['jquery',
 	    this.$el.html(template);
 	    $('#ingredients').append(this.$el);
 	},
-		
+	updateIngredient: function(){
+	    this.model.set('name', this.$('.ingredient').val());
+	},	
 	close: function(event) {
 	    event.preventDefault();
 	    this.clearout(); // from prototype
