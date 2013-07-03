@@ -28,7 +28,10 @@ $app->post('/login', function () use ($app) {
     $env = $app->environment();
     
     // environment variables set in middleware...
-    $userArray = array('username' => $env['nbs.username']); 
+    $userArray = array(
+	'id' => $env['nbs.id'],
+	'username' => $env['nbs.username']
+    ); 
     
     if($userArray['username']) {
 	$app->response()->header('Content-Type', 'application/json');

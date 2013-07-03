@@ -152,6 +152,7 @@ class HttpBasicAuth extends \Slim\Middleware
 	    
 	    if ($user) {
 		$env = $this->app->environment();
+		$env['nbs.id'] = $user['id'];
 		$env['nbs.username'] = $user['username'];		
 		$this->next->call();
 		

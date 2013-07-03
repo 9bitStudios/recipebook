@@ -39,13 +39,12 @@ define(['config',
 		    username: username,
 		    password: password,				
 		    success: function (data) {
-			globals.currentUser.set({name: data.username, loggedIn: true});
+			globals.currentUser.set({id: data.id, name: data.username, loggedIn: true});
 			Helper.createCookie('RecipeLogin', 1);
 			Backbone.history.navigate('', true);
 		    },
 		    error: function (errorMessage) {
 			var error = new NotificationView({ type:'error', text: 'Error logging in' });
-
 		    }
 		});	
 	    }
