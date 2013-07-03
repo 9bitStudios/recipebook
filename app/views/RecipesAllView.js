@@ -1,11 +1,12 @@
-define(['jquery',
+define(['config',
+	'jquery',
 	'underscore', 
 	'backbone', 
 	'globals',
 	'views/NotificationView',
 	'models/RecipeModel',
 	'collections/RecipeCollection', 
-	'text!templates/recipes-all.html'], function($, _, Backbone, globals, NotificationView, RecipeModel, RecipeCollection, allRecipesTemplate){
+	'text!templates/recipes-all.html'], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, RecipeCollection, allRecipesTemplate){
 
 		
     var RecipesAllView = Backbone.View.extend({
@@ -24,7 +25,8 @@ define(['jquery',
 
 	    var self = this;
 	    var recipes = new RecipeCollection();
-
+	    recipes.url = config.baseURL + "/api/user/recipes/" + globals.currentUser.get('id');
+	    
 	    recipes.fetch({
 		wait: true,
 		reset: true,

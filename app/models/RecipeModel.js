@@ -6,6 +6,7 @@ define(['jquery',
 	urlRoot: 'api/recipes', 
 
 	defaults: {
+	    userId: null,
 	    name: 'New Recipe',
 	},
 

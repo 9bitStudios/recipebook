@@ -12,6 +12,13 @@ class Recipes extends Database {
 	return $this->get_all_items($sql);
     }
     
+    function get_user_recipes($uid){
+	
+	$sql = 'SELECT * FROM recipes WHERE user_id = :uid';
+	$where = array('uid' => $uid);
+	return $this->get_items($sql, $where);
+    }     
+    
     function get_recipe($id){
 	
 	$sql = 'SELECT * FROM recipes WHERE id = :id';
@@ -24,6 +31,15 @@ class Recipes extends Database {
 	$params = array(':name' => $value);
 	return $this->insert_items($sql, $params);
     } 
+    
+    function add_user_recipe($uid, $name){
+	$sql = 'INSERT INTO recipes (user_id, name) VALUES(:userId, :name)';
+	$params = array(
+	    ':userId' => $uid,
+	    ':name' => $name
+	);
+	return $this->insert_items($sql, $params);
+    }    
     
     function update_recipe($id, $value){
 	$sql = 'UPDATE recipes SET name = :name WHERE id = :id';

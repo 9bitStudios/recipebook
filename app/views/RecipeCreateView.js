@@ -1,4 +1,5 @@
-define(['jquery',
+define(['config',
+	'jquery',
 	'underscore', 
 	'backbone', 
 	'globals',
@@ -11,7 +12,7 @@ define(['jquery',
 	'views/IngredientView',
 	'views/DirectionView',
 	'text!templates/recipe-create.html'
-	], function($, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeCreateTemplate){
+	], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeCreateTemplate){
 
 		
     var RecipeCreateView = Backbone.View.extend({
@@ -60,7 +61,8 @@ define(['jquery',
 	    $('#submit').attr('disabled', 'disabled');
 	    var self = this;
 	    var recipeName = $('#recipe-name').val();
-	    var recipe = new RecipeModel({ name: recipeName });
+	    var recipe = new RecipeModel({ userId: globals.currentUser.get('id'), name: recipeName });
+	    recipe.url = config.baseURL + "/api/recipes/" + globals.currentUser.get('id');
 	    recipe.save(null, {
 		wait: true,
 		success: function(model, response, options) {

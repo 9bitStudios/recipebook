@@ -33,6 +33,35 @@ $app->get('/recipes', function () use ($app) {
 });
 
 // GET route
+$app->get('/user/recipes/:id', function ($id) use ($app) {
+    
+    // GET with parameter
+
+    $db = new Recipes();
+    $items = $db->get_user_recipes($id);
+    $results = array();
+
+    if($items) {
+	foreach($items as $row) {
+
+	    $itemArray = array(
+		'id' => $row['id'],
+		'name' => $row['name'],
+	    );
+	    array_push($results, $itemArray);
+	}
+
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($results);
+    }
+    else {
+	$app->response()->status(500);
+    }
+
+	
+});
+
+// GET route
 $app->get('/recipes/:id', function ($id) use ($app) {
     
     // GET with parameter
@@ -66,6 +95,28 @@ $app->post('/recipes', function () use ($app) {
     $name = $request['name'];
     $db = new Recipes();
     $item = $db->add_recipe($name);	
+
+    if($item) { // if successful, just return the JSON sent for use on the client-side
+	
+	$results = array(
+	    'id' => $item,
+	    'name' => $name
+	);	
+	
+	$app->response()->header('Content-Type', 'application/json');
+	echo json_encode($results);
+    }
+	
+});
+
+// POST route
+$app->post('/recipes/:id', function ($id) use ($app) {
+
+    $request = (array) json_decode($app->request()->getBody());
+
+    $name = $request['name'];
+    $db = new Recipes();
+    $item = $db->add_user_recipe($id, $name);	
 
     if($item) { // if successful, just return the JSON sent for use on the client-side
 	
