@@ -2,9 +2,10 @@ define(['jquery',
 	'underscore', 
 	'backbone', 
 	'globals',
+	'views/NotificationView',
 	'models/IngredientModel',
 	'text!templates/ingredient-create.html',
-	], function($, _, Backbone, globals, IngredientModel, ingredientCreateTemplate){
+	], function($, _, Backbone, globals, NotificationView, IngredientModel, ingredientCreateTemplate){
 
 		
     var IngredientView = Backbone.View.extend({
@@ -38,6 +39,10 @@ define(['jquery',
 	    this.model.set('name', this.$('.ingredient').val());
 	},	
 	close: function(event) {
+	    
+	    // trigger an "ingredient-remove" event for the parent view to listen to passing in the model cid...
+	    this.$el.trigger('ingredient-remove', this.model.cid);
+
 	    event.preventDefault();
 	    this.clearout(); // from prototype
 	}

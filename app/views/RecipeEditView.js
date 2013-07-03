@@ -21,17 +21,20 @@ define(['config',
 	className: 'recipeEdit',
 	
 	events: {
-	    'click #submit': 'saveRecipe',
+	    'click #submit': 'saveMainItem',
 	    'click #addIngredient': 'addIngredient',
-	    'click #addDirection': 'addDirection'
+	    'click #addDirection': 'addDirection',
+	    'ingredient-remove .ingredientContainer': 'removeIngredient',
+	    'direction-remove .directionContainer': 'removeDirection'
 	},
 
 	initialize: function(options){
 
 	    var self = this;
-	    
 	    this.ingredientCollection = new IngredientCollection();
 	    this.directionCollection = new DirectionCollection();
+	    this.ingredientCollectionRemoved = new IngredientCollection();
+	    this.directionCollectionRemoved = new DirectionCollection();	    
 	    
 	    if(options.idParam) {
 
@@ -42,10 +45,8 @@ define(['config',
 			self.render(self.model.get('id'));
 		    },
 		    error: function (model, xhr, options) { 
-			var error = new NotificationView({ 
-			    type: 'error', 
-			    text: 'Error fetching recipe data'
-			});
+			var error = new NotificationView({ type: 'error', text: 'Error fetching recipe data' });
+			self.clearout();
 			Backbone.history.navigate('recipes',true);
 
 		    }
@@ -64,10 +65,10 @@ define(['config',
 		reset: true,
 		success: function(collection, response, options) {				
 		    _.each(collection.models, function(ingredient){
+			self.ingredientCollection = collection;
 			self.subviews.push(new IngredientView({ model: ingredient }));
 		    });		    
 		},
-
 		error: function(model, xhr, options) {
 		    var error = new NotificationView({ type:'error', text: 'Error getting ingredients' });
 		}
@@ -86,6 +87,7 @@ define(['config',
 		reset: true,
 		success: function(collection, response, options) {				
 		    _.each(collection.models, function(direction){
+			self.directionCollection = collection;
 			self.subviews.push(new DirectionView({ model: direction }));
 		    });	
 		},
@@ -112,56 +114,118 @@ define(['config',
 	addIngredient: function(event) {
 	    event.preventDefault();
 	    var ingredient = new IngredientModel({ recipeId: this.model.get('id') });
+	    this.ingredientCollection.add(ingredient);
 	    this.subviews.push(new IngredientView({ model: ingredient })); // add to subviews list so that things can be unbound later
 	},
 
 	addDirection: function(event) {
 	    event.preventDefault();
 	    var direction = new DirectionModel({ recipeId: this.model.get('id') });
+	    this.directionCollection.add(direction);
 	    this.subviews.push(new DirectionView({ model: direction })); // add to subviews list so that things can be unbound later
 	},		
 
-	saveRecipe: function(event) {
-	    event.preventDefault();
+	removeIngredient: function(event, arg){
+	    //console.log($(e.currentTarget).find('.ingredient').val());
+	    
+	    var ingredient = this.ingredientCollection.get(arg);
+	    this.ingredientCollectionRemoved.add(ingredient);
+	    this.ingredientCollection.remove(ingredient);
+	    
+	},
 
+	removeDirection: function(event, arg){
+	    //console.log($(e.currentTarget).find('.direction').val());
+	    
+	    var direction = this.directionCollection.get(arg);
+	    this.directionCollectionRemoved.add(direction);
+	    this.directionCollection.remove(direction);	    
+	    
+	},
+
+	saveMainItem: function(event) {
+	    event.preventDefault();
 	    var self = this;
 	    var recipeName = $('#recipe-name').val();
 
-	    if(recipeName === this.model.get('name')) {
-		var message = 'Recipe name is unchanged';
-		var error = new NotificationView({ 
-		    type: 'error', 
-		    text: message
-		});				
-	    }
-	    else {
-		this.model.save("name", recipeName, {
-
+	    this.model.save("name", recipeName, {
+		wait: true,
+		success: function(model, response, options) {
+		    var success = new NotificationView({ type: 'success', text: 'Recipe updated successfully' });	
+		    self.saveSubItems();
+		},
+		error: function (model, xhr, options) {
+		    var error = new NotificationView({ type: 'error', text: 'Error updating recipe' });		
+		}
+	    });
+	    
+	},
+	saveSubItems: function(){
+	    
+	    // if we get an error on any save event, we're going to want to trigger a notification
+	    var ingredientsSaved = true;
+	    var directionsSaved = true;	    
+	    
+	    // loop through ingredients, saving each
+	    _.each(this.ingredientCollection.models, function(model){
+		model.save(null,{
 		    wait: true,
-		    success: function(model, response, options) {
-
-			var success = new NotificationView({ 
-			    type: 'success', 
-			    text: 'Recipe updated successfully'
-			});	
-
-			self.remove(); // remove and unbind everything...
-			Backbone.history.navigate('recipes', true);
-
-		    },
+		    success: function(model, response, options) { },
 		    error: function (model, xhr, options) {
-
-			var message = 'Error updating recipe';
-
-			var error = new NotificationView({ 
-			    type: 'error', 
-			    text: message
-			});					
-
+			ingredientsSaved = false;
 		    }
 		});
-	    }
+	    });	    
+	    
+	    // loop through directions, saving each
+	    _.each(this.directionCollection.models, function(model){
+		model.save(null,{
+		    wait: true,
+		    success: function(model, response, options) { },
+		    error: function (model, xhr, options) {
+			directionsSaved = false;
+		    }
+		});
+	    });
+	    
+	    
+	    // loop through ingredients, destroying those marked for deletion
+	    _.each(this.ingredientCollectionRemoved.models, function(model){
+		model.destroy(null,{
+		    wait: true,
+		    success: function(model, response, options) { },
+		    error: function (model, xhr, options) {
+			directionsSaved = false;
+		    }
+		});
+	    });		    
+	    
+	    // loop through directions, destroying those marked for deletion
+	    _.each(this.directionCollectionRemoved.models, function(model){
+		model.destroy(null,{
+		    wait: true,
+		    success: function(model, response, options) { },
+		    error: function (model, xhr, options) {
+			directionsSaved = false;
+		    }
+		});
+	    });	    
+	    
+	    // any errors?...
+	    if(!ingredientsSaved)
+		var error = new NotificationView({ type: 'error', text: 'Error saving one or more ingredients' });	    
+	    
+	    if(!directionsSaved)
+		var error = new NotificationView({ type: 'error', text: 'Error saving one or more directions' });
+	    	    
+	    
+	    // remove and unbind everything...
+	    this.clearout(); 
+	    Backbone.history.navigate('recipes', true);
 	}
+	
+	
+		
     });
 
     return RecipeEditView;

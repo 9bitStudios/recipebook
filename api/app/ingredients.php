@@ -84,3 +84,23 @@ $app->put('/ingredients/:id', function ($id) use ($app) {
     }
 	
 });
+
+// DELETE route
+$app->delete('/ingredients/:id', function ($id) use ($app) {
+    
+    $request = (array) json_decode($app->request()->getBody());
+    $db = new Ingredients();
+    $items = $db->delete_ingredient($id);	
+    
+    if($items) { 
+	
+	// if successful, just return the deleted item if it's needed on the client side
+	$app->response()->header('Content-Type', 'application/json');	
+	echo json_encode($request);
+	
+    }
+    else {
+	$app->response()->status(500);
+    }
+	
+});

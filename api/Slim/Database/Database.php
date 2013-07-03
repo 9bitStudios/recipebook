@@ -145,6 +145,8 @@ class Database {
 
 	    if($statement->rowCount() === 1)
 		return true;
+	    elseif ($statement->rowCount() === 0)
+		return true;
 	    else
 		return false;
 	}
