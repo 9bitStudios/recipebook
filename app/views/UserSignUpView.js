@@ -3,7 +3,8 @@ define(['config',
 	'underscore', 
 	'backbone', 
 	'globals',
-	'text!templates/user-signup.html'], function(config, $, _, Backbone, globals, userSignUpTemplate){
+	'views/NotificationView',
+	'text!templates/user-signup.html'], function(config, $, _, Backbone, globals, NotificationView, userSignUpTemplate){
 
 		
     var UserSignUpView = Backbone.View.extend({
@@ -17,7 +18,6 @@ define(['config',
 	initialize: function(){
 	    this.render();
 	},
-
 
 	render: function(){
 	    var template = _.template(userSignUpTemplate, { model: this.model });
@@ -38,14 +38,22 @@ define(['config',
 		dataType: "json",
 		data: JSON.stringify({username: username, password: password}),				
 		success: function (data) {
-		    
+		    var success = new NotificationView({ type: 'success', text: 'Sign up successful' });
 		},
 		error: function (errorMessage) {
+		    
+		    if(errorMessage.status === 403)
+			var message = 'That username already exists. Please choose a different username';
+		    else 
+			var message = 'Error signing up';
+		    
+		    var error = new NotificationView({ type: 'error', text: message });
 		}
 		
 	    });
-    
-    
+	    
+	    Backbone.history.navigate('', true);
+
 	}
 	
     });

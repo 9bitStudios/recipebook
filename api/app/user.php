@@ -14,11 +14,19 @@ $app->post('/user', function () use ($app) {
     $password = $request['password'];
     $password = crypt($password, RECIPE_BOOK_DB_SALT);
     
-    // add user to db...
-    $db = new Users();
-    $user = $db->add_user($username, $password);
+    $db = new Users(); 
     
-    echo json_encode($request);
+     // if username does not exist return attempt to add otherwise return 403...
+    if(!$db->user_exists($username)) {
+	$user = $db->add_user($username, $password);
+	$userArray = array(
+	    'username' => $username
+	); 	
+	echo json_encode($userArray);
+    }
+    else {
+	$app->response()->status(403);
+    }
 	
 });
 
@@ -38,7 +46,7 @@ $app->post('/login', function () use ($app) {
 	echo json_encode($userArray);
     }
     else
-	$app->respose->status(401);
+	$app->response()->status(401);
 	
 });
 

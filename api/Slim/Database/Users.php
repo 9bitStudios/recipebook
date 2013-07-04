@@ -6,6 +6,14 @@ class Users extends Database {
 	parent::__construct();
     }
     
+    function user_exists($username){
+	$sql = 'SELECT * FROM users WHERE username = :username';
+	$where = array(
+	    'username' => $username,
+	);
+	return $this->get_item($sql, $where);
+    }    
+    
     function get_user($username, $password){
 	$sql = 'SELECT * FROM users WHERE username = :username AND password = :password';
 	$where = array(
