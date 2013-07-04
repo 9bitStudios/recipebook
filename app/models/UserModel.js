@@ -15,15 +15,22 @@ define(['config',
 	},
 
 	initialize: function() {
-	    if(Helper.readCookie('RecipeLogin') === '1')
+	    if(Helper.readCookie('RecipeLogin') === '1' && Helper.readCookie('RecipeUser') && Helper.readCookie('RecipeId')) {
 		this.set('loggedIn', true);
+		this.set('id', Helper.readCookie('RecipeId'));
+		this.set('name', Helper.readCookie('RecipeUser'));
+	    }
+	    else 
+		this.reset();
 	},
 
 	reset: function() {
 
 	    var self = this;
 	    Helper.destroyCookie('RecipeLogin');
-
+	    Helper.destroyCookie('RecipeUser');
+	    Helper.destroyCookie('RecipeId');
+	    
 	    $.ajax({
 		type: "POST",
 		url: config.baseURL + "/api/logout",

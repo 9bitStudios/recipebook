@@ -41,6 +41,8 @@ define(['config',
 		    success: function (data) {
 			globals.currentUser.set({id: data.id, name: data.username, loggedIn: true});
 			Helper.createCookie('RecipeLogin', 1);
+			Helper.createCookie('RecipeUser', data.username);
+			Helper.createCookie('RecipeId', data.id);
 			Backbone.history.navigate('', true);
 		    },
 		    error: function (errorMessage) {
