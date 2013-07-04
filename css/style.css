@@ -1561,15 +1561,18 @@ body {
   font-size: 12px;
   font-family: 'Helvetica Neue', Arial, 'Liberation Sans', FreeSans, sans-serif;
   color: #666;
-  background: #fff;
+  background: #e6e3d2;
 }
 /**************************************************
 FONTS
 ***************************************************/
 @font-face {
   font-family: 'Embedded';
-  src: url('../fonts/Lato-webfont.eot');
-  src: url('../fonts/Lato-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/Lato-webfont.woff') format('woff'), url('../fonts/Lato-webfont.ttf') format('truetype'), url('../fonts/Lato-webfont.svg') format('svg');
+  src: url('../fonts/Bellota-webfont.eot');
+  src: url('../fonts/Bellota-webfont.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/Bellota-webfont.woff') format('woff'), 
+       url('../fonts/Bellota-webfont.ttf') format('truetype'), 
+       url('../fonts/Bellota-webfont.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -2271,6 +2274,16 @@ p.wp-caption-text {
 /**************************************************
 PAGE & POST CONTENT
 ***************************************************/
+.postContent {
+margin:10px 0px;
+padding:20px;
+background:#fff;
+border:1px solid #eee;
+box-shadow: 0 0 1px #999;
+-moz-box-shadow: 0 0 1px #999; 
+-webkit-box-shadow: 0 0 1px #999;
+}
+
 .postInfo {
   margin-bottom: 20px;
   overflow: auto;
@@ -5297,6 +5310,15 @@ CUSTOM
   background: #666666 !important;
   color: #ffffff !important;
 }
+
+h1 { font-size: 30px; }
+h2 { font-size: 26px; }
+h3 { font-size: 18px; }
+h4 { font-size: 18px; }
+h5 { font-size: 16px; }
+h6 { font-size: 14px; }
+
+
 /**************************************************
 RESPONSIVE
 ***************************************************/
