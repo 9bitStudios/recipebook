@@ -66,7 +66,7 @@ $app->put('/ingredients/:id', function ($id) use ($app) {
     $request = (array) json_decode($app->request()->getBody());
     $name = $request['name'];
     $db = new Ingredients();
-    $items = $db->update_recipe($id, $name);	
+    $items = $db->update_ingredient($id, $name);	
 
     if($items) { // if successful, return the new object with the values
 
