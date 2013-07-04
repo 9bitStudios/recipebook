@@ -41,7 +41,7 @@ define(['jquery',
 	close: function(event) {
 	    
 	    // trigger an "ingredient-remove" event for the parent view to listen to passing in the model cid...
-	    this.$el.trigger('ingredient-remove', this.model.cid);
+	    this.$el.trigger('ingredient-remove', this.model);
 
 	    event.preventDefault();
 	    this.clearout(); // from prototype

@@ -40,7 +40,7 @@ define(['jquery',
 	close: function(event) {
     
 	    // trigger a "direction-remove" event for the parent view to listen to passing in the model id...
-	    this.$el.trigger('direction-remove', this.model.cid);
+	    this.$el.trigger('direction-remove', this.model);
 	    event.preventDefault();
 	    this.clearout(); // from prototype
 	}

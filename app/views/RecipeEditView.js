@@ -128,18 +128,16 @@ define(['config',
 	removeIngredient: function(event, arg){
 	    //console.log($(e.currentTarget).find('.ingredient').val());
 	    
-	    var ingredient = this.ingredientCollection.get(arg);
-	    this.ingredientCollectionRemoved.add(ingredient);
-	    this.ingredientCollection.remove(ingredient);
+	    this.ingredientCollection.remove(arg);
+	    this.ingredientCollectionRemoved.add(arg);
 	    
 	},
 
 	removeDirection: function(event, arg){
 	    //console.log($(e.currentTarget).find('.direction').val());
 	    
-	    var direction = this.directionCollection.get(arg);
-	    this.directionCollectionRemoved.add(direction);
-	    this.directionCollection.remove(direction);	    
+	    this.directionCollection.remove(arg);
+	    this.directionCollectionRemoved.add(arg);	    
 	    
 	},
 
@@ -195,7 +193,7 @@ define(['config',
 		    wait: true,
 		    success: function(model, response, options) { },
 		    error: function (model, xhr, options) {
-			directionsSaved = false;
+			ingredientsSaved = false;
 		    }
 		});
 	    });		    
@@ -223,8 +221,6 @@ define(['config',
 	    this.clearout(); 
 	    Backbone.history.navigate('recipes', true);
 	}
-	
-	
 		
     });
 
