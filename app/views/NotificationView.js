@@ -6,7 +6,7 @@ define(['jquery',
 		
     var NotificationView = Backbone.View.extend({
 
-	targetElement: 'body',
+	targetElement: '#message',
 
 	tagName: 'div',
 
@@ -17,6 +17,13 @@ define(['jquery',
 	    'error': 'Sorry! An error occured in the process',
 	    'warning': 'Are you sure you want to take this action?',
 	    'information': 'An unknown event occured'
+	}, 
+
+	cssClasses: {
+	    'success': 'accepted',
+	    'error': 'cancel',
+	    'warning': 'warning',
+	    'information': 'information'
 	}, 
 
 	events: {
@@ -52,7 +59,7 @@ define(['jquery',
 	render: function(type, text, target){
 
 	    var self = this;
-	    this.$el.addClass(type);
+	    this.$el.addClass(this.cssClasses[type]);
 	    this.$el.text(text);
 	    this.$el.prependTo(this.targetElement);
 

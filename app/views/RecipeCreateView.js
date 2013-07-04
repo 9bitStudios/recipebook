@@ -71,16 +71,14 @@ define(['config',
 		    self.ingredientCollection.invoke('set', {recipeId: recipe.get('id')});
 		    self.directionCollection.invoke('set', {recipeId: recipe.get('id')});
 		    
+		    var success = new NotificationView({ type: 'success', text: 'Recipe created' });	
+		    
 		    // save subview items
 		    self.saveSubItems(recipe.get('id'));
 		},
 
 		error: function (model, xhr, options) {
-		    var error = new NotificationView({ 
-			type: 'error', 
-			text: 'Error creating recipe'
-		    });					
-		    self.remove();
+		    var error = new NotificationView({ type: 'error', text: 'Error creating recipe' });		
 		    Backbone.history.navigate('recipes', true);		    
 		}
 	    });
