@@ -18,39 +18,42 @@ define(['config',
 	},
 
 	initialize: function(){
-	    this.render();
+	    this.recipes = new RecipeCollection();
+	    this.getRecipes(this.recipes);
 	},
 
-	render: function(){
+	render: function(recipes){
+	    var template = _.template(allRecipesTemplate, {recipes: recipes});
+	    this.$el.html(template);
+	    $('#page').empty().append(this.$el);
+	},
 
+	getRecipes: function(recipes){
 	    var self = this;
-	    var recipes = new RecipeCollection();
 	    recipes.url = config.baseURL + "/api/user/recipes/" + globals.currentUser.get('id');
-	    
 	    recipes.fetch({
 		wait: true,
 		reset: true,
 		success: function(collection, response, options) {				
-		    var template = _.template(allRecipesTemplate, {recipes: collection.models});
-		    self.$el.html(template);
-		    $('#page').empty().append(self.$el);					
+		    self.render(collection.models);					
 		},
 
 		error: function(model, xhr, options) {
 		    var message;
-		    if(xhr.status === 401) {
+
+		    if (xhr.status === 404) {
+			message = 'You don\'t have any recipes';
+			self.render(recipes.models);
+		    }
+		    else if(xhr.status === 401) {
 			message = 'You must be logged in and have proper permissions to access this data.';
 			Backbone.history.navigate('',true);
-
-		    }
-		    var error = new NotificationView({ 
-			type: 'error', 
-			text: message
-		    });
+		    }		    
+		    
+		    var error = new NotificationView({ type: 'error', text: message });
 		}
 
-	    });	
-
+	    });	    
 	},
 
 	deleteRecipe: function(event) {

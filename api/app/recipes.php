@@ -55,7 +55,7 @@ $app->get('/user/recipes/:id', function ($id) use ($app) {
 	echo json_encode($results);
     }
     else {
-	$app->response()->status(500);
+	$app->response()->status(404);
     }
 
 	
