@@ -39,20 +39,21 @@ define(['config',
 		data: JSON.stringify({username: username, password: password}),				
 		success: function (data) {
 		    var success = new NotificationView({ type: 'success', text: 'Sign up successful' });
+		    Backbone.history.navigate('', true);
 		},
 		error: function (errorMessage) {
 		    
-		    if(errorMessage.status === 403)
+		    if(errorMessage.status === 403) {
 			var message = 'That username already exists. Please choose a different username';
-		    else 
+		    }
+		    else { 
 			var message = 'Error signing up';
+		    }
 		    
 		    var error = new NotificationView({ type: 'error', text: message });
 		}
 		
 	    });
-	    
-	    Backbone.history.navigate('', true);
 
 	}
 	

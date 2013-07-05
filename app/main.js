@@ -21,6 +21,8 @@ require.config({
 });
 require(['jquery', 'underscore', 'backbone', 'helper', 'app'], function($, _, Backbone, Helper, App){ 
     
+    // add any prototypes or Backbone extensions before kicking off the application
+    
     // unbind events and remove view from memory
     Backbone.View.prototype.clearout = function() {
 	this.unbind();

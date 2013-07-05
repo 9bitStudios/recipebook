@@ -18,9 +18,11 @@ define(["config",
 	    console.log('New router created');	
 	},
 
+	// object containing views any partial views, 
 	views: {
 	    main: null
 	},
+
 
 	unsetView: function(view) {
 
@@ -115,9 +117,8 @@ define(["config",
 
 	// listen for any route changes
 	router.on('route', function() {
-
-		// do something if needed (remove view and unbind events and set current view perhaps?)
-
+	    // do something if needed
+	    // NOTE: this event fires *after* the route code above runs (not before)
 	});		
 
 	Backbone.history.start();

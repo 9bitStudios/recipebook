@@ -35,6 +35,8 @@ define(['config',
 		this.model.fetch({
 		    wait: true,
 		    success: function(model, response, options) {  
+			
+			// we've got model data, now we can get relational sub-items
 			self.render(self.model.get('id'));
 		    },
 		    error: function (model, xhr, options) { 
@@ -59,6 +61,8 @@ define(['config',
 		success: function(collection, response, options) {				
 		    _.each(collection.models, function(ingredient){
 			self.ingredientCollection = collection;
+			
+			// passing in editable:false so view will render text in details view opposed to input field
 			self.subviews.push(new IngredientView({ model: ingredient, editable:false }));
 		    });		    
 		},
@@ -81,6 +85,8 @@ define(['config',
 		success: function(collection, response, options) {				
 		    _.each(collection.models, function(direction){
 			self.directionCollection = collection;
+			
+			// passing in editable:false so view will render text in details view opposed to input field
 			self.subviews.push(new DirectionView({ model: direction, editable:false }));
 		    });	
 		},

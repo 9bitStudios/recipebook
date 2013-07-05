@@ -68,7 +68,6 @@ define(['config',
 		recipe.destroy({
 		    wait: true,
 		    success: function(model, response, options) {
-			console.log('model removed');
 			$('.recipe-item-'+id).fadeOut();
 		    },
 

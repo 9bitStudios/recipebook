@@ -41,7 +41,9 @@ define(['config',
 		this.model = new RecipeModel({ id: options.idParam });
 		this.model.fetch({
 		    wait: true,
-		    success: function(model, response, options) {  
+		    success: function(model, response, options) { 
+			
+			// we've got model data, now we can get relational sub-items (called in render function)
 			self.render(self.model.get('id'));
 		    },
 		    error: function (model, xhr, options) { 

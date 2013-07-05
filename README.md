@@ -1,9 +1,15 @@
 Recipe Book
 ==========
 
-An experimental exercise application built with Backbone.js & Slim PHP Framework as a REST API
+An experimental exercise client-side/single page application built with JavaScript & [Slim PHP Framework](http://www.slimframework.com/) as a REST API.
 
-For data storage: 
+Current libraries demonstrated...
+
+* Backbone.js
+
+Perhaps more will be used in the future
+
+### Data Storage
 
 Created database 'RecipeBook' then ran the following to create the...
 
@@ -35,7 +41,7 @@ Directions Table:
 CREATE TABLE `directions` (
     id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     recipe_id INT(11) NOT NULL,
-    name VARCHAR(255) COLLATE utf8_general_ci NOT NULL,
+    name TEXT COLLATE utf8_general_ci NOT NULL,
     UNIQUE KEY id (id)
 )
 ```

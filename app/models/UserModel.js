@@ -15,6 +15,8 @@ define(['config',
 	},
 
 	initialize: function() {
+    
+	    // read any cookie data and set current user...
 	    if(Helper.readCookie('RecipeLogin') === '1' && Helper.readCookie('RecipeUser') && Helper.readCookie('RecipeId')) {
 		this.set('loggedIn', true);
 		this.set('id', Helper.readCookie('RecipeId'));

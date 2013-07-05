@@ -39,6 +39,7 @@ define(['jquery',
 	    var text = this.defaultMessages[type]; 
 	    var target = this.targetElement; 
 
+	    // if any options were set, override defaults
 	    if(options && options.hasOwnProperty('type'))
 		type = options.type;
 	    if(options && options.hasOwnProperty('text'))
@@ -49,7 +50,7 @@ define(['jquery',
 	    if(options && options.hasOwnProperty('automaticClose'))
 		this.automaticClose = options.automaticClose;
 
-	    // is message already displayed? if yes, don't show again
+	    // is message already displayed in view? if yes, don't show again
 	    if($('.notification:contains('+text+')').length === 0) { 
 		this.render(type, text, target);
 	    }
@@ -63,7 +64,7 @@ define(['jquery',
 	    this.$el.text(text);
 	    this.$el.prependTo(this.targetElement);
 
-	    // Automatically close after set time
+	    // Automatically close after set time. also closes on click
 	    if(this.automaticClose) {
 		setTimeout(function(){
 		    self.closeNotification();

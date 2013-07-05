@@ -25,8 +25,8 @@ define(['config',
 	    $('#page').empty().append(this.$el);
 	},
 
-	login: function() {
-
+	login: function(event) {
+	    event.preventDefault();
 	    var username = $('#username').val();
 	    var password = $('#password').val();
 

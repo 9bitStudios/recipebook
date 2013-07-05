@@ -33,6 +33,7 @@ define(['jquery',
 	},
 	render: function() {
 	    
+	    // if {editable: false} property was passed in with options, choose different template. Default is true.
 	    if(this.options.editable === false)
 		var template = _.template(ingredientDetailsTemplate, { model: this.model });
 	    else
