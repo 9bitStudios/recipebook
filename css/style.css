@@ -1318,7 +1318,6 @@ li[class*=" fa-icon-"] {
 /**************************************************
 MIXINS
 ***************************************************/
-@base-font-size 12px;
 #form-nbs-mixin {
   padding: 6px 4px;
   outline: none;
@@ -1659,10 +1658,8 @@ legend span {
   color: #444;
 }
 form {
-  margin-bottom: 20px;
 }
 form fieldset {
-  margin-bottom: 20px;
 }
 input[type="text"],
 input[type="password"],
@@ -1674,7 +1671,6 @@ select {
   margin: 0px;
   width: 220px;
   max-width: 100%;
-  margin-bottom: 20px;
   border: 1px solid #ccc;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -1715,7 +1711,6 @@ input[type="reset"],
 input[type="button"] {
   padding: 4px 12px;
   display: inline-block;
-  margin-bottom: 20px;
   line-height: 21px;
   background: #eee;
   /* Old browsers */
@@ -5334,6 +5329,12 @@ h4 { font-size: 18px; }
 h5 { font-size: 16px; }
 h6 { font-size: 14px; }
 
+
+.deleteIngredient, .deleteDirection {
+    margin-left: 10px;
+    font-size: 18px;
+    color:#333;
+}
 
 /**************************************************
 RESPONSIVE

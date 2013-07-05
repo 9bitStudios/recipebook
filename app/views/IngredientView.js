@@ -4,8 +4,9 @@ define(['jquery',
 	'globals',
 	'views/NotificationView',
 	'models/IngredientModel',
+	'text!templates/ingredient-details.html',
 	'text!templates/ingredient-create.html',
-	], function($, _, Backbone, globals, NotificationView, IngredientModel, ingredientCreateTemplate){
+	], function($, _, Backbone, globals, NotificationView, IngredientModel, ingredientDetailsTemplate, ingredientCreateTemplate){
 
 		
     var IngredientView = Backbone.View.extend({
@@ -31,7 +32,12 @@ define(['jquery',
 	    this.render();
 	},
 	render: function() {
-	    var template = _.template(ingredientCreateTemplate, { model: this.model });
+	    
+	    if(this.options.editable === false)
+		var template = _.template(ingredientDetailsTemplate, { model: this.model });
+	    else
+		var template = _.template(ingredientCreateTemplate, { model: this.model });
+	    
 	    this.$el.html(template);
 	    $('#ingredients').append(this.$el);
 	},

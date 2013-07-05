@@ -3,6 +3,7 @@
 	<% _.each(recipes, function(recipe) { %>
 		<p class="recipe-item-<%= recipe.get('id') %>">
 		<h4><%= recipe.get('name') %></h4>
+		<a href="#recipe/<%= recipe.get('id') %>" class="fa-icon-eye-open"> View</a>&nbsp;|&nbsp;
 		<a href="#edit/<%= recipe.get('id') %>" class="fa-icon-pencil"> Edit</a>&nbsp;|&nbsp;
 		<a href="#delete/<%= recipe.get('id') %>" class="delete fa-icon-remove" data-id="<%= recipe.get('id') %>"> Delete</a>
 		</p>

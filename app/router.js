@@ -8,8 +8,9 @@ define(["config",
 	"views/LoginView",
 	"views/UserSignUpView",	
 	"views/RecipesAllView",
+	"views/RecipeDetailsView",	
 	"views/RecipeCreateView",
-	"views/RecipeEditView"], function(config, $, _, Backbone, globals, RecipeModel, HomeView, LoginView, UserSignUpView, RecipesAllView, RecipeCreateView, RecipeEditView) {
+	"views/RecipeEditView"], function(config, $, _, Backbone, globals, RecipeModel, HomeView, LoginView, UserSignUpView, RecipesAllView, RecipeDetailsView, RecipeCreateView, RecipeEditView) {
 
     var Router = Backbone.Router.extend({
 
@@ -44,7 +45,8 @@ define(["config",
 	    "login": "login", 
 	    "logout": "logout",
 	    "signUp": "signUp", 
-	    "recipes": "allRecipes", 			
+	    "recipes": "allRecipes",
+	    "recipe/:id": "viewRecipe",
 	    "new": "createNewRecipe",  
 	    "edit/:id": "editRecipe",		
 	    "error": "error",
@@ -77,6 +79,13 @@ define(["config",
 	    else
 		this.views['main'] = new RecipesAllView();				
 	},
+	viewRecipe: function(idParam) {
+	    this.unsetView('main');
+	    if(globals.currentUser.get('loggedIn') !== true)
+		Backbone.history.navigate('login', true);
+	    else
+		this.views['main'] = new RecipeDetailsView({idParam: idParam, model: RecipeModel});
+	},		
 	createNewRecipe: function() {
 	    this.unsetView('main');
 	    if(globals.currentUser.get('loggedIn') !== true)

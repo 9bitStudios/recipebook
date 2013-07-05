@@ -3,8 +3,9 @@ define(['jquery',
 	'backbone', 
 	'globals',
 	'models/DirectionModel',
+	'text!templates/direction-details.html',
 	'text!templates/direction-create.html',
-	], function($, _, Backbone, globals, DirectionModel, directionCreateTemplate){
+	], function($, _, Backbone, globals, DirectionModel, directionDetailsTemplate, directionCreateTemplate){
 
 		
     var DirectionView = Backbone.View.extend({
@@ -30,7 +31,12 @@ define(['jquery',
 	    this.render();
 	},
 	render: function() {
-	    var template = _.template(directionCreateTemplate, { model: this.model });
+	    
+	    if(this.options.editable === false)
+		var template = _.template(directionDetailsTemplate, { model: this.model });
+	    else
+		var template = _.template(directionCreateTemplate, { model: this.model });
+	    
 	    this.$el.html(template);
 	    $('#directions').append(this.$el);
 	},
