@@ -5,7 +5,7 @@ An experimental exercise client-side/single page application built with JavaScri
 
 Current libraries demonstrated...
 
-* [Backbone.js](http://backbonejs.org/])
+* [Backbone.js](http://backbonejs.org/)
 * [AngularJS](http://angularjs.org/)
 
 Perhaps more will be used in the future...
