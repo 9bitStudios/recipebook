@@ -57,3 +57,35 @@ app.controller('UserController', function ($rootScope, $scope) {
 	});
     }
 });
+
+app.controller('SignUpController', function ($rootScope, $scope, $location, userService, Notifications) {
+
+    init();
+    function init(){
+
+    }
+    
+    $scope.signUp = function(){
+	
+	var username = $scope.signup.username;
+	var password = $scope.signup.password;
+	
+	if(username && password) {
+	    userService.signUp(username, password).then(
+		function(data){	
+		    Notifications.success('New user created successfully');
+		    $location.path('/');
+		},
+		function(error) {
+		    Notifications.error('Error signing up');
+		}
+	    );
+	}
+	else {
+	    Notifications.error('Please enter a username and password');
+	}
+	    
+	
+    };	
+	
+});

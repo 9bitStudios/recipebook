@@ -159,8 +159,15 @@ app.service('userService', function ($http, configuration, $rootScope, $location
 	logout: function(){
 	    
 	},
-	signUp: function(){
+	signUp: function(username, password){
     
+	    var userToAdd = {username: username, password: password};
+	    var promise = $http.post(configuration.apiURL + '/user', userToAdd).then(function (response) {
+		return response.data;
+	    }, function(error){
+
+	    });
+	    return promise;    
 	},
 	
 	makeBase64Hash: function(user, pass){

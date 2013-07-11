@@ -16,7 +16,15 @@ app.config(function ($routeProvider) {
 	    access: {
 		restricted: false
 	    }
-        }) 	
+        }) 
+        .when('/signup',
+        {
+	    controller: 'SignUpController',
+            templateUrl: 'app/views/signup.html',
+	    access: {
+		restricted: false
+	    }	    
+        })	
 	.when('/recipes',
         {
 	    controller: 'RecipesAllController',
