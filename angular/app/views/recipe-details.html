@@ -1,0 +1,27 @@
+<h2>{{ recipe.name }}</h2>
+
+<h3>Ingredients</h3>
+
+    <div ng-controller="IngredientDetailsController">
+
+	<div id="ingredients" ng-repeat="ingredient in ingredients">
+	    <p>
+	    {{ ingredient.name }}
+	    </p>
+	</div>
+    </div>
+
+<h3>Directions</h3>
+
+    <div ng-controller="DirectionDetailsController">
+
+	<div id="ingredients" ng-repeat="direction in directions">
+	    <p>
+	    {{ direction.name }}
+	    </p>
+	</div>
+    </div>
+
+<ol id="directions"></ol>
+
+

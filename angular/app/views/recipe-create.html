@@ -1,0 +1,37 @@
+<h2>Create a recipe </h2>
+
+<form id="recipe-create">
+    <input type="text" data-ng-model="recipe.name" />
+
+    <h3>Ingredients</h3>
+
+    <div ng-controller="IngredientCreateController">
+	<p><a id="addIngredient" class="fa-icon-plus pointer" ng-click="addIngredientField()" add-ingredient> Add Ingredient</a></p>
+	<div id="ingredients" ng-repeat="ingredient in ingredients">
+	    <p>
+	    <input type="text" class="ingredient left" ng-model="ingredient.name"/>
+	    <a class="deleteIngredient fa-icon-remove pointer left" ng-click="removeIngredientField($index)"></a>
+	    </p>
+	    <div class="clear"></div>
+	</div>
+    </div>
+    
+    <h3>Directions</h3>
+
+    <div ng-controller="DirectionCreateController">
+	<p><a id="addDirection" class="fa-icon-plus pointer" ng-click="addDirectionField()" add-direction> Add Direction</a></p>
+	<div id="directions" ng-repeat="direction in directions">
+	    <p>
+	    <textarea class="direction left" ng-model="direction.name"></textarea>
+	    <a class="deleteDirection fa-icon-remove pointer left" ng-click="removeDirectionField($index)"></a>
+	    </p>
+	    <div class="clear"></div>
+	</div>
+    </div>   
+
+    <div class="clearout"></div>
+
+    <button data-ng-click="createRecipe()">Create Recipe</button>
+    
+</form>
+
