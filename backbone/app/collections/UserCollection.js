@@ -1,8 +1,8 @@
-define(['jquery','underscore', 'backbone'], function($, _, Backbone){
+define(['config','jquery','underscore', 'backbone'], function(config, $, _, Backbone){
 
 	var UserCollection = Backbone.Collection.extend({
 	
-		url: 'api/users',
+		url: config.apiURL + '/users'
 	
 	});
 	

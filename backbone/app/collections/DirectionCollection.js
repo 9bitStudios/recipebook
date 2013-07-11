@@ -1,9 +1,9 @@
-define(['jquery','underscore', 'backbone', 'models/DirectionModel'], function($, _, Backbone, DirectionModel){
+define(['config','jquery','underscore', 'backbone', 'models/DirectionModel'], function(config, $, _, Backbone, DirectionModel){
 
     var DirectionCollection = Backbone.Collection.extend({
 
 	model: DirectionModel,
-	url: "api/directions",
+	url: config.apiURL + "/directions",
 
     });
 

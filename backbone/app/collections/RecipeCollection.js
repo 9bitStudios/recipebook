@@ -1,9 +1,9 @@
-define(['jquery','underscore', 'backbone', 'models/RecipeModel'], function($, _, Backbone, RecipeModel){
+define(['config','jquery','underscore', 'backbone', 'models/RecipeModel'], function(config, $, _, Backbone, RecipeModel){
 
 	var RecipeCollection = Backbone.Collection.extend({
 	
 		model: RecipeModel,
-		url: "api/recipes",
+		url: config.apiURL + "/recipes"
 	
 	});
 	
