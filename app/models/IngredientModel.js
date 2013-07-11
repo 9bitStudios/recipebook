@@ -1,8 +1,8 @@
-define(['jquery','underscore', 'backbone'], function($, _, Backbone){
+define(['config','jquery','underscore', 'backbone'], function(config, $, _, Backbone){
 
     var IngredientModel = Backbone.Model.extend({
 	
-	urlRoot: 'api/ingredients', 
+	urlRoot: config.apiURL + '/ingredients', 
 	
 	defaults: {
 	    recipeId: null,

@@ -54,7 +54,7 @@ define(['config',
 	    
 	    var self = this;
 	    var ingredientCollection = new IngredientCollection();
-	    ingredientCollection.url = config.baseURL + "/api/ingredients/" + id;
+	    ingredientCollection.url = config.apiURL + "/ingredients/" + id;
 	    ingredientCollection.fetch({
 		wait: true,
 		reset: true,
@@ -78,7 +78,7 @@ define(['config',
 	    
 	    var self = this;
 	    var directionCollection = new DirectionCollection();
-	    directionCollection.url = config.baseURL + "/api/directions/" + id;
+	    directionCollection.url = config.apiURL + "/directions/" + id;
 	    directionCollection.fetch({
 		wait: true,
 		reset: true,

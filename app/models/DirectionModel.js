@@ -1,8 +1,8 @@
-define(['jquery','underscore', 'backbone'], function($, _, Backbone){
+define(['config', 'jquery','underscore', 'backbone'], function(config, $, _, Backbone){
 
     var DirectionModel = Backbone.Model.extend({
 	
-	urlRoot: 'api/directions', 
+	urlRoot: config.apiURL + '/directions', 
 	
 	defaults: {
 	    recipeId: null,

@@ -30,7 +30,7 @@ define(['config',
 
 	getRecipes: function(recipes){
 	    var self = this;
-	    recipes.url = config.baseURL + "/api/user/recipes/" + globals.currentUser.get('id');
+	    recipes.url = config.apiURL + "/user/recipes/" + globals.currentUser.get('id');
 	    recipes.fetch({
 		cache: false,
 		wait: true,

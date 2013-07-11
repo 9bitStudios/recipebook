@@ -62,7 +62,7 @@ define(['config',
 	    var self = this;
 	    var recipeName = $('#recipe-name').val();
 	    var recipe = new RecipeModel({ userId: globals.currentUser.get('id'), name: recipeName });
-	    recipe.url = config.baseURL + "/api/recipes/" + globals.currentUser.get('id');
+	    recipe.url = config.apiURL + "/recipes/" + globals.currentUser.get('id');
 	    recipe.save(null, {
 		wait: true,
 		success: function(model, response, options) {

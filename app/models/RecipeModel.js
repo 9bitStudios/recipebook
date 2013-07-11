@@ -1,9 +1,7 @@
-define(['jquery',
-	'underscore', 
-	'backbone'], function($, _, Backbone){
+define(['config','jquery','underscore', 'backbone'], function(config, $, _, Backbone){
 
     var RecipeModel = Backbone.Model.extend({
-	urlRoot: 'api/recipes', 
+	urlRoot: config.apiURL + '/recipes', 
 
 	defaults: {
 	    userId: null,
@@ -11,7 +9,6 @@ define(['jquery',
 	},
 
 	initialize: function() {
-	    console.log('New Recipe has been created...');
 	},
 
     });

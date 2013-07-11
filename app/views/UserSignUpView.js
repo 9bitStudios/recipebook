@@ -33,7 +33,7 @@ define(['config',
 	
 	    $.ajax({
 		type: "POST",
-		url: config.baseURL + "/api/user",
+		url: config.apiURL + "/user",
 		contentType: "application/json; charset=utf-8",
 		dataType: "json",
 		data: JSON.stringify({username: username, password: password}),				

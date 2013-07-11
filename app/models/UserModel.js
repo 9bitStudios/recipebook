@@ -6,7 +6,7 @@ define(['config',
 
     var UserModel = Backbone.Model.extend({
 
-	urlRoot: 'api/login', 
+	urlRoot: config.apiURL + '/login', 
 
 	defaults: {
 	    name: 'User',
@@ -35,7 +35,7 @@ define(['config',
 	    
 	    $.ajax({
 		type: "POST",
-		url: config.baseURL + "/api/logout",
+		url: config.apiURL + "/logout",
 		contentType: "application/json; charset=utf-8",
 		async: false,
 		dataType: "json",

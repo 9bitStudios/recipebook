@@ -33,7 +33,7 @@ define(['config',
 	    if(username.length > 0 && password.length > 0) {
 		$.ajax({
 		    type: "POST",
-		    url: config.baseURL + "/api/login",
+		    url: config.apiURL + "/login",
 		    contentType: "application/json; charset=utf-8",
 		    dataType: "json",
 		    username: username,
