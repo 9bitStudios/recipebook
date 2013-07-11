@@ -23,6 +23,7 @@ To get this project set up you have to do a couple things to configure the API a
 #### Config Files
 
 **JavaScript Config Files**
+
 In each project's "app" directory there should be a config.js file. What you'll want to to do is edit the "apiURL" property to set a path to point to the "api" directory found in this project (wherever you decide to put it) *without the trailing slash*. The config syntax will look a little bit different for different frameworks, but hopefully they're similar enough to understand what values need to be edited where. An example config.js file for the Backbone.js application is below...
 
 ```javascript
@@ -43,6 +44,7 @@ define([], function(){
 So you'd want to change the "apiURL" property to wherever it is you have put the file on your server.
 
 **API Config Files**
+
 You'll also want to configure your API config.php file inside of the "api" directory to set your database settings so that you can hook up your database with the API PHP files. See below for an example config.php file...
 
 ```php
@@ -57,7 +59,18 @@ We'll create the database in the next section.
 
 #### Database Setup
 
-As an example, on my server I created the database named 'recipebook' then ran the SQL below to create the needed tables. You can name your database whatever you want, you just need to be sure to set the name of the 'RECIPE_BOOK_DB_DATABASE' value in your config.php file.
+As an example, on my server I created the database named 'recipebook.' You can name your database whatever you want, you just need to be sure to set the name of the 'RECIPE_BOOK_DB_DATABASE' value in your config.php file.
+
+The easiest thing to do after this would probably be to just import the recipebook.sql file found in the "sql" directory into the database. This file pre-populates the database with a single user with the login...
+
+```javascript
+username: demo
+password: demo
+```
+
+So you can just login with those credentials right away. There are also a couple of sample recipes created under this user as well.
+
+But if you want to start from scratch or do things manually, the following SQL should do it for you...
 
 Recipes Table:
 
