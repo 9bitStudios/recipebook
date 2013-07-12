@@ -1,10 +1,10 @@
 
-app.service('recipeService', function ($http, configuration) {
+app.service('recipeService', function ($http, configuration, $rootScope) {
     
     return {
     
 	getAllRecipes: function () {
-	    var promise = $http.get(configuration.apiURL + '/recipes').then(function (response) {
+	    var promise = $http.get(configuration.apiURL + '/user/recipes/' + $rootScope.auth.id).then(function (response) {
 		return response.data;
 	    }, function(error){
 
@@ -25,8 +25,8 @@ app.service('recipeService', function ($http, configuration) {
 
 	addRecipe: function (name) {
 
-	    var recipeToAdd = {name: name};
-	    var promise = $http.post(configuration.apiURL + '/recipes', recipeToAdd).then(function (response) {
+	    var recipeToAdd = { name: name};
+	    var promise = $http.post(configuration.apiURL + '/recipes/' + $rootScope.auth.id, recipeToAdd).then(function (response) {
 
 		return response.data;
 
@@ -39,7 +39,7 @@ app.service('recipeService', function ($http, configuration) {
 
 	updateRecipe: function (id, name) {
 
-	    var recipeToUpdate = { id: id, name: name };
+	    var recipeToUpdate = { id: id, userId: $rootScope.auth.id, name: name };
 	    var promise = $http.put(configuration.apiURL + '/recipes/' + id, recipeToUpdate).then(function (response) {
 		return response.data;
 	    }, function(error){
