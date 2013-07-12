@@ -17,6 +17,14 @@ app.config(function ($routeProvider) {
 		restricted: false
 	    }
         }) 
+	.when('/logout',
+	{
+	    controller: 'LogoutController',
+            templateUrl: 'app/views/login.html',
+	    access: {
+		restricted: false
+	    }
+        }) 	
         .when('/signup',
         {
 	    controller: 'SignUpController',

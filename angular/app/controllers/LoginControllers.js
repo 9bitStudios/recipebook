@@ -33,6 +33,33 @@ app.controller('LoginController', function ($scope, $rootScope, $location, userS
     
 });
 
+app.controller('LogoutController', function ($rootScope, $location, configuration, RandomString) {
+
+    init();
+    function init(){
+	
+	jQuery.ajax({
+	    type: "POST",
+	    url: configuration.apiURL + "/logout",
+	    contentType: "application/json; charset=utf-8",
+	    async: false,
+	    dataType: "json",
+	    username: RandomString.generateString(8),
+	    password: RandomString.generateString(8),
+	    error: function (errorMessage) {
+		$rootScope.auth.id = null;
+		$rootScope.auth.username = null;
+		$rootScope.auth.isLoggedIn = false;
+		$rootScope.$broadcast('loginchange');	
+		$location.path('/');
+	    }
+	});		
+	
+	
+    }
+    
+});
+
 app.controller('UserController', function ($rootScope, $scope) {
 
     init();

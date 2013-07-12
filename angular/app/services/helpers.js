@@ -55,7 +55,27 @@ app.factory('applicationSync', function($rootScope) {
   
 });
 
-app.factory('Base64', function($rootScope) {
+app.factory('RandomString', function() {
+
+    return {
+	
+	generateString: function(strLength) {
+	    if(typeof strLength === 'undefined') 
+		strLength = 8;
+
+	    var text = "";
+	    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+	    for( var i=0; i < strLength; i++ )
+		    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+	    return text;
+	}
+    };
+
+});
+
+app.factory('Base64', function() {
 
     return {
 
