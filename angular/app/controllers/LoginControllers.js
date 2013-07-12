@@ -13,6 +13,7 @@ app.controller('LoginController', function ($scope, $rootScope, $location, userS
 	if(username && password) {
 	    userService.login(username, password).then(
 		function(data){
+		    $rootScope.auth.id = data.id;
 		    $rootScope.auth.username = data.username;
 		    $rootScope.auth.isLoggedIn = true;
 		    $rootScope.$broadcast('loginchange');	
