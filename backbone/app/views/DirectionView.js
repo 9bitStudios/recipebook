@@ -1,11 +1,10 @@
 define(['jquery',
 	'underscore', 
 	'backbone', 
-	'globals',
 	'models/DirectionModel',
 	'text!templates/direction-details.html',
 	'text!templates/direction-create.html',
-	], function($, _, Backbone, globals, DirectionModel, directionDetailsTemplate, directionCreateTemplate){
+	], function($, _, Backbone, DirectionModel, directionDetailsTemplate, directionCreateTemplate){
 
 		
     var DirectionView = Backbone.View.extend({

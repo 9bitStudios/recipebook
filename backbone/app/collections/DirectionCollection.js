@@ -1,4 +1,4 @@
-define(['config','jquery','underscore', 'backbone', 'models/DirectionModel'], function(config, $, _, Backbone, DirectionModel){
+define(['config', 'backbone', 'models/DirectionModel'], function(config, Backbone, DirectionModel){
 
     var DirectionCollection = Backbone.Collection.extend({
 

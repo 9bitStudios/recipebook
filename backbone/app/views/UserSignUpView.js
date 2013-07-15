@@ -2,9 +2,8 @@ define(['config',
 	'jquery',
 	'underscore', 
 	'backbone', 
-	'globals',
 	'views/NotificationView',
-	'text!templates/user-signup.html'], function(config, $, _, Backbone, globals, NotificationView, userSignUpTemplate){
+	'text!templates/user-signup.html'], function(config, $, _, Backbone, NotificationView, userSignUpTemplate){
 
 		
     var UserSignUpView = Backbone.View.extend({

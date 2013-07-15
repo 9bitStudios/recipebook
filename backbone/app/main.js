@@ -19,7 +19,7 @@ require.config({
 	}	  
     } 
 });
-require(['jquery', 'underscore', 'backbone', 'helper', 'app'], function($, _, Backbone, Helper, App){ 
+require(['backbone', 'app'], function(Backbone, App){ 
     
     // add any prototypes or Backbone extensions before kicking off the application
     

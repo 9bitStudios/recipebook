@@ -1,8 +1,7 @@
 define(['config', 
 	'jquery',
-	'underscore', 
 	'backbone', 
-	'helper'], function(config, $, _, Backbone, Helper){
+	'helper'], function(config, $, Backbone, Helper){
 
     var UserModel = Backbone.Model.extend({
 

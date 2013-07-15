@@ -1,11 +1,7 @@
 define(['jquery',
 	'underscore', 
-	'backbone', 
-	'globals',
-	'views/NotificationView',
-	'models/RecipeModel',
-	'collections/RecipeCollection', 
-	'text!templates/home.html'], function($, _, Backbone, globals, NotificationView, RecipeModel, RecipeCollection, homeTemplate){
+	'backbone',  
+	'text!templates/home.html'], function($, _, Backbone, homeTemplate){
 
     var HomeView = Backbone.View.extend({
 

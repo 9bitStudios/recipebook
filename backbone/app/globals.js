@@ -1,8 +1,5 @@
-define(['jquery', 
-	'underscore', 
-	'backbone',
-	'models/UserModel',
-	'views/UserInfoView'], function($, _, Backbone, UserModel, UserInfoView) {
+define(['models/UserModel',
+	'views/UserInfoView'], function(UserModel, UserInfoView) {
 	
     // global variables that need to be made available across the entire application 
     

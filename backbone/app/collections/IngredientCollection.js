@@ -1,4 +1,4 @@
-define(['config','jquery','underscore', 'backbone', 'models/IngredientModel'], function(config, $, _, Backbone, IngredientModel){
+define(['config', 'backbone', 'models/IngredientModel'], function(config, Backbone, IngredientModel){
 
     var IngredientCollection = Backbone.Collection.extend({
 

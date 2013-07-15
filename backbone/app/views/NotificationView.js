@@ -1,7 +1,6 @@
 define(['jquery',
-	'underscore',
 	'backbone'
-	], function($, _, Backbone){
+	], function($, Backbone){
 
 		
     var NotificationView = Backbone.View.extend({

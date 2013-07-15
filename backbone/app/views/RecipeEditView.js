@@ -2,7 +2,6 @@ define(['config',
 	'jquery',
 	'underscore', 
 	'backbone', 
-	'globals',
 	'views/NotificationView',
 	'models/RecipeModel',
 	'models/IngredientModel',
@@ -12,7 +11,7 @@ define(['config',
 	'views/IngredientView',
 	'views/DirectionView',
 	'text!templates/recipe-edit.html'
-	], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
+	], function(config, $, _, Backbone, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
 
 		
     var RecipeEditView = Backbone.View.extend({
@@ -95,7 +94,7 @@ define(['config',
 		},
 
 		error: function(model, xhr, options) {
-		    var error = new NotificationView({ type:'error', text: 'Error getting ingredients' });
+		    var error = new NotificationView({ type:'error', text: 'Error getting directions' });
 		}
 
 	    });	    	    

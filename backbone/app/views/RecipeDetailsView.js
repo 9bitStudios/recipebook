@@ -2,17 +2,14 @@ define(['config',
 	'jquery',
 	'underscore', 
 	'backbone', 
-	'globals',
 	'views/NotificationView',
 	'models/RecipeModel',
-	'models/IngredientModel',
-	'models/DirectionModel',
 	'collections/IngredientCollection',
 	'collections/DirectionCollection',
 	'views/IngredientView',
 	'views/DirectionView',
 	'text!templates/recipe-details.html'
-	], function(config, $, _, Backbone, globals, NotificationView, RecipeModel, IngredientModel, DirectionModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
+	], function(config, $, _, Backbone, NotificationView, RecipeModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
 
 		
     var RecipeDetailsView = Backbone.View.extend({

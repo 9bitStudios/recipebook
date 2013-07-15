@@ -1,8 +1,5 @@
-define(['jquery',
-	'underscore', 
-	'backbone', 
-	'globals',
-	], function($, _, Backbone, globals){
+define(['backbone'
+	], function(Backbone){
 
 		
     var LoadingView = Backbone.View.extend({

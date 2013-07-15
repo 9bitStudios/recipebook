@@ -1,12 +1,10 @@
 define(['jquery',
 	'underscore', 
 	'backbone', 
-	'globals',
-	'views/NotificationView',
 	'models/IngredientModel',
 	'text!templates/ingredient-details.html',
 	'text!templates/ingredient-create.html',
-	], function($, _, Backbone, globals, NotificationView, IngredientModel, ingredientDetailsTemplate, ingredientCreateTemplate){
+	], function($, _, Backbone, IngredientModel, ingredientDetailsTemplate, ingredientCreateTemplate){
 
 		
     var IngredientView = Backbone.View.extend({

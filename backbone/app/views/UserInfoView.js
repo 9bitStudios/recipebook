@@ -1,9 +1,7 @@
-define(['config',
-	'jquery',
+define(['jquery',
 	'underscore', 
 	'backbone', 
-	'globals',
-	'text!templates/user-info.html'], function(config, $, _, Backbone, globals, userInfoTemplate){
+	'text!templates/user-info.html'], function($, _, Backbone, userInfoTemplate){
 
 		
     var UserInfoView = Backbone.View.extend({
