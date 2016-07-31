@@ -4,7 +4,7 @@ define([], function(){
     // e.g. config.property or config['property'].
     return { 
 	debug: true,
-	apiURL: 'http://localhost/development/javascript/RecipeBook/api',
+	apiURL: 'http://localhost:8080/api',
 	applicationName: 'Recipe Book',
 	applicationAuthor: '9bit Studios'
     };	

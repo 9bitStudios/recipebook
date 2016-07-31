@@ -36,17 +36,18 @@ define(['config',
 		    url: config.apiURL + "/login",
 		    contentType: "application/json; charset=utf-8",
 		    dataType: "json",
-		    username: username,
-		    password: password,				
+			beforeSend: function (xhr) {
+				xhr.setRequestHeader ("Authorization", "Basic " + btoa(username + ":" + password));
+			},				
 		    success: function (data) {
-			globals.currentUser.set({id: data.id, name: data.username, loggedIn: true});
-			Helper.createCookie('RecipeLogin', 1);
-			Helper.createCookie('RecipeUser', data.username);
-			Helper.createCookie('RecipeId', data.id);
-			Backbone.history.navigate('', true);
+				globals.currentUser.set({id: data.id, name: data.username, loggedIn: true});
+				Helper.createCookie('RecipeLogin', 1);
+				Helper.createCookie('RecipeUser', data.username);
+				Helper.createCookie('RecipeId', data.id);
+				Backbone.history.navigate('', true);
 		    },
 		    error: function (errorMessage) {
-			var error = new NotificationView({ type:'error', text: 'Error logging in' });
+				var error = new NotificationView({ type:'error', text: 'Error logging in' });
 		    }
 		});	
 	    }
