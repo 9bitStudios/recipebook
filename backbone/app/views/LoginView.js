@@ -41,6 +41,9 @@ define(['config',
 			},				
 		    success: function (data) {
 				globals.currentUser.set({id: data.id, name: data.username, loggedIn: true});
+				Backbone.$.ajaxSetup({
+					headers: {'Authorization' :'Basic ' + btoa(username + ":" + password)}
+				});				
 				Helper.createCookie('RecipeLogin', 1);
 				Helper.createCookie('RecipeUser', data.username);
 				Helper.createCookie('RecipeId', data.id);
