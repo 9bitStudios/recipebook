@@ -1,5 +1,8 @@
-define(['underscore', 'backbone'], function(_, Backbone){
-	
+define([
+	'underscore', 
+	'backbone'
+], function(_, Backbone){
+
     return { 
 	
 		htmlEncode: function(value) {
@@ -8,14 +11,16 @@ define(['underscore', 'backbone'], function(_, Backbone){
 		
 		randomString: function(strLength) {
 		
-			if(typeof strLength === 'undefined') 
+			if(typeof strLength === 'undefined') { 
 				strLength = 8;
-		
+			}
+
 			var text = "";
 			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-			for( var i=0; i < strLength; i++ )
+			for(var i=0; i < strLength; i++) {
 				text += possible.charAt(Math.floor(Math.random() * possible.length));
+			}
 
 			return text;		
 		},
@@ -26,7 +31,9 @@ define(['underscore', 'backbone'], function(_, Backbone){
 				date.setTime(date.getTime()+(days*24*60*60*1000));
 				var expires = "; expires="+date.toGMTString();
 			}
-			else var expires = "";
+			else {
+				var expires = "";
+			}
 			document.cookie = name+"="+value+expires+"; path=/";
 		},
 
@@ -48,4 +55,3 @@ define(['underscore', 'backbone'], function(_, Backbone){
     };
 	
 });
-

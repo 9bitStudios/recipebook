@@ -1,18 +1,21 @@
-define(['config', 'backbone'], function(config, Backbone){
+define([
+	'config', 
+	'backbone'
+], function(config, Backbone){
 
-    var RecipeModel = Backbone.Model.extend({
-	urlRoot: config.apiURL + '/recipes', 
+	var RecipeModel = Backbone.Model.extend({
+		urlRoot: config.apiURL + '/recipes', 
 
-	defaults: {
-	    userId: null,
-	    name: 'New Recipe',
-	},
+		defaults: {
+			userId: null,
+			name: 'New Recipe',
+		},
 
-	initialize: function() {
-	},
+		initialize: function() {
+		},
 
-    });
-	
-    return RecipeModel;
-	
+	});
+
+	return RecipeModel;
+
 });

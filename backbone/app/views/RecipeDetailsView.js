@@ -1,4 +1,5 @@
-define(['config',
+define([
+	'config',
 	'jquery',
 	'underscore', 
 	'backbone', 
@@ -9,7 +10,7 @@ define(['config',
 	'views/IngredientView',
 	'views/DirectionView',
 	'text!templates/recipe-details.html'
-	], function(config, $, _, Backbone, NotificationView, RecipeModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
+], function(config, $, _, Backbone, NotificationView, RecipeModel, IngredientCollection, DirectionCollection, IngredientView, DirectionView, recipeEditTemplate){
 
 		
     var RecipeDetailsView = Backbone.View.extend({

@@ -1,11 +1,13 @@
-define(['router'], function(Router){
+define([
+    'router'
+], function(Router){
     
     var initialize = function(){
-	Router.init();
+        Router.init();
     };
-    
+
     return { 
-	init: initialize
+        init: initialize
     };
     
 });

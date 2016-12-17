@@ -4,64 +4,61 @@
 <!--[if IE 8]><html class="lt-ie9" lang="en"><![endif]-->
 <!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
 <head>
-  <meta charset="utf-8">
-  <title>Recipe Book</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="../css/style.css">
+<meta charset="utf-8">
+<title>Recipe Book</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="../css/style.css">
 </head>
- 
+
 <body>
 
 <header>
-    <div class="headerContainer">
-	<div class="header">
-	    <div class="row">
-		
-		<div class="six	columns">
-		    
-		    <a href="#/" class="fa-icon-home white">&nbsp;&nbsp;Home</a>
-		    
+	<div class="headerContainer">
+		<div class="header">
+			<div class="row">
+
+				<div class="six	columns">
+
+					<a href="#/" class="fa-icon-home white">&nbsp;&nbsp;Home</a>
+				</div>
+
+				<div class="six	columns">
+					<div id="userInfo" ng-controller="UserController" class="right">
+						<div ng-show="isLoggedIn">
+							Welcome {{ user }} &nbsp;|&nbsp; <a href="#/logout">Logout</a>
+						</div>
+						<div ng-show="!isLoggedIn">
+							<a href="#/login">Login</a> &nbsp;|&nbsp; <a href="#/signup">Sign Up</a>
+						</div>
+					</div>
+				</div>		
+
+			</div>
 		</div>
-		
-		<div class="six	columns">
-		    <div id="userInfo" ng-controller="UserController" class="right">
-			<div ng-show="isLoggedIn">
-			    Welcome {{ user }} &nbsp;|&nbsp; <a href="#/logout">Logout</a>
-			</div>
-			<div ng-show="!isLoggedIn">
-			    <a href="#/login">Login</a> &nbsp;|&nbsp; <a href="#/signup">Sign Up</a>
-			</div>
-		    </div>
-		</div>		
-		
-	    </div>
-	    
 	</div>
-    </div>
 </header>
-    
+
 <div class="contentContainer">      
-    <div class="row">   
-	<div class="twelve columns">
-	    <div class="postContent">   
-		<h1>Recipe Book</h1>
-		<div id="message"></div>
-		<div data-ng-view=""></div>
-	    </div>
+	<div class="row">   
+		<div class="twelve columns">
+			<div class="postContent">   
+				<h1>Recipe Book</h1>
+				<div id="message"></div>
+				<div data-ng-view=""></div>
+			</div>
+		</div>
 	</div>
-    </div>
 </div>
 
 <footer>
-    <div class="footerContainer">
-	<div class="footer">
-	    <div class="row"></div>
+	<div class="footerContainer">
+		<div class="footer">
+			<div class="row"></div>
+		</div>
 	</div>
-    </div>
 </footer>
-    
-    
-    
+
+
 <!-- App scripts -->
 <script src="app/libs/angular1.1.4.js"></script>
 <script src="app/libs/jquery.min.js"></script>
@@ -87,6 +84,6 @@
 
 <!-- Directives -->
 <script src="app/directives/fadeout.js"></script>
-    
+
 </body>
 </html>

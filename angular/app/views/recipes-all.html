@@ -1,10 +1,10 @@
 <div data-ng-repeat="recipe in recipes">
-    <p>
-	<h4>{{ recipe.name }}</h4>
-	<a href="#/recipe/{{ recipe.id }}" class="fa-icon-eye-open"> View</a>&nbsp;|&nbsp;
-	<a href="#/edit/{{ recipe.id }}" class="fa-icon-pencil"> Edit</a>&nbsp;|&nbsp;
-	<a href="" data-ng-click="deleteRecipe($index)" fade-out="500" class="delete fa-icon-remove"> Delete</a>
-    </p>
+	<div>
+		<h4>{{ recipe.name }}</h4>
+		<a href="#/recipe/{{ recipe.id }}" class="fa-icon-eye-open"> View</a>&nbsp;|&nbsp;
+		<a href="#/edit/{{ recipe.id }}" class="fa-icon-pencil"> Edit</a>&nbsp;|&nbsp;
+		<a href="" data-ng-click="deleteRecipe($index)" fade-out="500" class="delete fa-icon-remove"> Delete</a>
+	</div>
 </div>
 
 <a href="#/new" class="nbs-button-medium nbs-button-green-flat">Create New Recipe</a>

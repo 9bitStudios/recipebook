@@ -1,29 +1,27 @@
-define(['backbone'
-	], function(Backbone){
+define([
+	'backbone'
+], function(Backbone){
 
-		
-    var LoadingView = Backbone.View.extend({
+	var LoadingView = Backbone.View.extend({
 
-	tagName: 'div',
-	
-	className: 'loading',
+		tagName: 'div',
 
-	targetElement: 'body',
+		className: 'loading',
 
-	initialize: function(options){
-	    if(options && options.hasOwnProperty('target'))
-		this.targetElement = options.target;
-	    
-	    this.render();
-	},
-	render: function() {
-	    this.$el.text('Loading');
-	    this.$el.prependTo(this.targetElement);
-	}
-    });
-    
-    return LoadingView;
-	
+		targetElement: 'body',
+
+		initialize: function(options){
+			if(options && options.hasOwnProperty('target')) {
+				this.targetElement = options.target;
+			}
+			this.render();
+		},
+		render: function() {
+			this.$el.text('Loading');
+			this.$el.prependTo(this.targetElement);
+		}
+	});
+
+	return LoadingView;
+
 });
-
-

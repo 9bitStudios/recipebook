@@ -1,64 +1,59 @@
 
 app.service('recipeService', function ($http, configuration, $rootScope) {
-    
-    return {
-    
-	getAllRecipes: function () {
-	    var promise = $http.get(configuration.apiURL + '/user/recipes/' + $rootScope.auth.id).then(function (response) {
-		return response.data;
-	    }, function(error){
+	return {
+		getAllRecipes: function () {
+			var promise = $http.get(configuration.apiURL + '/user/recipes/' + $rootScope.auth.id).then(function (response) {
+				return response.data;
+			}, function(error){
 
-	    });
+			});
 
-	    return promise;	
-	},
-	
-	getRecipe: function (id) {
+			return promise;	
+		},
 
-	    var promise = $http.get(configuration.apiURL + '/recipes/' + id).then(function (response) {
-		return response.data;
-	    }, function(error){
+		getRecipe: function (id) {
 
-	    });
-	    return promise;	
-	},
+			var promise = $http.get(configuration.apiURL + '/recipes/' + id).then(function (response) {
+				return response.data;
+			}, function(error){
 
-	addRecipe: function (name) {
+			});
+			return promise;	
+		},
 
-	    var recipeToAdd = { name: name};
-	    var promise = $http.post(configuration.apiURL + '/recipes/' + $rootScope.auth.id, recipeToAdd).then(function (response) {
+		addRecipe: function (name) {
 
-		return response.data;
+			var recipeToAdd = { name: name};
+			var promise = $http.post(configuration.apiURL + '/recipes/' + $rootScope.auth.id, recipeToAdd).then(function (response) {
+				return response.data;
+			}, function(error){
 
-	    }, function(error){
+			});
+			return promise;		
 
-	    });
-	    return promise;		
+		},
 
-	},
+		updateRecipe: function (id, name) {
 
-	updateRecipe: function (id, name) {
+			var recipeToUpdate = { id: id, userId: $rootScope.auth.id, name: name };
+			var promise = $http.put(configuration.apiURL + '/recipes/' + id, recipeToUpdate).then(function (response) {
+				return response.data;
+			}, function(error){
 
-	    var recipeToUpdate = { id: id, userId: $rootScope.auth.id, name: name };
-	    var promise = $http.put(configuration.apiURL + '/recipes/' + id, recipeToUpdate).then(function (response) {
-		return response.data;
-	    }, function(error){
+			});
+			return promise;	
+		},
 
-	    });
-	    return promise;	
+		deleteRecipe: function (id) {
 
-	},
+			var promise = $http.delete(configuration.apiURL + '/recipes/' + id).then(function (response) {
+				return response.data;
+			}, function(error){
 
-	deleteRecipe: function (id) {
+			});
+			return promise;		
 
-	    var promise = $http.delete(configuration.apiURL + '/recipes/' + id).then(function (response) {
-		return response.data;
-	    }, function(error){
-
-	    });
-	    return promise;		
-
-	}    
-    };
+		}    
+	};
 
 });

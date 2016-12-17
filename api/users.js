@@ -13,16 +13,23 @@ module.exports = function(app) {
 		var salt = bcrypt.genSaltSync(10);
 		var passwordHash = bcrypt.hashSync(password, salt);
         
-        db.query('INSERT INTO `users` SET ?', { 'username': username, 'password': passwordHash }, function (error, results, fields) {
+        db.query('SELECT * FROM `users` WHERE `username` = ?', username, function (error, results, fields) {
+            
+            // username does not exist
+            if(results.length === 0) {
+                db.query('INSERT INTO `users` SET ?', { 'username': username, 'password': passwordHash }, function (error, results, fields) {
+                    if(error) {
+                        response.status(500).send({ error: 'Error adding user' });
+                    } else {
+                        response.json({
+                            'username': username
+                        });
+                    }
 
-            if(error) {
-                next();
-            } else {
-                response.json({
-                    'username': username
                 });
+            } else { // username already exists
+                response.status(403).send({ error: 'User already exists' });
             }
-
         });        
 
     });
