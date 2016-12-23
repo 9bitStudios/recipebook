@@ -1,4 +1,4 @@
-export class Events {
+class Events {
  
     constructor(){ 
         this.eventList = { }; 
@@ -31,3 +31,5 @@ export class Events {
         return this.eventList
     }
 }
+
+export default new Events();

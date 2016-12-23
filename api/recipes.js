@@ -24,7 +24,7 @@ module.exports = function(app) {
     });
 
     // GET /api/recipes
-    app.get('/api/user/recipes/:id', function(request, response){
+    app.get('/api/user/recipes/:id', Authentication.BasicAuthentication, function(request, response){
         db.query('SELECT * FROM `recipes` WHERE `user_id` = ?', [request.params.id], function (error, results, fields) {
             if(error) {
                 response.status(500).send({ error: 'Error getting data' });
