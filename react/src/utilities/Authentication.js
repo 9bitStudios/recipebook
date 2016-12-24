@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import config from '../Config';
+import config from 'Config';
 import {Helper} from './Helper';
 
 class Authentication {

@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
     devtool: 'source-map',
@@ -8,6 +9,11 @@ module.exports = {
         filename: "App.js"
     },
     watch: true,
+    resolve: {
+        root: [
+            path.resolve(__dirname  + '/react/src')
+        ]
+    },    
     module: {
         loaders: [{
             test: /\.jsx?$/,

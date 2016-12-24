@@ -1,7 +1,7 @@
 import {react} from 'react';
 import $ from 'jquery';
 import {Recipe} from './Recipe';
-import Authentication from '../../utilities/Authentication';
+import Authentication from 'utilities/Authentication';
 
 export class RecipeList extends React.Component {
     constructor(){

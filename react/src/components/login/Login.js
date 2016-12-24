@@ -1,6 +1,6 @@
 import {react} from 'react';
-import Authentication from '../../utilities/Authentication';
-import Events from '../../utilities/Events';
+import Authentication from 'utilities/Authentication';
+import Events from 'utilities/Events';
 
 export class Login extends React.Component {
     constructor(){
