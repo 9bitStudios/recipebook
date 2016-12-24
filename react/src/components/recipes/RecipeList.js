@@ -13,16 +13,17 @@ export class RecipeList extends React.Component {
 
     getRecipes(){
 
-        let token = Authentication.getUserInfo().token;
+        const id = Authentication.getUserInfo()['id'];
+        const token = Authentication.getUserInfo()['token'];
         let def = $.Deferred();
         
         $.ajax({
             type: "GET",
-            url: Config.apiURL + "/user/recipes/1",
+            url: `${Config.apiURL}/user/recipes/${id}`,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", "Basic " + token);
+                xhr.setRequestHeader ("Authorization", `Basic ${token}`);
             },
             success:(data, textStatus, jqXHR) => {
                 def.resolve(data)

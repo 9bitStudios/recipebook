@@ -10,6 +10,16 @@ class Authentication {
             loggedIn: false,
             token: null
         };
+
+        this.init();
+    }
+    init(){
+        let auth = Helper.ReadCookie('RecipeAuth');
+
+        if(auth){
+            auth = JSON.parse(auth);
+            this.userInfo = auth;
+        }
     }
     getUserInfo() {
         return this.userInfo;
@@ -31,6 +41,7 @@ class Authentication {
                 this.userInfo.username = data.username;
                 this.userInfo.loggedIn = true;
                 this.userInfo.token = token;
+                Helper.CreateCookie('RecipeAuth', JSON.stringify(this.getUserInfo()))
                 def.resolve(this.userInfo);
             },
             error:(jqXHR, textStatus, errorThrown) => {
