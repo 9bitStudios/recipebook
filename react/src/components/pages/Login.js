@@ -2,9 +2,9 @@ import {react} from 'react';
 import Authentication from 'utilities/Authentication';
 import Events from 'utilities/Events';
 
-export class Login extends React.Component {
+export default class Login extends React.Component {
     constructor(){
-        super(...arguments);
+        super(...arguments);        
     }
     login(){
         let username = ReactDOM.findDOMNode(this.refs.name).value

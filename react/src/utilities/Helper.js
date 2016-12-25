@@ -47,7 +47,7 @@ export class Helper {
     }
 
     static DestroyCookie(name) {
-        this.createCookie(name,"",-1);
+        this.CreateCookie(name,"",-1);
     }
     
     static StripTrailingSlash(str){

@@ -7,7 +7,6 @@ class Authentication {
         this.userInfo = {
             id: null,
             username: '',
-            loggedIn: false,
             token: null
         };
 
@@ -39,7 +38,6 @@ class Authentication {
             success:(data, textStatus, jqXHR) => {
                 this.userInfo.id = data.id;
                 this.userInfo.username = data.username;
-                this.userInfo.loggedIn = true;
                 this.userInfo.token = token;
                 Helper.CreateCookie('RecipeAuth', JSON.stringify(this.getUserInfo()))
                 def.resolve(this.userInfo);
@@ -52,7 +50,12 @@ class Authentication {
 
     }
     logout(){
-        
+        this.userInfo = {
+            id: null,
+            username: '',
+            token: null
+        };        
+        Helper.DestroyCookie('RecipeAuth');
     }
 }
 

@@ -1,30 +1,17 @@
 import {react} from 'react';
-import {RecipeList} from 'components/recipes/RecipeList';
-import {Login} from 'components/login/Login';
-import Events from 'utilities/Events';
-import Authentication from 'utilities/Authentication';
+import {Link} from 'react-router';
 
 export default class Home extends React.Component {
     constructor(){
         super(...arguments);
-
-        Events.on('login', () =>{
-            this.forceUpdate()
-        });
     }
     render(){
-        if(Authentication.getUserInfo().loggedIn) {
-            return (
-                <div>
-                    <RecipeList />
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    <Login />
-                </div>
-            );            
-        }
+        return(        
+            <div>
+                <p>Welcome to the Recipe Book Application...</p>
+
+                <h4><Link to="/recipes">View My Recipes</Link></h4>        
+            </div>
+        );
     }
 }
