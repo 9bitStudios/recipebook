@@ -1,13 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>React</title>
+    <title>Recipe Book</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <div id="content"></div>
-    
+
+    <header>
+        <div class="headerContainer">
+            <div class="header">
+                <div class="row">
+                    <div class="six	columns">
+                        <a href="#" class="fa-icon-home white">&nbsp;&nbsp;Home</a>
+                    </div>
+
+                    <div class="six	columns">
+                        <div id="userInfo" class="right"></div>
+                    </div>		
+
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <div class="contentContainer">      
+        <div class="row">   
+            <div class="twelve columns">
+                <div class="postContent">    
+                    <h1>Recipe Book</h1>
+                    <div id="message"></div>
+                    <div id="content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footerContainer">
+            <div class="footer">
+                <div class="row"></div>
+            </div>
+        </div>
+    </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.0/react-dom.js"></script>

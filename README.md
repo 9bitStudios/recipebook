@@ -7,6 +7,7 @@ Current libraries demonstrated...
 
 * [Backbone.js](http://backbonejs.org/)
 * [AngularJS](http://angularjs.org/)
+* [React](https://facebook.github.io/react/) (in progress)
 
 Perhaps more will be used in the future...
 

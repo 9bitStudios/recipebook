@@ -21,13 +21,13 @@ export default class UserMenu extends React.Component {
         if(Authentication.getUserInfo().id){
             return (
                 <div>
-                    Welcome {Authentication.getUserInfo().username} | <button onClick={() => this.logout()}>Logout</button>
+                    Welcome {Authentication.getUserInfo().username} | <a onClick={() => this.logout()}>Logout</a>
                 </div>
             );            
         } else {
             return (
                 <div>
-                    Welcome, <Link to="/login">Login</Link>
+                    <a href="#login">Login</a> | <a href="#signup">Sign Up</a>
                 </div>
             );
         }

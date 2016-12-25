@@ -9,14 +9,17 @@ export default class Login extends React.Component {
     login(){
         let username = ReactDOM.findDOMNode(this.refs.name).value
         let password = ReactDOM.findDOMNode(this.refs.password).value
-        Authentication.login(username, password).then((user) => Authentication.redirect());
+        Authentication.login(username, password).then((user) => { 
+            Events.broadcast('login');
+            Authentication.redirect() 
+        });
     }    
     render() {
         return (
-            <div>
-                <input name="name" type="text" ref="name" />
-                <input name="password" type="password" ref="password" />
-                <button onClick={() => this.login()}>Login</button>
+            <div id="log-in">
+                <p><label>User Name</label> <input name="name" type="text" ref="name" /></p>
+                <p><label>Password</label><input name="password" type="password" ref="password" /></p>
+                <button id="login" onClick={() => this.login()}>Login</button>
             </div>
         );
     }
