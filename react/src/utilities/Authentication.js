@@ -9,6 +9,13 @@ class Authentication {
             username: '',
             token: null
         };
+        
+        // called in/by React Router
+        this.authenticateRoute = (nextState, replace) => {
+            if(!this.userInfo.id) {
+                replace('/login');
+            }
+        }
 
         this.init();
     }
@@ -56,7 +63,16 @@ class Authentication {
             token: null
         };        
         Helper.DestroyCookie('RecipeAuth');
+        this.redirect();
     }
+    redirect(route){
+        if(route) {
+            window.location.hash = '#' + route;
+        } else {
+             window.location.hash = '#';
+        }
+    }
+
 }
 
 export default new Authentication();

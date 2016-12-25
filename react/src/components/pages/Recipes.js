@@ -10,18 +10,10 @@ export default class Recipes extends React.Component {
     }
     
     render() {
-
-        if(Authentication.getUserInfo().id) {
-            return (
-                <div>
-                    <RecipeList />
-                </div>
-            );
-        } else {
-            hashHistory.push('/login');
-            return false;
-        }  
-
-
+        return (
+            <div>
+                <RecipeList />
+            </div>
+        );
     }
 }
