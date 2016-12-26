@@ -1,7 +1,8 @@
 import {react} from 'react';
 import $ from 'jquery';
-import { Link } from 'react-router';
 import Authentication from 'utilities/Authentication';
+import RecipeListItem from 'components/recipes/RecipeListItem';
+
 
 export class RecipeList extends React.Component {
     constructor(){
@@ -75,18 +76,8 @@ export class RecipeList extends React.Component {
     render(){
 
         var recipes = this.state.recipes.map((recipe, index) => {
-            
-            let cssClass = `recipe-item-${recipe.id}`;
-            let viewPath = `/recipe/${recipe.id}`;
-            let editPath = `/edit/${recipe.id}`;
-
             return (
-                <div className={cssClass}>
-                    <h4>{recipe.name}</h4>
-                    <Link to={viewPath} className="fa-icon-eye-open"> View</Link>&nbsp;|&nbsp;		
-                    <Link to={editPath} className="fa-icon-pencil"> Edit</Link>&nbsp;|&nbsp;
-                    <a onClick={() => this.deleteRecipe(index)} className="delete fa-icon-remove"> Delete</a>
-                </div>
+                <RecipeListItem key={recipe.id} id={recipe.id} name={recipe.name} remove={() => this.deleteRecipe(index)} />
             );
         });
         
