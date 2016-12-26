@@ -2,7 +2,7 @@ import {react} from 'react';
 import Authentication from 'utilities/Authentication';
 import Events from 'utilities/Events';
 
-export default class Login extends React.Component {
+export default class LoginPage extends React.Component {
     constructor(){
         super(...arguments);        
     }

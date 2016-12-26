@@ -1,7 +1,7 @@
 import {react} from 'react';
 import {Link} from 'react-router';
 
-export default class Home extends React.Component {
+export default class HomePage extends React.Component {
     constructor(){
         super(...arguments);
     }
