@@ -7,6 +7,7 @@ import HomePage from 'components/pages/HomePage';
 import AboutPage from 'components/pages/AboutPage';
 import LoginPage from 'components/pages/LoginPage';
 import RecipeListPage from 'components/pages/RecipeListPage';
+import RecipePage from 'components/pages/RecipePage';
 
 ReactDOM.render(<UserMenu />, document.getElementById('userInfo'));
 
@@ -17,6 +18,8 @@ ReactDOM.render(
             <Route path="about" component={AboutPage} />
             <Route path="login" component={LoginPage} />
             <Route path="recipes" component={RecipeListPage} onEnter={Authentication.authenticateRoute} />
+            <Route path="recipe/:id" component={RecipePage} onEnter={Authentication.authenticateRoute} />
+            <Route path="edit/:id" component={RecipePage} onEnter={Authentication.authenticateRoute} />
         </Route>
     </Router>, 
 document.getElementById('content'));

@@ -5,13 +5,6 @@ export class Recipe extends React.Component {
         super(...arguments);
     }
 
-    getEditDisplay(){
-
-    }
-
-    getViewDisplay(){
-
-    }
     render() {
         return (
             <div>{this.props.name}</div>
