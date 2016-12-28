@@ -22,6 +22,8 @@ export class Direction extends React.Component {
         this.setState({
             name: name
         });
+
+        this.props.change(name);
     }
 
     render() {

@@ -17,15 +17,17 @@ export default class RecipePage extends React.Component {
         }
     }    
 
-    getRecipe(id){
+    request(method = "GET", url, data = null){
 
         let def = $.Deferred();
+        if(data) { data = JSON.stringify(data) }
         
         $.ajax({
-            type: "GET",
-            url: `${Config.apiURL}/recipes/${id}`,
+            type: method,
+            url: `${Config.apiURL}${url}`,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
+            data: data,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader ("Authorization", `Basic ${Authentication.getUserInfo()['token']}`);
             },
@@ -36,69 +38,25 @@ export default class RecipePage extends React.Component {
                 def.reject(jqXHR);
             }
         });
-        return def.promise();        
-    }
-    
-    getDirections(id){
-
-        let def = $.Deferred();
-        
-        $.ajax({
-            type: "GET",
-            url: `${Config.apiURL}/directions/${id}`,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", `Basic ${Authentication.getUserInfo()['token']}`);
-            },
-            success:(data, textStatus, jqXHR) => {
-                def.resolve(data)
-            },
-            error:(jqXHR, textStatus, errorThrown) => {
-                def.reject(jqXHR);
-            }
-        });
-        return def.promise();        
-    }  
-
-    getIngredients(id){
-
-        let def = $.Deferred();
-        
-        $.ajax({
-            type: "GET",
-            url: `${Config.apiURL}/ingredients/${id}`,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader ("Authorization", `Basic ${Authentication.getUserInfo()['token']}`);
-            },
-            success:(data, textStatus, jqXHR) => {
-                def.resolve(data)
-            },
-            error:(jqXHR, textStatus, errorThrown) => {
-                def.reject(jqXHR);
-            }
-        });
-        return def.promise();        
+        return def.promise();         
+            
     }
 
     componentWillMount(){
-        this.getRecipe(this.state.id).then(recipe => {
+        this.request("GET", `/recipes/${this.state.id}`).then(recipe => {
             this.setState({ 
                 id: recipe.id,
-                name: recipe.name                
+                name: recipe.name
             });
-
         });
 
-        this.getIngredients(this.state.id).then(ingredients => {
+        this.request("GET", `/ingredients/${this.state.id}`).then(ingredients => {
             this.setState({ 
                 ingredients: ingredients 
             });            
         });
 
-        this.getDirections(this.state.id).then(directions => {
+        this.request("GET", `/directions/${this.state.id}`).then(directions => {
             this.setState({ 
                 directions: directions 
             });            
@@ -119,7 +77,7 @@ export default class RecipePage extends React.Component {
         return (
 
             <div>
-                <h4>{this.state.name}</h4>
+                <h2>{this.state.name}</h2>
 
                 <h3>Ingredients</h3>
                 <ul>{ingredients}</ul>

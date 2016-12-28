@@ -1,5 +1,6 @@
 import {react} from 'react';
 import $ from 'jquery';
+import { Link } from 'react-router';
 import Authentication from 'utilities/Authentication';
 import RecipeListItem from 'components/recipes/RecipeListItem';
 
@@ -35,7 +36,7 @@ export class RecipeList extends React.Component {
         });
         return def.promise();        
     }
-    deleteRecipe(index) {
+    deleteRecipe(id, index) {
 
         if(confirm('Are you sure you want to delete this recipe?')) {
 
@@ -43,7 +44,7 @@ export class RecipeList extends React.Component {
 
             $.ajax({
                 type: "DELETE",
-                url: `${Config.apiURL}/recipes/${index}`,
+                url: `${Config.apiURL}/recipes/${id}`,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 beforeSend: function (xhr) {
@@ -77,14 +78,17 @@ export class RecipeList extends React.Component {
 
         var recipes = this.state.recipes.map((recipe, index) => {
             return (
-                <RecipeListItem key={recipe.id} id={recipe.id} name={recipe.name} remove={() => this.deleteRecipe(index)} />
+                <RecipeListItem key={recipe.id} id={recipe.id} name={recipe.name} remove={() => this.deleteRecipe(recipe.id, index)} />
             );
         });
         
         return (
             <div>
                 {recipes}
+                <Link to="/new" className="nbs-button-medium nbs-button-green-flat">Create new Recipe</Link>
+                <div className="clear"></div>
             </div>
+            
         );
          
     }

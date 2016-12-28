@@ -5,7 +5,7 @@ import Authentication from 'utilities/Authentication';
 import {Direction} from 'components/directions/Direction';
 import {Ingredient} from 'components/ingredients/Ingredient';
 
-export default class RecipeEditPage extends React.Component {
+export default class RecipeAddPage extends React.Component {
 
     constructor(){
         super(...arguments);
@@ -71,8 +71,7 @@ export default class RecipeEditPage extends React.Component {
     addIngredient(){
         this.state.ingredients.push({
             id: (this.state.ingredients.length > 0) ? this.state.ingredients[this.state.ingredients.length - 1].id + 1 : 1,
-            name: 'New Ingredient...',
-            isNew: true
+            name: 'New Ingredient...'
         });
 
         this.setState({
@@ -81,12 +80,7 @@ export default class RecipeEditPage extends React.Component {
     }
 
     removeIngredient(index){
-        let ingredient = this.state.ingredients.splice(index, 1);
-
-        // ingredient is not a newly added (i.e. unsaved ingredient) so we have to mark it for deletion
-        if(!ingredient.isNew) { 
-            this.ingredientsToDelete.push(ingredient);
-        }
+        this.state.ingredients.splice(index, 1);
 
         this.setState({
             ingredients: this.state.ingredients,
@@ -98,7 +92,6 @@ export default class RecipeEditPage extends React.Component {
         this.state.directions.push({
             id: (this.state.directions.length > 0) ? this.state.directions[this.state.directions.length - 1].id + 1 : 1,
             name: 'New Direction...',
-            isNew: true
         });
 
         this.setState({
@@ -107,70 +100,29 @@ export default class RecipeEditPage extends React.Component {
     }
 
     removeDirection(index){
-        let direction = this.state.directions.splice(index, 1);
-
-        // direction is not a newly added (i.e. unsaved direction) so we have to mark it for deletion
-        if(!direction.isNew) { 
-            this.directionsToDelete.push(direction);
-        }
+        this.state.directions.splice(index, 1);
 
         this.setState({
             directions: this.state.directions,
         });
 
-    }
+    }    
 
     save(){
-        this.request("PUT", `/recipes/${this.state.id}`, { name: this.state.name });
+        this.request("POST", `/recipes/${Authentication.getUserInfo().id}`, { name: this.state.name }).then(recipe => {
 
-        // loop through and add or update ingredients
-        this.state.ingredients.forEach((item, index) =>{
-            if(item.isNew) {
-                this.request("POST", "/ingredients", {recipeId: this.state.id, name: item.name})
-            } else {
-                this.request("PUT", `/ingredients/${item.id}`, { recipeId: this.state.id, name: item.name });
-            }
-        });
+            let id = recipe.id;
 
-        // delete ingredients marked for deletion
-        this.ingredientsToDelete.forEach((item, index) => {
-            this.request("DELETE", `/ingredients/${item.id}`)
-        });
-
-        // loop through and add or update directions
-        this.state.directions.forEach((item, index) =>{
-            if(item.isNew) {
-                this.request("POST", "/directions", {recipeId: this.state.id, name: item.name})
-            } else {
-                this.request("PUT", `/directions/${item.id}`, { recipeId: this.state.id, name: item.name });
-            }
-        });
-
-        // delete directions marked for deletion
-        this.directionsToDelete.forEach((item, index) => {
-            this.request("DELETE", `/directions/${item.id}`)
-        });                  
-
-    }
-
-    componentWillMount(){
-        this.request("GET", `/recipes/${this.state.id}`).then(recipe => {
-            this.setState({ 
-                id: recipe.id,
-                name: recipe.name
+            // loop through and add ingredients
+            this.state.ingredients.forEach((item, index) =>{
+                this.request("POST", "/ingredients", {recipeId: id, name: item.name});
             });
-        });
 
-        this.request("GET", `/ingredients/${this.state.id}`).then(ingredients => {
-            this.setState({ 
-                ingredients: ingredients 
-            });            
-        });
+            // loop through and add directions
+            this.state.directions.forEach((item, index) =>{
+                this.request("POST", "/directions", {recipeId: id, name: item.name});
+            });
 
-        this.request("GET", `/directions/${this.state.id}`).then(directions => {
-            this.setState({ 
-                directions: directions 
-            });            
         });
     }
 
@@ -189,7 +141,7 @@ export default class RecipeEditPage extends React.Component {
         return (
 
             <div>
-                <h2>Edit Recipe: {this.state.name}</h2>
+                <h2>Create Recipe: {this.state.name}</h2>
                 <input type="text" value={this.state.name} onChange={(e) => this.nameChanged(e)} />
                 <h3>Ingredients</h3>
                 <p><a onClick={() => this.addIngredient()} className="fa-icon-plus pointer"> Add Ingredient</a></p>
@@ -205,7 +157,7 @@ export default class RecipeEditPage extends React.Component {
 
                 <div className="clearout"></div>
 
-                <button onClick={() => this.save()}>Update Recipe</button>
+                <button onClick={() => this.save()}>Create Recipe</button>
 
             </div>
         );

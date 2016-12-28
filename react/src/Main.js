@@ -7,6 +7,7 @@ import HomePage from 'components/pages/HomePage';
 import AboutPage from 'components/pages/AboutPage';
 import LoginPage from 'components/pages/LoginPage';
 import RecipeListPage from 'components/pages/RecipeListPage';
+import RecipeAddPage from 'components/pages/RecipeAddPage';
 import RecipeViewPage from 'components/pages/RecipeViewPage';
 import RecipeEditPage from 'components/pages/RecipeEditPage';
 
@@ -16,11 +17,12 @@ ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={HomePage} />
-            <Route path="about" component={AboutPage} />
-            <Route path="login" component={LoginPage} />
-            <Route path="recipes" component={RecipeListPage} onEnter={Authentication.authenticateRoute} />
-            <Route path="recipe/:id" component={RecipeViewPage} onEnter={Authentication.authenticateRoute} />
-            <Route path="edit/:id" component={RecipeEditPage} onEnter={Authentication.authenticateRoute} />
+            <Route path="/about" component={AboutPage} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/recipes" component={RecipeListPage} onEnter={Authentication.authenticateRoute} />
+            <Route path="/new" component={RecipeAddPage} onEnter={Authentication.authenticateRoute} />
+            <Route path="/recipe/:id" component={RecipeViewPage} onEnter={Authentication.authenticateRoute} />
+            <Route path="/edit/:id" component={RecipeEditPage} onEnter={Authentication.authenticateRoute} />
         </Route>
     </Router>, 
 document.getElementById('content'));
