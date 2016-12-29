@@ -1,5 +1,6 @@
 import {react} from 'react';
-import { Router, Route, hashHistory, IndexRoute, Link } from 'react-router';
+import { Router, Route, hashHistory, useRouterHistory, IndexRoute, Link } from 'react-router';
+import { createHashHistory } from 'history';
 import Authentication from 'utilities/Authentication';
 import App from './App';
 import UserMenu from 'components/menus/UserMenu';
@@ -13,12 +14,14 @@ import RecipeAddPage from 'components/pages/RecipeAddPage';
 import RecipeViewPage from 'components/pages/RecipeViewPage';
 import RecipeEditPage from 'components/pages/RecipeEditPage';
 
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+
 ReactDOM.render(<UserMenu />, document.getElementById('userInfo'));
 
 ReactDOM.render(<Notification />, document.getElementById('message'));
 
 ReactDOM.render(
-    <Router history={hashHistory}>
+    <Router history={appHistory}>
         <Route path="/" component={App}>
             <IndexRoute component={HomePage} />
             <Route path="/about" component={AboutPage} />

@@ -6,8 +6,8 @@ An experimental exercise client-side/single page application built with JavaScri
 Current libraries demonstrated...
 
 * [Backbone.js](http://backbonejs.org/)
-* [AngularJS](http://angularjs.org/)
-* [React](https://facebook.github.io/react/) (in progress)
+* [AngularJS 1](http://angularjs.org/)
+* [React](https://facebook.github.io/react/)
 
 Perhaps more will be used in the future...
 
