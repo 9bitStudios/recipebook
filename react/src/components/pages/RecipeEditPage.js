@@ -154,7 +154,7 @@ export default class RecipeEditPage extends React.Component {
             });  
 
             Events.broadcast('notification', 'Recipe updated', 'success')
-            Helper.Redirect(); 
+            Helper.Redirect('/recipes');
 
         });
         

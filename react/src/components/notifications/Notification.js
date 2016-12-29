@@ -45,20 +45,21 @@ export default class Notification extends React.Component {
     show(){
         var node = ReactDOM.findDOMNode(this.refs.display);
         $(node).show();
-        this.fadeout();
+        setTimeout(() =>{
+            this.fadeout();
+        }, 5000);
+        
     }
 
     fadeout() {
         var node = ReactDOM.findDOMNode(this.refs.display);
-        $(node).fadeOut(3000, () =>{
-
-        });
+        $(node).fadeOut();
     }
 
     render(){
 
         return(
-            <div ref="display" className={this.state.cssClass}>{this.state.text}</div>
+            <div ref="display" onClick={() => this.fadeout()} className={this.state.cssClass}>{this.state.text}</div>
         )
     }
 

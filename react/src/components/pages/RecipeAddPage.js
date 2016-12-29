@@ -126,7 +126,7 @@ export default class RecipeAddPage extends React.Component {
             });
 
             Events.broadcast('notification', 'Recipe added', 'success')
-            Helper.Redirect();
+            Helper.Redirect('/recipes');
 
         });
     }
