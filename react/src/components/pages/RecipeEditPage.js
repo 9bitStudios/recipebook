@@ -1,6 +1,8 @@
 import {react} from 'react';
 import $ from 'jquery';
 import {Link, hashHistory} from 'react-router';
+import {Helper} from 'utilities/Helper';
+import Events from 'utilities/Events';
 import Authentication from 'utilities/Authentication';
 import {Direction} from 'components/directions/Direction';
 import {Ingredient} from 'components/ingredients/Ingredient';
@@ -84,8 +86,8 @@ export default class RecipeEditPage extends React.Component {
         let ingredient = this.state.ingredients.splice(index, 1);
 
         // ingredient is not a newly added (i.e. unsaved ingredient) so we have to mark it for deletion
-        if(!ingredient.isNew) { 
-            this.ingredientsToDelete.push(ingredient);
+        if(!ingredient[0].isNew) { 
+            this.ingredientsToDelete.push(ingredient[0]);
         }
 
         this.setState({
@@ -110,8 +112,8 @@ export default class RecipeEditPage extends React.Component {
         let direction = this.state.directions.splice(index, 1);
 
         // direction is not a newly added (i.e. unsaved direction) so we have to mark it for deletion
-        if(!direction.isNew) { 
-            this.directionsToDelete.push(direction);
+        if(!direction[0].isNew) { 
+            this.directionsToDelete.push(direction[0]);
         }
 
         this.setState({
@@ -121,36 +123,41 @@ export default class RecipeEditPage extends React.Component {
     }
 
     save(){
-        this.request("PUT", `/recipes/${this.state.id}`, { name: this.state.name });
+        this.request("PUT", `/recipes/${this.state.id}`, { name: this.state.name }).then(recipe =>{
 
-        // loop through and add or update ingredients
-        this.state.ingredients.forEach((item, index) =>{
-            if(item.isNew) {
-                this.request("POST", "/ingredients", {recipeId: this.state.id, name: item.name})
-            } else {
-                this.request("PUT", `/ingredients/${item.id}`, { recipeId: this.state.id, name: item.name });
-            }
+            // loop through and add or update ingredients
+            this.state.ingredients.forEach((item, index) =>{
+                if(item.isNew) {
+                    this.request("POST", "/ingredients", {recipeId: this.state.id, name: item.name})
+                } else {
+                    this.request("PUT", `/ingredients/${item.id}`, { recipeId: this.state.id, name: item.name });
+                }
+            });
+
+            // delete ingredients marked for deletion
+            this.ingredientsToDelete.forEach((item, index) => {
+                this.request("DELETE", `/ingredients/${item.id}`)
+            });
+
+            // loop through and add or update directions
+            this.state.directions.forEach((item, index) =>{
+                if(item.isNew) {
+                    this.request("POST", "/directions", {recipeId: this.state.id, name: item.name})
+                } else {
+                    this.request("PUT", `/directions/${item.id}`, { recipeId: this.state.id, name: item.name });
+                }
+            });
+
+            // delete directions marked for deletion
+            this.directionsToDelete.forEach((item, index) => {
+                this.request("DELETE", `/directions/${item.id}`)
+            });  
+
+            Events.broadcast('notification', 'Recipe updated', 'success')
+            Helper.Redirect(); 
+
         });
-
-        // delete ingredients marked for deletion
-        this.ingredientsToDelete.forEach((item, index) => {
-            this.request("DELETE", `/ingredients/${item.id}`)
-        });
-
-        // loop through and add or update directions
-        this.state.directions.forEach((item, index) =>{
-            if(item.isNew) {
-                this.request("POST", "/directions", {recipeId: this.state.id, name: item.name})
-            } else {
-                this.request("PUT", `/directions/${item.id}`, { recipeId: this.state.id, name: item.name });
-            }
-        });
-
-        // delete directions marked for deletion
-        this.directionsToDelete.forEach((item, index) => {
-            this.request("DELETE", `/directions/${item.id}`)
-        });                  
-
+        
     }
 
     componentWillMount(){

@@ -63,15 +63,9 @@ class Authentication {
             token: null
         };        
         Helper.DestroyCookie('RecipeAuth');
-        this.redirect();
+        Helper.Redirect();
     }
-    redirect(route){
-        if(route) {
-            window.location.hash = '#' + route;
-        } else {
-             window.location.hash = '#';
-        }
-    }
+
 
 }
 

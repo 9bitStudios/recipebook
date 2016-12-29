@@ -1,6 +1,8 @@
 import {react} from 'react';
 import $ from 'jquery';
 import {Link, hashHistory} from 'react-router';
+import {Helper} from 'utilities/Helper';
+import Events from 'utilities/Events';
 import Authentication from 'utilities/Authentication';
 import {Direction} from 'components/directions/Direction';
 import {Ingredient} from 'components/ingredients/Ingredient';
@@ -122,6 +124,9 @@ export default class RecipeAddPage extends React.Component {
             this.state.directions.forEach((item, index) =>{
                 this.request("POST", "/directions", {recipeId: id, name: item.name});
             });
+
+            Events.broadcast('notification', 'Recipe added', 'success')
+            Helper.Redirect();
 
         });
     }

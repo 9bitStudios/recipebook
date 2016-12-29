@@ -3,6 +3,7 @@ import { Router, Route, hashHistory, IndexRoute, Link } from 'react-router';
 import Authentication from 'utilities/Authentication';
 import App from './App';
 import UserMenu from 'components/menus/UserMenu';
+import Notification from 'components/notifications/Notification';
 import HomePage from 'components/pages/HomePage';
 import AboutPage from 'components/pages/AboutPage';
 import LoginPage from 'components/pages/LoginPage';
@@ -12,6 +13,8 @@ import RecipeViewPage from 'components/pages/RecipeViewPage';
 import RecipeEditPage from 'components/pages/RecipeEditPage';
 
 ReactDOM.render(<UserMenu />, document.getElementById('userInfo'));
+
+ReactDOM.render(<Notification />, document.getElementById('message'));
 
 ReactDOM.render(
     <Router history={hashHistory}>

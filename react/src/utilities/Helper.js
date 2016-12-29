@@ -63,4 +63,13 @@ export class Helper {
             return str;
         }
     }
+
+    static Redirect(route){
+        if(route) {
+            window.location.hash = '#' + route;
+        } else {
+             window.location.hash = '#';
+        }
+    }
+
 }
