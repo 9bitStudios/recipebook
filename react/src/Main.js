@@ -6,6 +6,7 @@ import UserMenu from 'components/menus/UserMenu';
 import Notification from 'components/notifications/Notification';
 import HomePage from 'components/pages/HomePage';
 import AboutPage from 'components/pages/AboutPage';
+import SignUpPage from 'components/pages/SignUpPage';
 import LoginPage from 'components/pages/LoginPage';
 import RecipeListPage from 'components/pages/RecipeListPage';
 import RecipeAddPage from 'components/pages/RecipeAddPage';
@@ -22,6 +23,7 @@ ReactDOM.render(
             <IndexRoute component={HomePage} />
             <Route path="/about" component={AboutPage} />
             <Route path="/login" component={LoginPage} />
+            <Route path="/signup" component={SignUpPage} />
             <Route path="/recipes" component={RecipeListPage} onEnter={Authentication.authenticateRoute} />
             <Route path="/new" component={RecipeAddPage} onEnter={Authentication.authenticateRoute} />
             <Route path="/recipe/:id" component={RecipeViewPage} onEnter={Authentication.authenticateRoute} />
