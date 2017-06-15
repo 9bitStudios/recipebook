@@ -13,7 +13,7 @@ Perhaps more will be used in the future...
 
 **Disclaimer:** At present, not all of this code is 100% production ready (far from it actually, lol). Both the client side and the server side need additional refinements with regard to validation, error handling, messaging and a number of other areas. While features will continue to be improved over time, the primary aim of this project is to implement things conceptually and show potential starting points to solving various problems encountered in client side application development. (So please don't just change a couple class names and ship it off it a client). Also, I make no grandiose claims about being a Kung Fu master at coming up with the greatest possible solution for everything using any of the frameworks demonstrated. So, as mentioned above, if have any suggestions for better ways to handle different components of this application, please feel free to offer them up. 
 
-###Setting Up
+### Setting Up
 
 This project uses Node.js as a both a server and a REST API. You will want to install the dependencies for the project by running the following command in a terminal or command window... 
 
@@ -109,4 +109,4 @@ To run the server/project simply run the following in a terminal/command window.
 $ node server
 ```
 
-This will strt the server and run the project at http://localhost:8080. Go to that URL to view the home page. From there you can navigate to the different applications.
+This will start the server and run the project at http://localhost:8080. Go to that URL to view the home page. From there you can navigate to the different applications.
