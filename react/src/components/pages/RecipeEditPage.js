@@ -56,68 +56,76 @@ export default class RecipeEditPage extends React.Component {
 
     ingredientChange(value, index) {
         
-        this.state.ingredients[index] = {
-            id: this.state.ingredients[index].id,
-            name: value
-        };
-
+        this.setState((prevState, props) => {
+            prevState.ingredients[index] = {
+                id: prevState.ingredients[index].id,
+                name: value,
+                isNew: prevState.ingredients[index].isNew     
+            }
+            return prevState;
+        });
     }
 
     directionChange(value, index) {
-        this.state.directions[index] = {
-            id: this.state.directions[index].id,
-            name: value
-        };
+
+        this.setState((state, props) => {
+            state.directions[index] = {
+                id: state.directions[index].id,
+                name: value,
+                isNew: state.directions[index].isNew     
+            }
+            return state;            
+        });
     }
 
     addIngredient(){
-        this.state.ingredients.push({
-            id: (this.state.ingredients.length > 0) ? this.state.ingredients[this.state.ingredients.length - 1].id + 1 : 1,
-            name: 'New Ingredient...',
-            isNew: true
-        });
 
-        this.setState({
-            ingredients: this.state.ingredients,
+        this.setState((state, props) => {
+            state.ingredients.push({
+                id: (state.ingredients.length > 0) ? state.ingredients[state.ingredients.length - 1].id + 1 : 1,
+                name: 'New Ingredient...',
+                isNew: true
+            });
+            return state;
         });
     }
 
     removeIngredient(index){
-        let ingredient = this.state.ingredients.splice(index, 1);
 
-        // ingredient is not a newly added (i.e. unsaved ingredient) so we have to mark it for deletion
-        if(!ingredient[0].isNew) { 
-            this.ingredientsToDelete.push(ingredient[0]);
-        }
+        this.setState((state, props) => {
+            let ingredient = state.ingredients.splice(index, 1);
 
-        this.setState({
-            ingredients: this.state.ingredients,
+            // ingredient is not a newly added (i.e. unsaved ingredient) so we have to mark it for deletion
+            if(!ingredient[0].isNew) { 
+                this.ingredientsToDelete.push(ingredient[0]);
+            }
+
+            return state;
         });
-
     }
 
     addDirection(){
-        this.state.directions.push({
-            id: (this.state.directions.length > 0) ? this.state.directions[this.state.directions.length - 1].id + 1 : 1,
-            name: 'New Direction...',
-            isNew: true
-        });
-
-        this.setState({
-            directions: this.state.directions,
+        this.setState((state, props) => {
+            state.directions.push({
+                id: (state.directions.length > 0) ? state.directions[state.directions.length - 1].id + 1 : 1,
+                name: 'New Ingredient...',
+                isNew: true
+            });
+            return state;
         });
     }
 
     removeDirection(index){
-        let direction = this.state.directions.splice(index, 1);
+        
+        this.setState((state, props) => {
+            let direction = this.state.directions.splice(index, 1);
 
-        // direction is not a newly added (i.e. unsaved direction) so we have to mark it for deletion
-        if(!direction[0].isNew) { 
-            this.directionsToDelete.push(direction[0]);
-        }
+            // direction is not a newly added (i.e. unsaved direction) so we have to mark it for deletion
+            if(!direction[0].isNew) { 
+                this.directionsToDelete.push(direction[0]);
+            }
 
-        this.setState({
-            directions: this.state.directions,
+            return state;
         });
 
     }

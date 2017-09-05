@@ -10,10 +10,11 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) {
-        console.error('error connecting: ' + err.stack);
+        console.error('Error: Could not connect to MySQL...\r\n');
+        console.error(err.stack);
         return;
     }
-    console.log('connected as id ' + connection.threadId);
+    console.log('Connected to MySQL: Connected as thread ID: ' + connection.threadId);
 
 });
 
